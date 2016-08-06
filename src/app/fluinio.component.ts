@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/filter';
 
 declare var ga : any;
 
@@ -9,9 +9,9 @@ declare var ga : any;
   templateUrl: 'fluinio.component.html',
 })
 export class FluinioAppComponent {
-  constructor(private router : Router ) {
-    /*router.events.filter(e => e instanceof NavigationEnd).subscribe( (n:NavigationEnd) => { 
+  constructor(router : Router ) {
+    router.events.filter(e => e instanceof NavigationEnd).subscribe( (n:NavigationEnd) => { 
       ga('send', 'pageview', n.urlAfterRedirects);
-    });*/
+    });
   }
 }
