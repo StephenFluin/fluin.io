@@ -5,10 +5,10 @@
 }
 
 body {
-    background-color:#5f5f5f;
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 400;
+    background-color: #929292;
 }
 
 hr {
@@ -17,6 +17,8 @@ hr {
     border-top: 1px solid rgba(0, 0, 0, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
+
+/* HEADER-TOOLBAR SECTION */
 
 #header {
     display: flex;
@@ -29,7 +31,7 @@ hr {
     z-index: 9999;
     width: 100%;
     height: 75px;
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.6);
 }
 
 #header h1 {
@@ -77,6 +79,8 @@ a:active {
     width: 25px;
 }
 
+/* INTRO BLOCK SECTION */
+
 #intro-block {
     border: 1px solid blue;
     display: flex;  
@@ -112,8 +116,11 @@ a:active {
     height: 300px;
 }
 
+/* BLOG POSTS SECTION */
+
 #posts-block {
     display: flex;
+    justify-content: space-around;
     border: 1px solid yellow;
     width: 90%;
     margin: 100px auto 0px;
@@ -121,27 +128,42 @@ a:active {
 
 #posts-block>div {
     background: white;
-    flex-grow: 1;
     margin: 10px;
     text-align: center;
     border: 1px solid red;
+    height: 300px;
 }
 
-#posts-block img {
-    max-width: 100%;
+.post-image img {
+    width: 100%;
 }
 
-.post-block {
-    height: 500px;
-}
-
-#post-title {
+.post-title {
     margin: 20px 0px;
 }
 
-#post-date {
+.post-date {
     color: grey;
 }
+
+/* FOOTER SECTION */
+
+#footer {
+    background: #929292;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#footer div p {
+    text-align: right;
+    border: 1px solid purple;
+}
+
+/* ------------------- BLOG PAGE CSS ------------------- */
+
+/* SIDEBAR-NAVBAR SECTION */
 
 #sidebar {
   position: fixed;
@@ -180,6 +202,8 @@ a:active {
     height: 30px;
     color: #999999;
 }
+
+/* BLOG SECTION */
 
 #blogposts p {
         line-height: 1.5;
