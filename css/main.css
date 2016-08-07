@@ -219,10 +219,14 @@ a:active {
     line-height: 1.5x;
 }
 
+#social {
+    display: flex;
+    justify-content: space-between;
+}
+
 #social img {
     height: 30px;
     color: #999999;
-    
 }
 
 /* BLOG SECTION */
