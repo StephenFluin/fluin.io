@@ -8,6 +8,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 400;
+    color: #383f49;
     /*background-color: #929292;
     background-image: url('/images/black-background.svg');
     background-size:100% auto;
@@ -137,14 +138,14 @@ a:active {
     justify-content: space-around;
     /*border: 1px solid mediumpurple;*/
     width: 90%;
-    margin: 100px auto 0px;
+    margin: 50px auto 0px;
 }
 
 #posts-block>div {
     background: white;
     margin: 16px;
     text-align: center;
-    /*border: 1px solid red;*/
+    border: 0.25px solid #929292;
     height: 300px;
 }
 
@@ -166,10 +167,12 @@ a:active {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    border-top: 0.25px solid #929292;
 }
 
 #footer div p {
     text-align: right;
+    color: white;
     /*border: 1px solid purple;*/
 }
 
@@ -189,6 +192,12 @@ a:active {
 
 #sidebar>div {
     margin: 20px;
+}
+
+#sidebar input[type=search] {
+    height: 30px; 
+    width: 100%;
+    text-indent: 10px;
 }
 
 #blogposts {
@@ -213,6 +222,7 @@ a:active {
 #social img {
     height: 30px;
     color: #999999;
+    
 }
 
 /* BLOG SECTION */
