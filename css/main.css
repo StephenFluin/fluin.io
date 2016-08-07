@@ -72,7 +72,7 @@ a:active {
 }
 
 .container {
-    padding: 10px 20px;
+    padding: 16px;
 }
 
 #header>div {
@@ -95,7 +95,7 @@ a:active {
 /* INTRO BLOCK SECTION */
 
 #intro-block {
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
     display: flex;  
     width: 90%;
     margin: 150px auto 0px;
@@ -103,7 +103,7 @@ a:active {
 
 #intro-block>div {
     flex-grow: 1;
-    border:1px solid green;
+    /*border:1px solid green;*/
 }
 
 #intro-block h1 {
@@ -135,16 +135,16 @@ a:active {
 #posts-block {
     display: flex;
     justify-content: space-around;
-    border: 1px solid yellow;
+    /*border: 1px solid mediumpurple;*/
     width: 90%;
     margin: 100px auto 0px;
 }
 
 #posts-block>div {
     background: white;
-    margin: 10px;
+    margin: 16px;
     text-align: center;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     height: 300px;
 }
 
@@ -170,7 +170,7 @@ a:active {
 
 #footer div p {
     text-align: right;
-    border: 1px solid purple;
+    /*border: 1px solid purple;*/
 }
 
 /* ------------------- BLOG PAGE CSS ------------------- */
