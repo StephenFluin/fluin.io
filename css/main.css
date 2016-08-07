@@ -204,19 +204,37 @@ a:active {
     display: flex;
     flex-flow: column wrap;
     align-content: flex-start;
-    border: 1px solid blue;
+    /*border: 1px solid blue;*/
     display: flex;  
     width: 75%;
     margin-top: 100px;
 }
 
 #blogposts>div {
+    padding: 0px 30px;
+    margin: 10px 0;
+}
+
+.main-image {
+    width: 600px;
+}
+
+.main-image img{
+    width: 100%;
+    display: flex;
+}
+
+#blogposts p {
+    line-height: 1.8;
+}
+
+#blogposts>div {
     flex: 0 0 auto;
-    border:1px solid green;
+    /*border:1px solid green;*/
 }
 
 #category-list {
-    line-height: 1.5x;
+    line-height: 1.5;
 }
 
 #social {
@@ -230,10 +248,6 @@ a:active {
 }
 
 /* BLOG SECTION */
-
-#blogposts p {
-        line-height: 1.5;
-}
 
 #featured-blogs img {
     width: 200px;
