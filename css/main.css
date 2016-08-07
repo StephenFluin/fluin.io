@@ -188,6 +188,7 @@ a:active {
   width: 25%px;
   height: 100%;
   background-color: white;
+  border-left: 0.25px solid #929292;
 }
 
 #sidebar>div {
