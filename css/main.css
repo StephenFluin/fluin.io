@@ -9,11 +9,11 @@ body {
     font-size: 14px;
     font-weight: 400;
     color: #383f49;
-    /*background-color: #929292;
-    background-image: url('/images/black-background.svg');
+    /*background-color: #929292;*/
+    background-image: url('/images/background.jpg');
     background-size:100% auto;
     background-position: center top;
-    background-repeat:no-repeat;*/
+    background-repeat:no-repeat;
 }
 
 p {
@@ -99,7 +99,7 @@ a:active {
     /*border: 1px solid blue;*/
     display: flex;  
     width: 90%;
-    margin: 150px auto 0px;
+    margin: 150px auto 75px;
 }
 
 #intro-block>div {
