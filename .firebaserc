@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "fluindotio-website"
+    "default": "fluindotio-website",
+    "website": "fluindotio-website-93127"
   }
 }
