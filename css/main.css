@@ -10,7 +10,7 @@ body {
     font-weight: 400;
     color: #383f49;
     /*background-color: #929292;*/
-    background-image: url('/images/background.jpg');
+    background-image: url('/images/background-1sm.jpg');
     background-size:100% auto;
     background-position: center top;
     background-repeat:no-repeat;
@@ -111,7 +111,8 @@ a:active {
     font-size: 100px;
     text-transform: uppercase;
     line-height: 1;
-    color: #383f49;
+    /*color: #383f49;*/
+    color: white;
 }
 
 #intro-block h2 {
@@ -161,16 +162,19 @@ a:active {
 
 /* FOOTER SECTION */
 
-#footer {
+.footer {
     background: #929292;
     height: 50px;
-    display: flex;
-    justify-content: flex-end;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    /*display: flex;
+    justify-content: flex-end;*/
     align-items: center;
     border-top: 0.25px solid #929292;
 }
 
-#footer div p {
+.footer div p {
     text-align: right;
     color: white;
     /*border: 1px solid purple;*/
@@ -252,4 +256,25 @@ a:active {
 
 #featured-blogs img {
     width: 200px;
+}
+
+/* ------------------- BIO PAGE CSS ------------------- */
+
+/* BIO TEXT SECTION */
+
+div.bio {
+    position: fixed;
+    top: 300px;
+    right: 300px;
+    width: 800px;
+}
+
+.bio h1, p {
+    color: white;
+    padding: 10px;
+}
+
+.bio p {
+    line-height: 1.5;
+    font-size: 1.5em;
 }
