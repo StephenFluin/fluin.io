@@ -9,11 +9,7 @@ body {
     font-size: 14px;
     font-weight: 400;
     color: #383f49;
-    /*background-color: #929292;*/
-    background-image: url('/images/background-1sm.jpg');
-    background-size:100% auto;
-    background-position: center top;
-    background-repeat:no-repeat;
+    background-color: #929292;
 }
 
 p {
@@ -262,11 +258,19 @@ a:active {
 
 /* BIO TEXT SECTION */
 
-div.bio {
-    position: fixed;
+.bio {
+    background-image: url('/images/background-1sm.jpg');
+    background-size:100% auto;
+    background-position: center top;
+    background-repeat:no-repeat;
+    min-height:1000px;
+}
+
+.bio .content {
+    position: absolute;
     top: 300px;
-    right: 300px;
-    width: 800px;
+    right: 200px;
+    left:55%;
 }
 
 .bio h1, p {
