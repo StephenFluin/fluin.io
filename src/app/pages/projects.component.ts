@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: 'projects.component.html',
+  templateUrl: './views/projects.component.html',
 })
 export class ProjectsComponent  { }

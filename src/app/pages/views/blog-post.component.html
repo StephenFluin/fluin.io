@@ -1,0 +1,13 @@
+<div *ngIf="post" class="container">
+    <div class="main-image"><img src="images/imgpostholder.png" alt="Blog Image"></div>
+    <div>
+        <h3>Author: Stephen Fluin</h3>
+    </div>
+    <div class="date">
+        <h3>Date: {{post.date}}</h3>
+    </div>
+    <div>
+        {{post.body}}
+    </div>
+    <h1>{{post.title}}</h1>
+</div>

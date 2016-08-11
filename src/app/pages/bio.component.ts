@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  templateUrl: 'bio.component.html',
+  templateUrl: './views/bio.component.html',
 })
 export class BioComponent  { }

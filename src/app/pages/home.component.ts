@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
 @Component({
-  templateUrl: 'home.component.html',
+  templateUrl: './views/home.component.html',
 })
 export class HomeComponent  {
   posts : Observable<any[]>; 

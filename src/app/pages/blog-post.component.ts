@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
 @Component({
-  templateUrl: 'blog-post.component.html',
+  templateUrl: './views/blog-post.component.html',
 })
 export class BlogPostComponent  {
     post;
