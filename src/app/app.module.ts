@@ -7,7 +7,6 @@ import { FluinioAppComponent } from './fluinio.component';
 import { AppHeaderComponent } from './app-header.component';
 import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
-import { BioComponent } from './pages/bio.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
 import { routeConfig } from './routes';
@@ -23,7 +22,6 @@ import { routeConfig } from './routes';
         AppHeaderComponent,
         HomeComponent,
         BlogComponent,
-        BioComponent,
         SpeakingComponent,
     ],
     bootstrap: [FluinioAppComponent]
