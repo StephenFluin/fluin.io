@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
 import { BlogPostComponent } from './pages/blog-post.component'
 import { BioComponent } from './pages/bio.component';
+import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
 export const routeConfig : RouterConfig = [
@@ -11,6 +12,7 @@ export const routeConfig : RouterConfig = [
     {path: 'blog', component: BlogComponent},
     {path: 'blog/:id', component: BlogPostComponent},
     {path: 'bio', component: BioComponent},
+    {path: 'projects', component: ProjectsComponent},
     {path: 'speaking', component: SpeakingComponent},
 
 ]
