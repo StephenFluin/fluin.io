@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
 
 import { FluinioAppComponent } from './fluinio.component';
 import { AppHeaderComponent } from './app-header.component';
@@ -14,7 +15,8 @@ import { routeConfig } from './routes';
 @NgModule({
     imports: [
         BrowserModule,
-        RouterModule.forRoot(routeConfig)
+        RouterModule.forRoot(routeConfig),
+        HttpModule,
     ],
     declarations: [
         FluinioAppComponent,
