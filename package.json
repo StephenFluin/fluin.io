@@ -22,7 +22,7 @@
     "@angular/platform-server": "github:angular/platform-server-builds",
     "@angular/router": "github:angular/router-builds",
     "@angular/tsc-wrapped": "github:angular/tsc-wrapped-builds",
-    "angular-cli": "github:angular/angular-cli#ba7531a656ec8e6eb5e076d3e442ca3742a5381c",
+    "angular-cli": "^1.0.0-beta.11-webpack.2",
     "core-js": "^2.4.0",
     "reflect-metadata": "0.1.3",
     "rxjs": "^5.0.0-beta.11",
