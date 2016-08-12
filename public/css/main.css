@@ -52,6 +52,10 @@ hr {
     text-transform: uppercase;
 }
 
+#page {
+    margin-top:150px;
+}
+
 a:visited, a:link {
     text-decoration: none;
 }
@@ -260,10 +264,11 @@ a:active {
 
 .bio {
     background-image: url('/images/background-1sm.jpg');
-    background-size:100% auto;
+    background-size:cover;
     background-position: center top;
     background-repeat:no-repeat;
     min-height:1000px;
+    margin-top:-150px;
 }
 
 .bio .content {
