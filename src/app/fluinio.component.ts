@@ -6,7 +6,7 @@ declare var ga : any;
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'fluinio.component.html',
+  templateUrl: './fluinio.component.html',
 })
 export class FluinioAppComponent {
   constructor(router : Router ) {

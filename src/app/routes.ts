@@ -14,6 +14,7 @@ export const routeConfig : RouterConfig = [
         {path: '', component: BlogHomeComponent},
         {path: ':id', component: BlogPostComponent},
     ]},
+    //{path: 'bio', loadChildren: "./bio.module"},
     {path: 'bio', component: BioComponent},
     //{path: 'bio', loadChildren: "./bio.module#BioModule"},
     {path: 'projects', component: ProjectsComponent},
