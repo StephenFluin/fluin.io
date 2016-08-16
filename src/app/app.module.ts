@@ -7,7 +7,12 @@ import { FluinioAppComponent } from './fluinio.component';
 import { AppHeaderComponent } from './app-header.component';
 import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
+
+// routes
+import { BlogHomeComponent } from './pages/blog-home.component';
+import { BlogPostComponent } from './pages/blog-post.component';
 import { BioComponent } from './pages/bio.component';
+import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
 import { routeConfig } from './routes';
@@ -24,6 +29,10 @@ import { routeConfig } from './routes';
         HomeComponent,
         BlogComponent,
         BioComponent,
+        SpeakingComponent,
+        BlogHomeComponent,
+        BlogPostComponent,
+        ProjectsComponent,
         SpeakingComponent,
     ],
     bootstrap: [FluinioAppComponent]
