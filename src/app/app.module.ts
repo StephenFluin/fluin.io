@@ -29,6 +29,7 @@ import { routeConfig } from './routes';
         HomeComponent,
         BlogComponent,
         SpeakingComponent,
+        BioComponent,
         BlogHomeComponent,
         BlogPostComponent,
         ProjectsComponent,
