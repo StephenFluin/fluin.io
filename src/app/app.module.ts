@@ -11,9 +11,11 @@ import { BlogComponent } from './pages/blog.component';
 // routes
 import { BlogHomeComponent } from './pages/blog-home.component';
 import { BlogPostComponent } from './pages/blog-post.component';
-import { BioComponent } from './pages/bio.component';
 import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
+
+import { BioModule } from './bio.module';
+import { BioComponent } from './pages/bio.component';
 
 import { routeConfig } from './routes';
 
@@ -22,6 +24,7 @@ import { routeConfig } from './routes';
         BrowserModule,
         RouterModule.forRoot(routeConfig),
         HttpModule,
+        BioModule,
     ],
     declarations: [
         FluinioAppComponent,
@@ -29,7 +32,6 @@ import { routeConfig } from './routes';
         HomeComponent,
         BlogComponent,
         SpeakingComponent,
-        BioComponent,
         BlogHomeComponent,
         BlogPostComponent,
         ProjectsComponent,
