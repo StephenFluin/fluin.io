@@ -15,7 +15,6 @@ import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
 import { BioModule } from './bio.module';
-import { BioComponent } from './pages/bio.component';
 
 import { routeConfig } from './routes';
 
@@ -27,8 +26,8 @@ import { routeConfig } from './routes';
         BioModule,
     ],
     declarations: [
-        FluinioAppComponent,
         AppHeaderComponent,
+        FluinioAppComponent,
         HomeComponent,
         BlogComponent,
         SpeakingComponent,

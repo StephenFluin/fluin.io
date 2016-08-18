@@ -22,7 +22,6 @@
   "files": [
     "typings.d.ts",
 	  "main.ts"
-	  //"main-static.ts"
   ],
   "typescript.tsdk": "./node_modules/typescript/lib",
 

@@ -12,7 +12,7 @@ import { routeConfig } from './routes';
         CommonModule,
         HttpModule,
         RouterModule.forChild([
-            { path: 'child', component: BioComponent}
+            { path: 'bio', component: BioComponent}
         ])
     ],
     declarations: [
