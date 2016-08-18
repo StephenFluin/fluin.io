@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs';
+// I import everything because otherwise switchMap isn't defined
+import 'rxjs/Rx';
+
 
 import * as Showdown from 'showdown';
 
@@ -12,19 +14,22 @@ export class BlogPostComponent  {
     post;
 
     constructor(activatedRoute : ActivatedRoute, http: Http) {
-        activatedRoute.params.flatMap((params) => {
-            console.log("Got new params!",params);
+        activatedRoute.params.switchMap((params) => {
+            let filter;
+            if(!params['id']) {
+                // If none specified, just get first
+                filter = list => list[0];
+            } else {
+                // Otherwise, get specified
+                filter = list => list.find(item => item.id === params['id']);
+            }
             return http.get('/posts.json').map(response => {
-                console.log("got new posts!");
-                let item = (response.json() as any[]).find(item => 
-                    item.id === params['id']
-                );
+                let item = filter(response.json() as any[]);
                 let converter = new Showdown.Converter();
                 item.body = converter.makeHtml(item.body);
                 return item;
             })
         }).subscribe(post => {
-            console.log("Updating post");
             this.post = post;
         });
 

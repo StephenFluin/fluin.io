@@ -12,7 +12,7 @@ import { SpeakingComponent } from './pages/speaking.component';
 export const routeConfig : Routes = [
     {path: '', component: HomeComponent},
     {path: 'blog',  component: BlogComponent, children: [
-        {path: '', component: BlogHomeComponent},
+        {path: '', component: BlogPostComponent},
         {path: ':id', component: BlogPostComponent},
     ]},
     // Leave this out until Lazy loading works
