@@ -14,8 +14,8 @@ import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
-import { BioModule } from './bio.module';
-
+import { BioComponent } from './pages/bio.component';
+import { AdminModule } from './admin/admin.module';
 import { routeConfig } from './app.routes';
 
 @NgModule({
@@ -23,7 +23,8 @@ import { routeConfig } from './app.routes';
         BrowserModule,
         RouterModule.forRoot(routeConfig),
         HttpModule,
-        // BioModule,
+        // Add this when not lazy loading
+        AdminModule,
     ],
     declarations: [
         AppHeaderComponent,
@@ -33,6 +34,7 @@ import { routeConfig } from './app.routes';
         SpeakingComponent,
         BlogHomeComponent,
         BlogPostComponent,
+        BioComponent,
         ProjectsComponent,
         SpeakingComponent,
     ],

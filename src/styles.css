@@ -49,11 +49,11 @@ hr {
     font-size: 14px;
     font-weight: normal;
     color: rgba(255,255,255,.85);
-    text-transform: uppercase;
 }
 
 #page {
     margin-top:150px;
+    min-height:750px;
 }
 
 a:visited, a:link {
@@ -109,7 +109,6 @@ a:active {
 
 #intro-block h1 {
     font-size: 100px;
-    text-transform: uppercase;
     line-height: 1;
     /*color: #383f49;*/
     color: white;
@@ -165,11 +164,6 @@ a:active {
 .footer {
     background: #929292;
     height: 50px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    /*display: flex;
-    justify-content: flex-end;*/
     align-items: center;
     border-top: 0.25px solid #929292;
 }
