@@ -1,6 +1,6 @@
 <!-- intro-block-->
 <div class="container" id="intro-block">
-    <div style="text-align: right"><img id="main-pic" src="images/mainpic.jpg" alt="Stephen Fluin"></div>
+    <div style="text-align: right"><img id="main-pic" src="/assets/images/mainpic.jpg" alt="Stephen Fluin"></div>
     <div style="padding: 0px 0px 0px 50px; width: 500px">
         <div>
             <h1>Stephen</h1>
@@ -22,7 +22,7 @@
 <!-- posts-block-->
 <div id="posts-block">
     <div class="post-block" *ngFor="let post of posts | async" [routerLink]="['blog',post.id]">
-        <div class="post-image"><img src="images/imgpostholder.png"></div>
+        <div class="post-image"><img src="/assets/images/imgpostholder.png"></div>
         <div class="post-title">
             <h2>{{post.title}}</h2>
         </div>

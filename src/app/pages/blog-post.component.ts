@@ -23,7 +23,7 @@ export class BlogPostComponent  {
                 // Otherwise, get specified
                 filter = list => list.find(item => item.id === params['id']);
             }
-            return http.get('/posts.json').map(response => {
+            return http.get('/assets/posts.json').map(response => {
                 let item = filter(response.json() as any[]);
                 let converter = new Showdown.Converter();
                 item.body = converter.makeHtml(item.body);

@@ -16,7 +16,7 @@ export const routeConfig : Routes = [
         {path: ':id', component: BlogPostComponent},
     ]},
     // Leave this out until Lazy loading works
-    //{path: 'bio', loadChildren: "./bio.module#BioModule"},
+    {path: 'bio', loadChildren: "./bio.module#BioModule"},
     {path: 'projects', component: ProjectsComponent},
     {path: 'speaking', component: SpeakingComponent},
 

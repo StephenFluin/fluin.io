@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class BlogHomeComponent {
   constructor(activatedRoute: ActivatedRoute, http: Http, router: Router) {
-    http.get('/posts.json').map(response => {
+    http.get('/assets/posts.json').map(response => {
       let item = (response.json() as any[])[0]
       return item.id;
     }).subscribe(id => {

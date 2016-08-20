@@ -263,7 +263,7 @@ a:active {
 /* BIO TEXT SECTION */
 
 .bio {
-    background-image: url('/images/background-1sm.jpg');
+    background-image: url('/assets/images/background-1sm.jpg');
     background-size:cover;
     background-position: center top;
     background-repeat:no-repeat;

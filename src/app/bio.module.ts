@@ -5,14 +5,12 @@ import { HttpModule } from '@angular/http';
 
 import { BioComponent } from './pages/bio.component';
 
-import { routeConfig } from './routes';
-
 @NgModule({
     imports: [
         CommonModule,
         HttpModule,
         RouterModule.forChild([
-            { path: 'bio', component: BioComponent}
+            { path: '', component: BioComponent}
         ])
     ],
     declarations: [
