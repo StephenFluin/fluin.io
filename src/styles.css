@@ -2,10 +2,10 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     font-weight: 400;
     color: #383f49;
@@ -51,15 +51,8 @@ hr {
     background-color: rgba(53,63,73,0.6);
 }
 
-#header h1 {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 14px;
-    font-weight: normal;
-    color: rgba(255,255,255,.85);
-}
-
 #page {
-    margin-top:150px;
+    margin-top:75px;
     min-height:750px;
 }
 
@@ -71,7 +64,7 @@ a:hover {
     text-decoration: none;
 }
 
-#header div a:hover h1 {
+#header a:hover {
     color: white;
 }
 
@@ -80,11 +73,17 @@ a:active {
 }
 
 .container {
-    padding: 16px;
+    padding: 30px;
 }
-
-#header>div {
-    padding: 0px 30px;
+nav {
+    display:flex;
+    align-items:center;
+}
+nav>* {
+    padding-left:30px;
+    font-size: 14px;
+    font-weight: normal;
+    color: rgba(255,255,255,.85);
 }
 
 .spacer {
@@ -181,23 +180,26 @@ a:active {
     /*border: 1px solid purple;*/
 }
 
+router-outlet {
+    display:none;
+}
+
 /* ------------------- BLOG PAGE CSS ------------------- */
+#blogposts {
+    display: flex;
+    margin-top: 100px;
+}
+
+#blogposts>* {
+    flex-grow:1;
+}
 
 /* SIDEBAR-NAVBAR SECTION */
 
 #sidebar {
-  position: fixed;
-  right: 0;
-  top: 75px;
-  z-index: 9999;
-  width: 25%px;
-  height: 100%;
+  width: 300px;
   background-color: white;
   border-left: 0.25px solid #929292;
-}
-
-#sidebar>div {
-    margin: 20px;
 }
 
 #sidebar input[type=search] {
@@ -206,20 +208,6 @@ a:active {
     text-indent: 10px;
 }
 
-#blogposts {
-    display: flex;
-    flex-flow: column wrap;
-    align-content: flex-start;
-    /*border: 1px solid blue;*/
-    display: flex;  
-    width: 75%;
-    margin-top: 100px;
-}
-
-#blogposts>div {
-    padding: 0px 30px;
-    margin: 10px 0;
-}
 
 .main-image {
     width: 600px;
