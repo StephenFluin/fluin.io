@@ -9,7 +9,14 @@ body {
     font-size: 14px;
     font-weight: 400;
     color: #383f49;
-    background-color: #929292;
+    /*background-color: #929292;*/
+    background: url(../images/etheral-bg.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+#main body {
+    background: url(../images/etheral-bg.jpg) no-repeat center center fixed;
+    background-size: cover;
 }
 
 p {
