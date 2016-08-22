@@ -47,8 +47,6 @@ hr {
 #header {
     display: flex;
     align-items: center;
-    /*border: 1px solid red;
-    background: rgba(0,0,0,.5);*/
     position: fixed;
     top: 0;
     left: 0;
@@ -192,8 +190,7 @@ router-outlet {
 
 #sidebar {
   width: 300px;
-  background-color: white;
-  border-left: 0.25px solid #929292;
+  background-color: rgba(53,63,73,0.1);
 }
 
 #sidebar input[type=search] {
@@ -204,13 +201,14 @@ router-outlet {
 
 #sidebar section {
     margin:30px 0;
+    width:240px;
 }
 
-.main-image {
+.post-image {
     width: 600px;
 }
 
-.main-image img{
+.post-image img{
     width: 100%;
     display: flex;
 }
@@ -226,6 +224,10 @@ router-outlet {
 
 #featured-blogs img {
     width: 100%;
+}
+#featured-blogs>* {
+    margin-bottom:15px;
+    display:block;
 }
 
 /* ------------------- BIO PAGE CSS ------------------- */

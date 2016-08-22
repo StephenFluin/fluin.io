@@ -3,9 +3,9 @@
     <router-outlet></router-outlet>
     
         <!-- sidebar-->
-        <div class="container" id="sidebar" style="flex-grow:0">
-            <section style="margin-top:0px;">
-                <img style="width:50%;margin:0px auto;display:block;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
+        <div id="sidebar" class="container" style="flex-grow:0">
+            <section style="margin-top:0px;text-align:center;">
+                <img style="width:50%;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
                 <div>
                     <p>Thank you for stopping by!</p>
                 </div>
@@ -26,32 +26,22 @@
                 <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"><img src="/assets/images/sm-linkedin.svg" alt="Linkedin"></a>
                 <a href="https://plus.google.com/+StephenFluin" target="_blank"><img src="/assets/images/sm-gplus.svg" alt="Google+"></a>
             </section>
-            <!-- end social-->
 
             <hr>
 
             <section id="category-list">
-                <div>
-                    <h3>Angular</h3>
-                </div>
-                <div>
-                    <h3>Wearables</h3>
-                </div>
-                <div>
-                    <h3>Mobile</h3>
-                </div>
+                <div>Angular</div>
+                <div>Wearables</div>
+                <div>Mobile</div>
             </section>
-            <!-- end categories-->
 
             <hr>
 
             <section id="featured-blogs">
-                <div *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
-                    <div>
-                        <img src="/assets/images/imgpostholder.png">
-                    </div>
-                    <div>{{post.title}}</div>
-                </div>
+                <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
+                    <img src="/assets/images/imgpostholder.png">
+                    {{post.title}}
+                </a>
             </section>
             <!-- end featured-blogs-->
     </div>
