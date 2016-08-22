@@ -38,6 +38,6 @@ import { routeConfig } from './app.routes';
         ProjectsComponent,
         SpeakingComponent,
     ],
-    bootstrap: [FluinioAppComponent]
+    bootstrap: [FluinioAppComponent],
 })
 export class AppModule {}

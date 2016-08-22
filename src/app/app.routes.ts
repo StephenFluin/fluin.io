@@ -12,14 +12,14 @@ import { SpeakingComponent } from './pages/speaking.component';
 export const routeConfig: Routes = [
     { path: '', component: HomeComponent },
     {
-        path: 'blog', component: BlogComponent, children: [
+        path: 'blog', component: BlogComponent, data: {title: 'Blog'}, children: [
             { path: '', component: BlogPostComponent },
             { path: ':id', component: BlogPostComponent },
         ]
     },
-    { path: 'bio', component: BioComponent },
-    { path: 'projects', component: ProjectsComponent },
-    { path: 'speaking', component: SpeakingComponent },
+    { path: 'bio', component: BioComponent,  data: {title: 'About Stephen Fluin'}},
+    { path: 'projects', component: ProjectsComponent, data: {title: 'Projects'} },
+    { path: 'speaking', component: SpeakingComponent, data: {title: 'Speaking'} },
 
 
     // This works great in JIT mode, but the CLI doesn't connect the bundle for AOT yet

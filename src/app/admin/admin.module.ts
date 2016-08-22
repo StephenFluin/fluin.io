@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AdminComponent } from './admin.component';
 
 import { AngularFireModule } from 'angularfire2';
+import { AuthService } from './shared/auth.service';
 
 @NgModule({
     imports: [
@@ -25,5 +26,8 @@ import { AngularFireModule } from 'angularfire2';
     declarations: [
         AdminComponent,
     ],
+    providers: [
+        AuthService
+    ]
 })
 export class AdminModule { }
