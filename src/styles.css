@@ -178,11 +178,11 @@ router-outlet {
 }
 
 /* ------------------- BLOG PAGE CSS ------------------- */
-#blogposts {
+#blogpost {
     display: flex;
 }
 
-#blogposts>* {
+#blogpost>* {
     flex-grow:1;
 }
 
@@ -204,11 +204,11 @@ router-outlet {
     width:240px;
 }
 
-.post-image {
+#blogpost .highlight-image {
     width: 600px;
 }
 
-.post-image img{
+#blogpost .highlight-image img{
     width: 100%;
     display: flex;
 }
