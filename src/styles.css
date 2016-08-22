@@ -4,23 +4,30 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
+h1, h2, h3 {
+    margin:0px;
+}
 
 body {
     font-size: 14px;
     font-weight: 400;
     color: #383f49;
-    /*background-color: #929292;*/
-    background: url('/assets/images/etheral-bg.jpg') no-repeat center center fixed;
-    background-size: cover;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.container {
+    padding: 30px;
+}
+p {
+    line-height: 1.5;
 }
 
 #main body {
     background: url('/assets/images/etheral-bg.jpg') no-repeat center center fixed;
     background-size: cover;
-}
-
-p {
-    font-size: 12px;
 }
 
 hr {
@@ -68,13 +75,7 @@ a:hover {
     color: white;
 }
 
-a:active {
-    text-decoration: none;
-}
 
-.container {
-    padding: 30px;
-}
 nav {
     display:flex;
     align-items:center;
@@ -102,41 +103,35 @@ nav>* {
 /* INTRO BLOCK SECTION */
 
 #intro-block {
-    /*border: 1px solid blue;*/
-    display: flex;  
-    width: 90%;
-    margin: 150px auto 75px;
+   margin-top:-75px;
+    padding-top:145px;
+    padding-bottom:70px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    color:rgba(255,255,255,.95);
+    position:relative;
+    font-size:16px;
+    background-color:rgba(53,63,73,0.6);
 }
+/*#intro-block::after {
+  content: ""; background: url('/assets/images/etheral-bg.jpg') no-repeat center center;
+    background-size: cover;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1; 
+  font-size: 16px;  
+}*/
 
-#intro-block>div {
-    flex-grow: 1;
-    /*border:1px solid green;*/
-}
+
 
 #intro-block h1 {
-    font-size: 100px;
-    line-height: 1;
-    /*color: #383f49;*/
-    color: white;
+    font-size: 80px;
 }
-
-#intro-block h2 {
-    font-size: 16px;
-    line-height: 2;
-    padding-top: 10px;
-}
-
-#intro-block img {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#main-pic {
-    display: flex;
-    height: 300px;
-}
-
 /* BLOG POSTS SECTION */
 
 #posts-block {
@@ -187,7 +182,6 @@ router-outlet {
 /* ------------------- BLOG PAGE CSS ------------------- */
 #blogposts {
     display: flex;
-    margin-top: 100px;
 }
 
 #blogposts>* {
@@ -208,6 +202,9 @@ router-outlet {
     text-indent: 10px;
 }
 
+#sidebar section {
+    margin:30px 0;
+}
 
 .main-image {
     width: 600px;
@@ -218,19 +215,6 @@ router-outlet {
     display: flex;
 }
 
-#blogposts p {
-    line-height: 1.8;
-}
-
-#blogposts>div {
-    flex: 0 0 auto;
-    /*border:1px solid green;*/
-}
-
-#category-list {
-    line-height: 1.5;
-}
-
 #social {
     display: flex;
     justify-content: space-between;
@@ -238,13 +222,10 @@ router-outlet {
 
 #social img {
     height: 30px;
-    color: #999999;
 }
 
-/* BLOG SECTION */
-
 #featured-blogs img {
-    width: 200px;
+    width: 100%;
 }
 
 /* ------------------- BIO PAGE CSS ------------------- */
@@ -258,6 +239,7 @@ router-outlet {
     background-repeat:no-repeat;
     min-height:1000px;
     margin-top:-150px;
+    color:white;
 }
 
 .bio .content {
@@ -265,14 +247,4 @@ router-outlet {
     top: 300px;
     right: 200px;
     left:55%;
-}
-
-.bio h1, p {
-    color: white;
-    padding: 10px;
-}
-
-.bio p {
-    line-height: 1.5;
-    font-size: 1.5em;
 }

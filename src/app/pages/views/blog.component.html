@@ -2,41 +2,35 @@
 <div id="blogposts">
     <router-outlet></router-outlet>
     
-    <div style="flex-grow:0">
-
         <!-- sidebar-->
-        <div class="container" id="sidebar">
-            <div>
-                <img height="50px" width="50px" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
-                <div>
-                    <h2>Stephen Fluin</h2>
-                </div>
+        <div class="container" id="sidebar" style="flex-grow:0">
+            <section style="margin-top:0px;">
+                <img style="width:50%;margin:0px auto;display:block;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
                 <div>
                     <p>Thank you for stopping by!</p>
                 </div>
-            </div>
-            <!-- end bio-->
+            </section>
 
             <hr>
 
-            <div>
-                <div><input type="search" placeholder="search"></div>
-            </div>
+            <section>
+                <input type="search" placeholder="search">
+            </section>
             <!-- end searchbar-->
 
             <hr>
 
-            <div id="social">
+            <section id="social">
                 <a href="https://twitter.com/stephenfluin" target="_blank"><img src="/assets/images/sm-twitter.svg" alt="Twitter"></a>
                 <a href="https://github.com/StephenFluin" target="_blank"><img src="/assets/images/sm-github.svg" alt="Github"></a>
                 <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"><img src="/assets/images/sm-linkedin.svg" alt="Linkedin"></a>
                 <a href="https://plus.google.com/+StephenFluin" target="_blank"><img src="/assets/images/sm-gplus.svg" alt="Google+"></a>
-            </div>
+            </section>
             <!-- end social-->
 
             <hr>
 
-            <div class="container" id="category-list">
+            <section id="category-list">
                 <div>
                     <h3>Angular</h3>
                 </div>
@@ -46,26 +40,19 @@
                 <div>
                     <h3>Mobile</h3>
                 </div>
-            </div>
+            </section>
             <!-- end categories-->
 
             <hr>
 
-            <div class="container" id="featured-blogs">
+            <section id="featured-blogs">
                 <div *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
                     <div>
                         <img src="/assets/images/imgpostholder.png">
                     </div>
-                    <div>
-                        <h2>{{post.title}}</h2>
-                    </div>
+                    <div>{{post.title}}</div>
                 </div>
-            </div>
+            </section>
             <!-- end featured-blogs-->
-
-            <div>
-                <!-- end sidebar-->
-            </div>
-        </div>
     </div>
 </div>
