@@ -13,8 +13,7 @@ export class FluinioAppComponent {
   constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
     router.events.filter(e => e instanceof NavigationEnd).subscribe((n: NavigationEnd) => {
       ga('send', 'pageview', n.urlAfterRedirects);
-      console.log(activatedRoute);
-      //title.setTitle(ActivatedRoute.arguments);
     });
+    console.log("router is",router);
   }
 }

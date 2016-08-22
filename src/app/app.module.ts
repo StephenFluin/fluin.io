@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
@@ -39,5 +39,6 @@ import { routeConfig } from './app.routes';
         SpeakingComponent,
     ],
     bootstrap: [FluinioAppComponent],
+    providers: [Title],
 })
 export class AppModule {}
