@@ -24,3 +24,4 @@ export const routeConfig: Routes = [
 
     // This works great in JIT mode, but the CLI doesn't connect the bundle for AOT yet
     //{ path: 'admin', loadChildren: "./admin/admin.module#AdminModule" },
+];
