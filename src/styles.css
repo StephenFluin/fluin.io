@@ -1,0 +1,252 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+h1, h2, h3 {
+    margin:0px;
+}
+
+body {
+    font-size: 14px;
+    font-weight: 400;
+    color: #383f49;
+}
+
+a:active {
+    text-decoration: none;
+}
+
+.container {
+    padding: 30px;
+}
+p {
+    line-height: 1.5;
+}
+
+#main body {
+    background: url('/assets/images/etheral-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+hr {
+    border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.date {
+    color: gray;
+    font-weight: normal;    
+}
+
+/* HEADER-TOOLBAR SECTION */
+
+#header {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 75px;
+    background-color: rgba(53,63,73,0.6);
+}
+
+#page {
+    margin-top:75px;
+    min-height:750px;
+}
+
+a:visited, a:link {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+#header a:hover {
+    color: white;
+}
+
+
+nav {
+    display:flex;
+    align-items:center;
+}
+nav>* {
+    padding-left:30px;
+    font-size: 14px;
+    font-weight: normal;
+    color: rgba(255,255,255,.85);
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+#logo {
+    height: 40px;
+}
+
+#twitter-pic {
+    height: 25px;
+    width: 25px;
+}
+
+/* INTRO BLOCK SECTION */
+
+#intro-block {
+   margin-top:-75px;
+    padding-top:145px;
+    padding-bottom:70px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    color:rgba(255,255,255,.95);
+    position:relative;
+    font-size:16px;
+    background-color:rgba(53,63,73,0.6);
+}
+/*#intro-block::after {
+  content: ""; background: url('/assets/images/etheral-bg.jpg') no-repeat center center;
+    background-size: cover;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1; 
+  font-size: 16px;  
+}*/
+
+
+
+#intro-block h1 {
+    font-size: 80px;
+}
+/* BLOG POSTS SECTION */
+
+#posts-block {
+    display: flex;
+    justify-content: space-around;
+    /*border: 1px solid mediumpurple;*/
+    width: 90%;
+    margin: 50px auto 0px;
+}
+
+#posts-block>div {
+    background: white;
+    margin: 16px;
+    text-align: center;
+    border: 0.25px solid #929292;
+    height: 300px;
+}
+
+.post-image img {
+    width: 100%;
+    max-width: 350px; /*250px height*/
+    border-bottom: solid 0.25px #929292;
+}
+
+.post-title {
+    margin: 10px 0px;
+}
+
+/* FOOTER SECTION */
+
+.footer {
+    background: #929292;
+    height: 50px;
+    align-items: center;
+    border-top: 0.25px solid #929292;
+}
+
+.footer div p {
+    text-align: right;
+    color: white;
+    /*border: 1px solid purple;*/
+}
+
+router-outlet {
+    display:none;
+}
+
+/* ------------------- BLOG PAGE CSS ------------------- */
+#blogpost {
+    display: flex;
+}
+
+#blogpost>* {
+    flex-grow:1;
+}
+
+/* SIDEBAR-NAVBAR SECTION */
+
+#sidebar {
+  width: 300px;
+  background-color: rgba(53,63,73,0.1);
+}
+
+#sidebar input[type=search] {
+    height: 30px; 
+    width: 100%;
+    text-indent: 10px;
+}
+
+#sidebar section {
+    margin:30px 0;
+    width:240px;
+}
+
+#blogpost .highlight-image {
+    width: 600px;
+}
+
+#blogpost .highlight-image img{
+    width: 100%;
+    display: flex;
+}
+
+#social {
+    display: flex;
+    justify-content: space-between;
+}
+
+#social img {
+    height: 30px;
+}
+
+#featured-blogs img {
+    width: 100%;
+}
+#featured-blogs>* {
+    margin-bottom:15px;
+    display:block;
+}
+
+/* ------------------- BIO PAGE CSS ------------------- */
+
+/* BIO TEXT SECTION */
+
+.bio {
+    background-image: url('/assets/images/background-1sm.jpg');
+    background-size:cover;
+    background-position: center top;
+    background-repeat:no-repeat;
+    min-height:1000px;
+    margin-top:-150px;
+    color:white;
+}
+
+.bio .content {
+    position: absolute;
+    top: 300px;
+    right: 200px;
+    left:55%;
+}

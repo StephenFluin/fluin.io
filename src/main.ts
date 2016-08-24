@@ -1,1 +1,1 @@
-main.aot.ts
+main.jit.ts

@@ -1,72 +1,48 @@
 <!-- blogposts-->
-<div id="blogposts">
+<div id="blogpost">
     <router-outlet></router-outlet>
     
-    <div>
-        <!-- end blogposts-->
-
         <!-- sidebar-->
-        <div class="container" id="sidebar">
-            <div>
-                <img height="50px" width="50px" src="images/mainpic.jpg" alt="Stephen Fluin">
-                <div>
-                    <h2>Stephen Fluin</h2>
-                </div>
+        <div id="sidebar" class="container" style="flex-grow:0">
+            <section style="margin-top:0px;text-align:center;">
+                <img style="width:50%;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
                 <div>
                     <p>Thank you for stopping by!</p>
                 </div>
-            </div>
-            <!-- end bio-->
+            </section>
 
             <hr>
 
-            <div>
-                <div><input type="search" placeholder="search"></div>
-            </div>
+            <section>
+                <input type="search" placeholder="search">
+            </section>
             <!-- end searchbar-->
 
             <hr>
 
-            <div id="social">
-                <a href="https://twitter.com/stephenfluin" target="_blank"><img src="images/sm-twitter.svg" alt="Twitter"></a>
-                <a href="https://github.com/StephenFluin" target="_blank"><img src="images/sm-github.svg" alt="Github"></a>
-                <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"><img src="images/sm-linkedin.svg" alt="Linkedin"></a>
-                <a href="https://plus.google.com/+StephenFluin" target="_blank"><img src="images/sm-gplus.svg" alt="Google+"></a>
-            </div>
-            <!-- end social-->
+            <section id="social">
+                <a href="https://twitter.com/stephenfluin" target="_blank"><img src="/assets/images/sm-twitter.svg" alt="Twitter"></a>
+                <a href="https://github.com/StephenFluin" target="_blank"><img src="/assets/images/sm-github.svg" alt="Github"></a>
+                <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"><img src="/assets/images/sm-linkedin.svg" alt="Linkedin"></a>
+                <a href="https://plus.google.com/+StephenFluin" target="_blank"><img src="/assets/images/sm-gplus.svg" alt="Google+"></a>
+            </section>
 
             <hr>
 
-            <div class="container" id="category-list">
-                <div>
-                    <h3>Angular</h3>
-                </div>
-                <div>
-                    <h3>Wearables</h3>
-                </div>
-                <div>
-                    <h3>Mobile</h3>
-                </div>
-            </div>
-            <!-- end categories-->
+            <section id="category-list">
+                <div>Angular</div>
+                <div>Wearables</div>
+                <div>Mobile</div>
+            </section>
 
             <hr>
 
-            <div class="container" id="featured-blogs">
-                <div *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
-                    <div>
-                        <img src="images/imgpostholder.png">
-                    </div>
-                    <div>
-                        <h2>{{post.title}}</h2>
-                    </div>
-                </div>
-            </div>
+            <section id="featured-blogs">
+                <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
+                    <img src="/assets/images/imgpostholder.png">
+                    {{post.title}}
+                </a>
+            </section>
             <!-- end featured-blogs-->
-
-            <div>
-                <!-- end sidebar-->
-            </div>
-        </div>
     </div>
 </div>
