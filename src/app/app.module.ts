@@ -16,7 +16,7 @@ import { SpeakingComponent } from './pages/speaking.component';
 
 import { BioModule } from './bio.module';
 
-import { routeConfig } from './routes';
+import { routeConfig } from './app.routes';
 
 @NgModule({
     imports: [
