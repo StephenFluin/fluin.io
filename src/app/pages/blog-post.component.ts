@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Http } from '@angular/http';
+import { Title } from '@angular/platform-browser';
 // I import everything because otherwise switchMap isn't defined
 import 'rxjs/Rx';
 
@@ -13,7 +14,7 @@ import * as Showdown from 'showdown';
 export class BlogPostComponent  {
     post;
 
-    constructor(activatedRoute : ActivatedRoute, http: Http) {
+    constructor(activatedRoute : ActivatedRoute, http: Http, title: Title) {
         activatedRoute.params.switchMap((params) => {
             let filter;
             if(!params['id']) {
@@ -25,6 +26,7 @@ export class BlogPostComponent  {
             }
             return http.get('/assets/posts.json').map(response => {
                 let item = filter(response.json() as any[]);
+                title.setTitle( item.title + ' | fluin.io blog'); 
                 let converter = new Showdown.Converter();
                 item.body = converter.makeHtml(item.body);
                 return item;

@@ -10,7 +10,7 @@ import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
 export const routeConfig: Routes = [
-    { path: '', component: HomeComponent },
+    { path: '', component: HomeComponent, data: {title: "Home"} },
     {
         path: 'blog', component: BlogComponent, data: {title: 'Blog'}, children: [
             { path: '', component: BlogPostComponent },

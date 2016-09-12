@@ -12,8 +12,13 @@ declare var ga: any;
 export class FluinioAppComponent {
   constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
     router.events.filter(e => e instanceof NavigationEnd).subscribe((n: NavigationEnd) => {
+      let pageTitle = router.routerState.snapshot.root.children[0].data['title'];
+      if(pageTitle) {
+        title.setTitle(pageTitle);
+      } else {
+        title.setTitle("fluin.io");
+      }
       ga('send', 'pageview', n.urlAfterRedirects);
     });
-    console.log("router is",router);
   }
 }
