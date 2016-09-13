@@ -39,7 +39,8 @@
 
             <section id="featured-blogs">
                 <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
-                    <img src="/assets/images/imgpostholder.png">
+                    <img *ngIf="!post.image" src="/assets/images/imgpostholder.png">
+                    <img *ngIf="post.image" [src]="post.image">
                     {{post.title}}
                 </a>
             </section>

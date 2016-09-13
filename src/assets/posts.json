@@ -1,15 +1,30 @@
 [
-    {"id": "angular-is-awesome", 
-        "title": "Angular is awesome", 
-        "date":"2016-08-08",
-        "body":"The Angular team recently released RC5. This release is particularly exciting because with the recent work towards Ahead of Time compilation, many of the dreams the team had about application performance are beginning to come true for developers worldwide."},
-    {"id": "perfmatters", 
-        "title": "#perfmatters", 
-        "date":"2016-08-08",
-        "body":"__#perfmatters__ is a fantastic reminder to developers that the performance of their applications matter to users, and that as a directly result, it should matter directly to their bottom line. Each hundredth of a second of additional waiting time or loading time risks losing customers, visitors, and partners forever. This concept is being understood better and better by the community as they see the impact performance has on conversions.\n\nThere's another side to performance, however, and that is the performance of developers. Most people forget that optimizing for developer productivity can have an impact that is almost as large as that of application performance. Helping to ensure that developers work on the right things in the right way ensures that their talent and knowledge is leveraged for maximum effect."},
-    {"id": "state-of-wearables", 
-    "title": "The State of Wearables", 
-    "date":"2016-08-08",
-    "body":"Wearable technology is another window into our digital lives."},
-    {"id": "open-source", "title": "Open Source", "date":"2016-08-08","body":"Open source is a critical part of building software at scale. There will always be more great developers outside your company than inside, regardless of what company you work for."}
+    {
+        "id": "angular-is-awesome",
+        "image": "https://firebasestorage.googleapis.com/v0/b/fluindotio-website-93127.appspot.com/o/angular.png?alt=media&token=c237d20d-4790-4d67-80d5-e2c2b007df0f",
+        "title": "Angular is awesome",
+        "date": "2016-08-08",
+        "body": "The Angular team recently released RC5. This release is particularly exciting because with the recent work towards Ahead of Time compilation, many of the dreams the team had about application performance are beginning to come true for developers worldwide."
+    },
+    {
+        "id": "perfmatters",
+        "image": "https://firebasestorage.googleapis.com/v0/b/fluindotio-website-93127.appspot.com/o/permatters.jpg?alt=media&token=0c9cea78-6093-4779-9180-26cd1db59a87",
+        "title": "#perfmatters",
+        "date": "2016-08-08",
+        "body": "__#perfmatters__ is a fantastic reminder to developers that the performance of their applications matter to users, and that as a directly result, it should matter directly to their bottom line. Each hundredth of a second of additional waiting time or loading time risks losing customers, visitors, and partners forever. This concept is being understood better and better by the community as they see the impact performance has on conversions.\n\nThere's another side to performance, however, and that is the performance of developers. Most people forget that optimizing for developer productivity can have an impact that is almost as large as that of application performance. Helping to ensure that developers work on the right things in the right way ensures that their talent and knowledge is leveraged for maximum effect."
+    },
+    {
+        "id": "state-of-wearables",
+        "image": "https://firebasestorage.googleapis.com/v0/b/fluindotio-website-93127.appspot.com/o/glass.jpg?alt=media&token=b2b23736-d725-426d-a32d-92fa2b5f5af2",
+        "title": "The State of Wearables",
+        "date": "2016-08-08",
+        "body": "Wearable technology is another window into our digital lives."
+    },
+    {
+        "id": "open-source",
+        "image": "https://opensource.org/files/osi_keyhole_300X300_90ppi_0.png",
+        "title": "Open Source",
+        "date": "2016-08-08",
+        "body": "Open source is a critical part of building software at scale. There will always be more great developers outside your company than inside, regardless of what company you work for."
+    }
 ]

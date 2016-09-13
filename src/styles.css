@@ -148,9 +148,11 @@ nav>* {
     height: 300px;
 }
 
-.post-image img {
-    width: 100%;
-    max-width: 350px; /*250px height*/
+.post-image {
+    width: 300px;
+    height:200px;
+    background-size:cover;
+    background-position: center center;
     border-bottom: solid 0.25px #929292;
 }
 
@@ -205,12 +207,7 @@ router-outlet {
 }
 
 #blogpost .highlight-image {
-    width: 600px;
-}
-
-#blogpost .highlight-image img{
-    width: 100%;
-    display: flex;
+    max-width: 600px;
 }
 
 #social {
@@ -223,7 +220,9 @@ router-outlet {
 }
 
 #featured-blogs img {
-    width: 100%;
+    max-height: 150px;
+    display:block;
+    margin:0px auto;
 }
 #featured-blogs>* {
     margin-bottom:15px;
@@ -239,7 +238,7 @@ router-outlet {
     background-size:cover;
     background-position: center top;
     background-repeat:no-repeat;
-    min-height:1000px;
+    min-height:100vh;
     margin-top:-150px;
     color:white;
 }
@@ -249,4 +248,7 @@ router-outlet {
     top: 300px;
     right: 200px;
     left:55%;
+}
+.bio p {
+    margin-bottom:16px;
 }
