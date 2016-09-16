@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
 
 import { AdminComponent } from './admin.component';
+import { UploadComponent } from './upload.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { AuthService } from './shared/auth.service';
@@ -12,9 +14,11 @@ import { AuthService } from './shared/auth.service';
     imports: [
         CommonModule,
         HttpModule,
+        FormsModule,
         RouterModule.forChild([
             // path should be '' in Lazy loading, 'admin' in not
-            { path: 'admin', component: AdminComponent }
+            { path: '', component: AdminComponent },
+            { path: 'upload', component: UploadComponent },
         ]),
         AngularFireModule.initializeApp({
             apiKey: "AIzaSyAJawulOMYRp0eXjMHLqiffzuS9tToCfAI",
@@ -25,6 +29,7 @@ import { AuthService } from './shared/auth.service';
     ],
     declarations: [
         AdminComponent,
+        UploadComponent,
     ],
     providers: [
         AuthService
