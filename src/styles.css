@@ -7,6 +7,9 @@
 h1, h2, h3 {
     margin:0px;
 }
+img {
+    max-width:100%;
+}
 
 body {
     font-size: 14px;
@@ -112,20 +115,13 @@ nav>* {
     font-size:16px;
     background-color:rgba(53,63,73,0.6);
 }
-/*#intro-block::after {
-  content: ""; background: url('/assets/images/etheral-bg.jpg') no-repeat center center;
-    background-size: cover;
-  opacity: 0.3;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1; 
-  font-size: 16px;  
-}*/
 
-
+#intro-block div {
+    width:700px;
+}
+#intro-block img {
+    width: 300px;
+}
 
 #intro-block h1 {
     font-size: 80px;
@@ -251,4 +247,30 @@ router-outlet {
 }
 .bio p {
     margin-bottom:16px;
+}
+
+
+
+/* Mobile */
+@media (max-width: 600px) {
+    #intro-block {
+        flex-direction: column;
+        padding:100px 16px 16px 16px;
+    }
+    #intro-block div {
+        width:100%;
+    }
+    #intro-block img {
+        width:100%;
+        padding: 0;
+    }
+    #posts-block {
+        flex-direction:column;
+    }
+    #blogpost {
+        flex-direction: column;
+    }
+    #sidebar {
+        width:100%;
+    }
 }
