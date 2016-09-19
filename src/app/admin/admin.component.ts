@@ -12,6 +12,7 @@ import { AngularFire } from 'angularfire2';
 		</div>
 		<div class="container" *ngIf="!(auth.isAdmin | async)">
 			<p>You need more access.</p>
+			<button (click)="auth.login()">Login</button>
 		</div>
 
 		`,

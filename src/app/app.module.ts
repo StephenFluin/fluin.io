@@ -3,6 +3,8 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
+import { PostService } from './shared/post.service';
+
 import { FluinioAppComponent } from './fluinio.component';
 import { AppHeaderComponent } from './app-header.component';
 import { HomeComponent } from './pages/home.component';
@@ -39,6 +41,9 @@ import { routeConfig } from './app.routes';
         SpeakingComponent,
     ],
     bootstrap: [FluinioAppComponent],
-    providers: [Title],
+    providers: [
+        Title, 
+        PostService
+    ],
 })
 export class AppModule {}
