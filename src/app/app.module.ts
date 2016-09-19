@@ -15,6 +15,7 @@ import { ProjectsComponent } from './pages/projects.component';
 import { SpeakingComponent } from './pages/speaking.component';
 
 import { BioComponent } from './pages/bio.component';
+//import { AdminzModule } from './admin/admin.module';
 import { routeConfig } from './app.routes';
 
 @NgModule({

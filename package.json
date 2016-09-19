@@ -22,14 +22,15 @@
     "@angular/platform-server": "github:angular/platform-server-builds",
     "@angular/router": "^3.0.0",
     "@angular/tsc-wrapped": "github:angular/tsc-wrapped-builds",
+    "@types/es6-promise": "0.0.31",
     "angular-cli": "^1.0.0-beta.11-webpack.9-1",
-    "angularfire2": "^2.0.0-beta.3-pre2",
+    "angularfire2": "^2.0.0-beta.5-preview",
     "core-js": "^2.4.0",
     "reflect-metadata": "0.1.3",
     "rxjs": "^5.0.0-beta.12",
     "showdown": "^1.4.2",
     "ts-helpers": "^1.1.1",
-    "typescript": "^2.0.0",
+    "typescript": "^2.0.2",
     "zone.js": "0.6.21"
   },
   "devDependencies": {

@@ -19,5 +19,5 @@ export const routeConfig: Routes = [
     { path: 'bio', component: BioComponent,  data: {title: 'About Stephen Fluin'}},
     { path: 'projects', component: ProjectsComponent, data: {title: 'Projects'} },
     { path: 'speaking', component: SpeakingComponent, data: {title: 'Speaking'} },
-    { path: 'admin', loadChildren: "./admin/admin.module#AdminModule" },
+    { path: 'admin', loadChildren: "app/admin/admin.module#AdminModule" },
 ];

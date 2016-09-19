@@ -6,7 +6,9 @@ import { AngularFire } from 'angularfire2';
 	template: `
 		<div class="container" *ngIf="auth.isAdmin | async">
 			<h1>Supervision</h1>
-			<a routerLink="upload">Upload a file</a>
+			<ul>
+				<li><a routerLink="upload">Upload a file</a></li>
+			</ul>
 		</div>
 		<div class="container" *ngIf="!(auth.isAdmin | async)">
 			<p>You need more access.</p>
