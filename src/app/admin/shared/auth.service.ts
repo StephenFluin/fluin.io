@@ -2,16 +2,21 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 
-console.log("Angularfire is",AngularFire);
-
 @Injectable()
 export class AuthService {
     isAdmin: Observable<boolean>;
+    name: Observable<any>;
     
     constructor(public af: AngularFire) {
         //this.af = {auth:{map:()=>{}}};
-        this.isAdmin = this.af.auth.map( authState => !!authState);
-        //this.isAdmin = Observable.of(true);
+        let state = this.af.auth.cache(1);
+
+        this.isAdmin = state.map( authState => !!authState);
+        this.name = state.map( authState => ( authState ? authState.google.displayName : ''));
+
+        this.name.subscribe(n=>console.log(n),e=>console.log(e),()=>console.log("failure"));
+
+        
     }
     login() {
         this.af.auth.login({
