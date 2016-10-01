@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { MdCardModule } from '@angular2-material/card';
-import { MdInputModule} from '@angular2-material/input';
+import { MdInputModule } from '@angular2-material/input';
 
 
 import { AdminComponent } from './admin.component';
@@ -13,6 +13,9 @@ import { EditPostComponent } from './edit-post.component';
 
 import { AngularFireModule } from 'angularfire2';
 import { AuthService } from './shared/auth.service';
+import { EditablePostService } from './shared/editable-post.service';
+import { FirebaseToolsModule } from '../firebasetools/firebasetools.module';
+import { AppModule } from '../app.module';
 
 @NgModule({
     imports: [
@@ -23,7 +26,7 @@ import { AuthService } from './shared/auth.service';
             // path should be '' in Lazy loading, 'admin' in not
             { path: '', component: AdminComponent },
             { path: 'upload', component: UploadComponent },
-            { path: ':id', component: EditPostComponent},
+            { path: ':id', component: EditPostComponent },
         ]),
         AngularFireModule.initializeApp({
             apiKey: "AIzaSyAJawulOMYRp0eXjMHLqiffzuS9tToCfAI",
@@ -33,6 +36,7 @@ import { AuthService } from './shared/auth.service';
         }),
         MdCardModule,
         MdInputModule,
+        FirebaseToolsModule,
     ],
     declarations: [
         AdminComponent,
@@ -40,7 +44,8 @@ import { AuthService } from './shared/auth.service';
         EditPostComponent,
     ],
     providers: [
-        AuthService
+        AuthService,
+        EditablePostService,
     ]
 })
 export class AdminModule { }

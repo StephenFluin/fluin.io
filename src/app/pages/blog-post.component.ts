@@ -20,15 +20,17 @@ export class BlogPostComponent  {
         activatedRoute.params.switchMap((params) => {
             let filter;
             if(!params['id']) {
-                // If none specified, just get first
-                filter = list => list[0];
+                // If none specified, just get first, it should already be sorted by date
+                filter = list => list[Object.keys(list)[0]]
             } else {
                 // Otherwise, get specified
-                filter = list => list.find(item => item.id === params['id']);
+                filter = list => list[params['id']];
             }
             return posts.data.map(response => {
+                
                 let item = filter(response);
                 title.setTitle( item.title + ' | fluin.io blog'); 
+                console.log("set title to",title.getTitle());
                 let converter = new Showdown.Converter();
                 item.body = converter.makeHtml(item.body);
                 return item;

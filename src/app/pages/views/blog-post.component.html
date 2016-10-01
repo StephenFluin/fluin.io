@@ -1,4 +1,4 @@
-<div *ngIf="post" class="container" style="flex-grow:1">
+<div *ngIf="post" class="container post" style="flex-grow:1">
     <div class="highlight-image">
         <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
         <img *ngIf="post.image" [src]="post.image" [alt]="post.title">

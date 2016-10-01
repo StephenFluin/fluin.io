@@ -38,7 +38,7 @@
             <hr>
 
             <section id="featured-blogs">
-                <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
+                <a *ngFor="let post of posts | async | refirebase" [routerLink]="['/blog',post.id]">
                     <img *ngIf="!post.image" src="/assets/images/imgpostholder.png">
                     <img *ngIf="post.image" [src]="post.image">
                     {{post.title}}

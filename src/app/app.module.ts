@@ -14,31 +14,32 @@ import { BlogComponent } from './pages/blog.component';
 import { BlogHomeComponent } from './pages/blog-home.component';
 import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
-import { SpeakingComponent } from './pages/speaking.component';
+import { TalksComponent } from './pages/talks.component';
 
 import { BioComponent } from './pages/bio.component';
 //import { AdminzModule } from './admin/admin.module';
 import { routeConfig } from './app.routes';
+
+// Pipes
+import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
 
 @NgModule({
     imports: [
         BrowserModule,
         RouterModule.forRoot(routeConfig),
         HttpModule,
-        // Add this when not lazy loading
-        //AdminModule,
+        FirebaseToolsModule,
     ],
     declarations: [
         AppHeaderComponent,
         FluinioAppComponent,
         HomeComponent,
         BlogComponent,
-        SpeakingComponent,
+        TalksComponent,
         BlogHomeComponent,
         BlogPostComponent,
         BioComponent,
         ProjectsComponent,
-        SpeakingComponent,
     ],
     bootstrap: [FluinioAppComponent],
     providers: [

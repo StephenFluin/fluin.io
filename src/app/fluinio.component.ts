@@ -14,7 +14,7 @@ export class FluinioAppComponent {
       let pageTitle = router.routerState.snapshot.root.children[0].data['title'];
       if(pageTitle) {
         title.setTitle(pageTitle);
-      } else {
+      } else if(pageTitle !== false) {
         title.setTitle("fluin.io");
       }
       window.scrollTo(0,0);

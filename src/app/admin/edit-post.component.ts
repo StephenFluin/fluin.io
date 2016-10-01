@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { PostService } from '../shared/post.service';
+import { EditablePostService } from './shared/editable-post.service';
 import 'rxjs';
 
 import * as Showdown from 'showdown';
@@ -11,11 +12,13 @@ import * as Showdown from 'showdown';
   <div *ngIf="post" class="container" style="flex-grow:1;display:flex;">
     <form style="width:50%;padding:16px;" ngNoForm>
         <md-input placeholder="title" [(ngModel)]="post.title"></md-input>
+
+        <md-input placeholder="id" [(ngModel)]="post.id"></md-input>
         <md-input placeholder="date" type="date" [(ngModel)]="post.date"></md-input>
         <textarea placeholder="body" (ngModelChange)="renderBody()" [(ngModel)]="post.body" style="height:400px;width:100%;"></textarea>
-        
+        <button type="button" (click)="save()">Save</button>
     </form>
-    <div style="width:50%;padding:16px;">
+    <div style="width:50%;padding:16px;" class="post">
         <div class="highlight-image">
             <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
             <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
@@ -39,16 +42,17 @@ export class EditPostComponent  {
     post;
     converter;
 
-    constructor(activatedRoute : ActivatedRoute, posts: PostService, title: Title) {
+    constructor(activatedRoute : ActivatedRoute, public posts: PostService, public ep: EditablePostService, title: Title) {
         this.converter = new Showdown.Converter();
         activatedRoute.params.switchMap((params) => {
             let filter;
             if(!params['id']) {
                 // If none specified, just get first
-                filter = list => list[0];
+                console.error("No post specified");
+                return;
             } else {
                 // Otherwise, get specified
-                filter = list => list.find(item => item.id === params['id']);
+                filter = list => list[params['id']];
             }
             return posts.data.map(response => {
                 let item = filter(response);
@@ -65,7 +69,13 @@ export class EditPostComponent  {
     }
 
     renderBody() {
-        console.log("rendering new body");
+        //console.log("rendering new body");
         this.post.renderedBody = this.converter.makeHtml(this.post.body);
+    }
+
+    save() {
+        delete this.post.renderedBody;
+        this.ep.save(this.post);
+        this.renderBody();
     }
 }
