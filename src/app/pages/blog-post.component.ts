@@ -32,7 +32,7 @@ export class BlogPostComponent  {
                 title.setTitle( item.title + ' | fluin.io blog'); 
                 console.log("set title to",title.getTitle());
                 let converter = new Showdown.Converter();
-                item.body = converter.makeHtml(item.body);
+                item.renderedBody = converter.makeHtml(item.body);
                 return item;
             })
         }).subscribe(post => {
