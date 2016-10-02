@@ -1,32 +1,33 @@
 {
-  "compilerOptions": {
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "lib": ["es6", "dom", "es2015"],
-    "mapRoot": "./",
-    "module": "es6",
-    "moduleResolution": "node",
-    "outDir": "../dist/out-tsc",
-    "sourceMap": true,
-    "target": "es5",
-    "typeRoots": [
-      "../node_modules/@types"
+    "compilerOptions": {
+        "declaration": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "lib": [
+            "es6",
+            "dom",
+            "es2015"
+        ],
+        "mapRoot": "./",
+        "module": "es6",
+        "moduleResolution": "node",
+        "outDir": "../dist/out-tsc",
+        "sourceMap": true,
+        "target": "es5",
+        "typeRoots": [
+            "../node_modules/@types"
+        ],
+        "types": [
+            "jasmine"
+        ],
+        "skipLibCheck": true
+    },
+    "files": [
+        "typings.d.ts",
+        "main.ts"
     ],
-    "types": [
-      "jasmine"
-    ],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true
-  },
-  "files": [
-    "typings.d.ts",
-	  "main.ts"
-  ],
-  "typescript.tsdk": "./node_modules/typescript/lib",
-
-  "angularCompilerOptions": {
-    "genDir": "./ngfactory",
-    "debug": false
-  }
+    "angularCompilerOptions": {
+        "genDir": "./ngfactory",
+        "debug": false
+    }
 }

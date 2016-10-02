@@ -24,9 +24,9 @@ import { AppModule } from '../app.module';
         FormsModule,
         RouterModule.forChild([
             // path should be '' in Lazy loading, 'admin' in not
-            { path: '', component: AdminComponent },
-            { path: 'upload', component: UploadComponent },
-            { path: ':id', component: EditPostComponent },
+            { path: '', component: AdminComponent, data: {title: "Admin"} },
+            { path: 'upload', component: UploadComponent, data: {title: "Upload Files"}  },
+            { path: ':id', component: EditPostComponent, data: {title: false}  },
         ]),
         AngularFireModule.initializeApp({
             apiKey: "AIzaSyAJawulOMYRp0eXjMHLqiffzuS9tToCfAI",

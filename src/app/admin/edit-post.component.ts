@@ -9,30 +9,35 @@ import * as Showdown from 'showdown';
 
 @Component({
   template: `
-  <div *ngIf="post" class="container" style="flex-grow:1;display:flex;">
-    <form style="width:50%;padding:16px;" ngNoForm>
-        <md-input placeholder="title" [(ngModel)]="post.title"></md-input>
+  <div *ngIf="post" class="container" style="flex-grow:1;">
+    <div class="columns" style="display:flex;">
+        <form style="width:50%;padding:16px;" ngNoForm>
+            <md-input placeholder="title" [(ngModel)]="post.title"></md-input>
+            <md-input placeholder="image url" [(ngModel)]="post.image"></md-input>
+            <md-input placeholder="id" [(ngModel)]="post.id"></md-input>
+            <md-input placeholder="date" type="date" [(ngModel)]="post.date"></md-input>
+            <textarea placeholder="body" (ngModelChange)="renderBody()" [(ngModel)]="post.body" style="height:400px;width:100%;"></textarea>
+            <button type="button" (click)="save()">Save</button>
+        </form>
+        <div style="width:50%;padding:16px;" class="post">
+            <div class="highlight-image">
+                <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
+                <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
+            </div>
 
-        <md-input placeholder="id" [(ngModel)]="post.id"></md-input>
-        <md-input placeholder="date" type="date" [(ngModel)]="post.date"></md-input>
-        <textarea placeholder="body" (ngModelChange)="renderBody()" [(ngModel)]="post.body" style="height:400px;width:100%;"></textarea>
-        <button type="button" (click)="save()">Save</button>
-    </form>
-    <div style="width:50%;padding:16px;" class="post">
-        <div class="highlight-image">
-            <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
-            <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
+            <h1>{{post.title}}</h1>
+            <div>
+                <h3>by Stephen Fluin</h3>
+            </div>
+            <div class="date">
+                <h3>{{post.date}}</h3>
+            </div>
+            <div [innerHTML]="post.renderedBody">
+            </div>
         </div>
-
-        <h1>{{post.title}}</h1>
-        <div>
-            <h3>by Stephen Fluin</h3>
-        </div>
-        <div class="date">
-            <h3>{{post.date}}</h3>
-        </div>
-        <div [innerHTML]="post.renderedBody">
-        </div>
+    </div>
+    <div>
+        <image-upload [folder]="'posts/'+post.id"></image-upload>
     </div>
 </div>
 `,
