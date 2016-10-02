@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFire } from 'angularfire2';
 import { AuthService } from './shared/auth.service';
 import { PostService } from '../shared/post.service';
 
@@ -19,6 +20,16 @@ import { PostService } from '../shared/post.service';
 					</md-card>
 				</a>
 			</div>
+			<div>
+				<h2>Manage Talks</h2>
+				<select [(ngModel)]="selectedTalk">
+					<option *ngFor="let talk of talkList | async" [ngValue]="talk">{{talk.title}}</option>
+				</select>
+				<div *ngIf="selectedTalk">
+					<h3>Talk Image Upload</h3>
+					<md-input [(ngModel)]="talkName"></md-input>
+					<image-upload [folder]="'talks/'+selectedTalk.$key"></image-upload>
+				</div>
 		</div>
 		<div class="container" *ngIf="!(auth.isAdmin | async)">
 			<p>You need more access.</p>
@@ -29,7 +40,12 @@ import { PostService } from '../shared/post.service';
 })
 export class AdminComponent  {
 	posts;
-	constructor(public auth : AuthService, posts: PostService) {
+	talkName: string;
+	talkList;
+	selectedTalk;
+
+	constructor(public auth : AuthService, posts: PostService, public af: AngularFire) {
 		this.posts = posts.data;
+		this.talkList = af.database.list('/talks/');
 	}
  }

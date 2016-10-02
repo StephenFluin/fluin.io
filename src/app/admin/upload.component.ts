@@ -44,7 +44,12 @@ export class UploadComponent {
     constructor(public af: AngularFire, public router: Router) {
     }
     ngOnInit() {
-        var storage = firebase.storage();
+        
+    }
+
+    ngOnChanges() {
+        console.log("new values for folder");
+        let storage = firebase.storage();
         
         this.fileList = this.af.database.list(`/${this.folder}/images`);
         console.log("Rendering all images in ",`/${this.folder}/images`)
@@ -61,7 +66,7 @@ export class UploadComponent {
 
     upload() {
         // Create a root reference
-        var storageRef = firebase.storage().ref();
+        let storageRef = firebase.storage().ref();
 
         let success = false;
         // This currently only grabs item 0, TODO refactor it to grab them all
@@ -74,7 +79,7 @@ export class UploadComponent {
             let path = `/${this.folder}/${selectedFile.name}`;
             var iRef = storageRef.child(path);
             iRef.put(selectedFile).then((snapshot) => {
-                console.log('Uploaded a blob or file! Now storing the reference at',`/{$this.folder}/images/`);
+                console.log('Uploaded a blob or file! Now storing the reference at',`/${this.folder}/images/`);
                 af.database.list(`/${folder}/images/`).push({ path: path, filename: selectedFile.name })
             });
         }

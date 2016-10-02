@@ -30,7 +30,6 @@ export class BlogPostComponent  {
                 
                 let item = filter(response);
                 title.setTitle( item.title + ' | fluin.io blog'); 
-                console.log("set title to",title.getTitle());
                 let converter = new Showdown.Converter();
                 item.renderedBody = converter.makeHtml(item.body);
                 return item;
