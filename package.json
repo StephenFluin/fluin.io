@@ -48,6 +48,6 @@
     "karma-jasmine": "0.3.8",
     "protractor": "3.3.0",
     "ts-node": "1.2.1",
-    "tslint": "3.13.0",
+    "tslint": "3.13.0"
   }
 }

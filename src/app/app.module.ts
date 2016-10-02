@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 
 import { PostService } from './shared/post.service';
+import { TalkService } from './shared/talk.service';
 
 import { FluinioAppComponent } from './fluinio.component';
 import { AppHeaderComponent } from './app-header.component';
@@ -15,6 +16,7 @@ import { BlogHomeComponent } from './pages/blog-home.component';
 import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
 import { TalksComponent } from './pages/talks.component';
+import { TalkViewComponent } from './pages/talk-view.component';
 
 import { BioComponent } from './pages/bio.component';
 //import { AdminzModule } from './admin/admin.module';
@@ -36,6 +38,7 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
         HomeComponent,
         BlogComponent,
         TalksComponent,
+        TalkViewComponent,
         BlogHomeComponent,
         BlogPostComponent,
         BioComponent,
@@ -44,7 +47,8 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
     bootstrap: [FluinioAppComponent],
     providers: [
         Title, 
-        PostService
+        PostService,
+        TalkService,
     ],
 })
 export class AppModule {}

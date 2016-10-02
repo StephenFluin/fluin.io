@@ -264,20 +264,32 @@ router-outlet {
         flex-direction: column;
         padding:100px 16px 16px 16px;
     }
-    #intro-block div {
-        width:100%;
-    }
     #intro-block img {
         width:100%;
         padding: 0;
     }
     #posts-block {
         flex-direction:column;
+        flex-wrap: nowrap;
+    }
+    .post-image {
+        width:100%;
     }
     #blogpost {
         flex-direction: column;
     }
     #sidebar {
         width:100%;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1309px) {
+
+    #intro-block div {
+        width:100%;
+    }
+    #posts-block {
+        flex-wrap: wrap;
     }
 }

@@ -52,7 +52,6 @@ export class EditPostComponent  {
         activatedRoute.params.switchMap((params) => {
             let filter;
             if(!params['id']) {
-                // If none specified, just get first
                 console.error("No post specified");
                 return;
             } else {

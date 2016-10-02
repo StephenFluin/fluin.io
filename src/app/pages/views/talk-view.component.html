@@ -1,0 +1,5 @@
+<div *ngIf="talk" class="container">
+    <h2>{{talk.title}}</h2>
+    <iframe *ngIf="talk.urlExists" [src]="talk.safeUrl" style="width:100%;height:56.25vw"></iframe>
+    <p *ngIf="!talk.urlExists">This talk has not yet been shared.</p>
+</div>
