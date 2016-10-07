@@ -6,7 +6,7 @@ import { PostService } from '../shared/post.service';
 @Component({
 	template: `
 		<div class="container" *ngIf="auth.isAdmin | async">
-			<h1><span [title]="auth.uid | async">{{auth.name | async}}</span> Supervision (<a (click)="auth.logout()">logout</a>)</h1>
+			<h2><span [title]="auth.uid | async">{{auth.name | async}}</span> Supervision (<a (click)="auth.logout()">logout</a>)</h2>
 			<ul>
 				<li><a routerLink="upload">Upload a file</a></li>
 			</ul>
@@ -20,6 +20,13 @@ import { PostService } from '../shared/post.service';
 					</md-card>
 				</a>
 			</div>
+
+			<div>
+				<h2>New Talk</h2>
+				<input [(ngModel)]="talkName" placeholder="post-id"><button (click)="console.log(talkName.value)">Create</button>
+			</div>
+
+
 			<div>
 				<h2>Manage Talks</h2>
 				<select [(ngModel)]="selectedTalk">
