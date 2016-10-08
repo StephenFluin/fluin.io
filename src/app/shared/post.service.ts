@@ -12,7 +12,7 @@ export interface Post {
 
 @Injectable()
 export class PostService {
-    url: string = 'https://fluindotio-website-93127.firebaseio.com/posts.json?orderByChild=date';
+    url: string = 'https://fluindotio-website-93127.firebaseio.com/posts.json?orderBy=%22date%22&limitToLast=4';
     data: Observable<Post[]>;
     constructor(private http: Http) {
         this.data = this.http.get(this.url)

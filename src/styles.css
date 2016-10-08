@@ -17,6 +17,11 @@ body {
     color: #383f49;
 }
 
+code {
+    font-family: 'Roboto Mono', monospace;
+    
+}
+
 a:active {
     text-decoration: none;
 }
@@ -148,6 +153,18 @@ nav>* {
 
 .post p {
     margin-bottom:16px;
+}
+.post code {
+    margin-bottom:16px;
+    background-color:#DDD;
+    border:1px solid #ccc;
+    display:block;
+    padding:16px;
+}
+.post p code {
+    display:inline;
+    padding:4px;
+    border:none;
 }
 
 

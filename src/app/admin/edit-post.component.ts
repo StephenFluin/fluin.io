@@ -37,7 +37,7 @@ import * as Showdown from 'showdown';
         </div>
     </div>
     <div>
-        <image-upload [folder]="'posts/'+post.id"></image-upload>
+        <image-upload *ngIf="post.id" [folder]="'posts/'+post.id"></image-upload>
     </div>
 </div>
 `,
@@ -77,6 +77,7 @@ export class EditPostComponent  {
     renderBody() {
         //console.log("rendering new body");
         this.post.renderedBody = this.converter.makeHtml(this.post.body);
+        console.log(this.post.renderedBody);
     }
 
     save() {

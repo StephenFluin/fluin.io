@@ -19,7 +19,7 @@ export class EditablePostService {
     save(post: Post): void {
         if(post.id) {
             let e = this.getObject(post.id);
-            e.set(post);
+            e.update(post);
         } else {
             let l = this.getPostList();
             let result = l.push(post);
