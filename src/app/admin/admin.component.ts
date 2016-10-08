@@ -23,7 +23,7 @@ import { PostService } from '../shared/post.service';
 
 			<div>
 				<h2>New Talk</h2>
-				<input [(ngModel)]="talkName" placeholder="post-id"><button (click)="console.log(talkName.value)">Create</button>
+				<button routerLink="new">Create</button>
 			</div>
 
 
@@ -37,8 +37,9 @@ import { PostService } from '../shared/post.service';
 					<md-input [(ngModel)]="talkName"></md-input>
 					<image-upload [folder]="'talks/'+selectedTalk.$key"></image-upload>
 				</div>
+			</div>
 		</div>
-		<div class="container" *ngIf="!(auth.isAdmin | async)">
+		<div class="container" *ngIf="(auth.isAdmin | async) == false">
 			<p>You need more access.</p>
 			<button (click)="auth.login()">Login</button>
 		</div>
@@ -52,6 +53,7 @@ export class AdminComponent  {
 	selectedTalk;
 
 	constructor(public auth : AuthService, posts: PostService, public af: AngularFire) {
+		console.log("Admin component running.");
 		this.posts = posts.data;
 		this.talkList = af.database.list('/talks/');
 	}

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { PostService } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
-import 'rxjs';
+import { Observable } from 'rxjs';
 
 import * as Showdown from 'showdown';
 
@@ -54,6 +54,8 @@ export class EditPostComponent  {
             if(!params['id']) {
                 console.error("No post specified");
                 return;
+            } else if(params['id'] === 'new') {
+                return Observable.of({});
             } else {
                 // Otherwise, get specified
                 filter = list => list[params['id']];

@@ -13,9 +13,9 @@ export class AuthService {
         let state = this.af.auth.cache(1);
 
         this.isAdmin = state.map( authState => !!authState);
-        this.name = state.map( authState => ( authState ? authState.google.displayName : ''));
-        this.uid = state.map( authState => authState.uid);
-        this.name.subscribe(n=>console.log(n),e=>console.log(e),()=>console.log("failure"));
+        this.name = state.map( authState => ( authState ? authState.google.displayName : null));
+        this.uid = state.map( authState => authState ? authState.uid: null);
+        this.name.subscribe(n=>console.log("new auth state:",n),e=>console.log(e),()=>console.log("failure"));
 
         
     }
