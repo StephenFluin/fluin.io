@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { MdCardModule } from '@angular2-material/card';
-import { MdInputModule } from '@angular2-material/input';
+import { MaterialRootModule } from '@angular/material';
 
 
 import { AdminComponent } from './admin.component';
@@ -33,8 +32,7 @@ import { AppModule } from '../app.module';
             databaseURL: "https://fluindotio-website-93127.firebaseio.com",
             storageBucket: "fluindotio-website-93127.appspot.com",
         }),
-        MdCardModule,
-        MdInputModule,
+        MaterialRootModule,
         FirebaseToolsModule,
     ],
     declarations: [
