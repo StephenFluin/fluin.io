@@ -12,14 +12,37 @@ export interface Post {
 
 @Injectable()
 export class PostService {
-    url: string = 'https://fluindotio-website-93127.firebaseio.com/posts.json?orderBy=%22date%22&limitToLast=4';
-    data: Observable<Post[]>;
+    url: string = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
+    data: Observable<any>;
+    postList: Observable<Post[]>;
+
     constructor(private http: Http) {
         this.data = this.http.get(this.url)
             .map(response => {
+
                 let result = response.json() as any[];
                 return result;
             }).cache(1);
+
+        this.postList = this.data.map(data => {
+
+            let list = [];
+            for (let key of Object.keys(data)) {
+                let item = data[key];
+                item.key = key;
+                list.push(item);
+            }
+            list.sort((a, b) => {
+                if (a.date > b.date) {
+                    return -1;
+                } else if (b.date > a.date) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            return list;
+        }).cache(1);
     }
 
 }
