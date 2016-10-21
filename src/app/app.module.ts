@@ -46,9 +46,9 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
     ],
     bootstrap: [FluinioAppComponent],
     providers: [
-        Title, 
+        Title,
         PostService,
         TalkService,
     ],
 })
-export class AppModule {}
+export class AppModule { }

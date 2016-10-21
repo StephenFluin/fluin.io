@@ -11,15 +11,15 @@ import { PostService } from '../shared/post.service';
 import * as Showdown from 'showdown';
 
 @Component({
-  templateUrl: './views/blog-post.component.html',
+    templateUrl: './views/blog-post.component.html',
 })
-export class BlogPostComponent  {
+export class BlogPostComponent {
     post;
 
-    constructor(activatedRoute : ActivatedRoute, posts: PostService, title: Title) {
+    constructor(activatedRoute: ActivatedRoute, posts: PostService, title: Title) {
         activatedRoute.params.switchMap((params) => {
             let filter;
-            if(!params['id']) {
+            if (!params['id']) {
                 // If none specified, just get first, it should already be sorted by date
                 filter = list => list[Object.keys(list)[0]]
             } else {
@@ -27,9 +27,9 @@ export class BlogPostComponent  {
                 filter = list => list[params['id']];
             }
             return posts.data.map(response => {
-                
+
                 let item = filter(response);
-                title.setTitle( item.title + ' | fluin.io blog'); 
+                title.setTitle(item.title + ' | fluin.io blog');
                 let converter = new Showdown.Converter();
                 item.renderedBody = converter.makeHtml(item.body);
                 return item;

@@ -7,9 +7,9 @@ import { PostService } from '../shared/post.service';
 @Component({
   templateUrl: './views/home.component.html',
 })
-export class HomeComponent  {
-  posts : Observable<any[]>; 
-  constructor(http : Http, posts: PostService) {
+export class HomeComponent {
+  posts: Observable<any[]>;
+  constructor(http: Http, posts: PostService) {
     this.posts = posts.postList;
   }
 }

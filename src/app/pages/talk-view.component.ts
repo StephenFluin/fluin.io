@@ -18,13 +18,14 @@ export class TalkViewComponent {
         ).subscribe(
             next => {
                 this.talk = next;
-                if(this.talk.title) {
-                    title.setTitle( this.talk.title + " | fluin.io talks");                }
-                if(this.talk.url) {
+                if (this.talk.title) {
+                    title.setTitle(this.talk.title + " | fluin.io talks");
+                }
+                if (this.talk.url) {
                     this.talk.urlExists = true;
                     this.talk.safeUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.talk.url);
                 }
             }
-        )
+            )
     }
 } 
