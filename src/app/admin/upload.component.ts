@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 
 declare var firebase: any;
 
-interface Image {
+export interface Image {
     path: string;
     filename: string;
     downloadURL?: string;

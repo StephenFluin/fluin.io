@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": "",
         "declaration": false,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -24,10 +25,10 @@
     },
     "files": [
         "typings.d.ts",
-        "main.ts"
+        "main.ts",
+        "app/admin/admin.module.ts"
     ],
     "angularCompilerOptions": {
-        "genDir": "./ngfactory",
         "debug": false
     }
 }
