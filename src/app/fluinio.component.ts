@@ -17,7 +17,7 @@ export class FluinioAppComponent {
             } else if (pageTitle !== false) {
                 title.setTitle("fluin.io");
             }
-            window.scrollTo(0, 0);
+            //window.scrollTo(0, 0);
             ga('send', 'pageview', n.urlAfterRedirects);
         });
     }

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PostService } from '../shared/post.service';
 
 @Component({
+  moduleId: module.id,
   templateUrl: './views/home.component.html',
 })
 export class HomeComponent {
