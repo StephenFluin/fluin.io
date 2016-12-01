@@ -1,0 +1,19 @@
+{
+    "routing": {
+        "index": "/index.html",
+        "routes": {
+            "/": {
+                "prefix": false
+            },
+            "/blog": {
+                "prefix": false
+            },
+            "/bio": {
+                "prefix": false
+            },
+            "/talks": {
+                "prefix": false
+            }
+        }
+    }
+}

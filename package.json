@@ -31,7 +31,11 @@
     "showdown": "^1.4.2",
     "ts-helpers": "^1.1.1",
     "typescript": "^2.0.3",
-    "zone.js": "0.6.21"
+    "zone.js": "0.6.21",
+    "@angular/service-worker": "^0.7.1",
+    "@types/gulp": "^3.8.32",
+    "gulp": "^3.9.1",
+    "run-sequence": "^1.2.2"
   },
   "devDependencies": {
     "@types/jasmine": "^2.2.30",
