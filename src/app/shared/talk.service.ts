@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
+import "../shared/shareResults";
+
 export interface Talk {
     $key: string;
     title: string;
@@ -19,7 +21,7 @@ export class TalkService {
             .map(response => {
                 let result = response.json() as any[];
                 return result;
-            }).cache(1);
+            }).shareResults();
     }
 
 }

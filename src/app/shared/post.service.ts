@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs';
 
+import "../shared/shareResults";
+
 export interface Post {
     body: string;
     date: string;
@@ -22,7 +24,7 @@ export class PostService {
 
                 let result = response.json() as any[];
                 return result;
-            }).cache(1);
+            }).shareResults();
 
         this.postList = this.data.map(data => {
 
@@ -42,7 +44,7 @@ export class PostService {
                 }
             });
             return list;
-        }).cache(1);
+        }).shareResults();
     }
 
 }

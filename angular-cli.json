@@ -1,25 +1,30 @@
 {
   "project": {
-    "version": "1.0.0-beta.11-webpack.2",
-    "name": "fluinio"
+    "version": "1.0.0-beta.24",
+    "name": "test-proje"
   },
   "apps": [
     {
       "root": "src",
       "outDir": "dist",
-      "assets": "assets",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
       "index": "index.html",
       "main": "main.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "app",
       "mobile": false,
-      "styles": ["styles.css"],
+      "styles": [
+        "styles.css"
+      ],
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",
-        "prod": "environments/environment.prod.ts",
-        "dev": "environments/environment.dev.ts"
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
       }
     }
   ],
@@ -27,17 +32,28 @@
   "packages": [],
   "e2e": {
     "protractor": {
-      "config": "config/protractor.conf.js"
+      "config": "./protractor.conf.js"
     }
   },
   "test": {
     "karma": {
-      "config": "config/karma.conf.js"
+      "config": "./karma.conf.js"
     }
   },
   "defaults": {
     "styleExt": "css",
     "prefixInterfaces": false,
-    "lazyRoutePrefix": "+"
+    "inline": {
+      "style": false,
+      "template": false
+    },
+    "spec": {
+      "class": false,
+      "component": true,
+      "directive": true,
+      "module": false,
+      "pipe": true,
+      "service": true
+    }
   }
 }

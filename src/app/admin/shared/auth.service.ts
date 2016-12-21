@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 
+import "../../shared/shareResults";
+
 @Injectable()
 export class AuthService {
     isAdmin: Observable<boolean>;
@@ -10,7 +12,7 @@ export class AuthService {
     
     constructor(public af: AngularFire) {
         //this.af = {auth:{map:()=>{}}};
-        let state = this.af.auth.cache(1);
+        let state = this.af.auth.shareResults();
 
         this.isAdmin = state.map( authState => !!authState);
         this.name = state.map( authState => ( authState ? authState.google.displayName : null));
