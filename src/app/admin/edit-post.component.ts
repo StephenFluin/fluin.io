@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { PostService } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { Observable } from 'rxjs';
 
+
 import * as Showdown from 'showdown';
 
 @Component({
-  template: `
+    template: `
   <div *ngIf="post" class="container" style="flex-grow:1;">
     <div class="columns" style="display:flex;">
         <form style="width:50%;padding:16px;" ngNoForm>
@@ -43,18 +45,18 @@ import * as Showdown from 'showdown';
 `,
     styles: ['md-input {display:block;margin:0 0 32px 0;}'],
 })
-export class EditPostComponent  {
+export class EditPostComponent {
     post;
     converter;
 
-    constructor(activatedRoute : ActivatedRoute, public posts: PostService, public ep: EditablePostService, title: Title) {
+    constructor(activatedRoute: ActivatedRoute, public posts: PostService, public ep: EditablePostService, title: Title, public router: Router) {
         this.converter = new Showdown.Converter();
         activatedRoute.params.switchMap((params) => {
             let filter;
-            if(!params['id']) {
+            if (!params['id']) {
                 console.error("No post specified");
                 return;
-            } else if(params['id'] === 'new') {
+            } else if (params['id'] === 'new') {
                 return Observable.of({});
             } else {
                 // Otherwise, get specified
@@ -62,9 +64,9 @@ export class EditPostComponent  {
             }
             return posts.data.map(response => {
                 let item = filter(response);
-                title.setTitle( 'Edit ' + item.title + ' | fluin.io blog'); 
-               
-                
+                title.setTitle('Edit ' + item.title + ' | fluin.io blog');
+
+
                 item.renderedBody = this.converter.makeHtml(item.body);
                 return item;
             })
@@ -83,6 +85,7 @@ export class EditPostComponent  {
     save() {
         delete this.post.renderedBody;
         this.ep.save(this.post);
+        this.router.navigateByUrl('/admin');
         this.renderBody();
     }
 }

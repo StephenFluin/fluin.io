@@ -69,8 +69,15 @@ export class UploadComponent {
         let storageRef = firebase.storage().ref();
 
         let success = false;
+
+        if((<HTMLInputElement>document.getElementById('file')).files.length <= 0) {
+            console.log("No files found to upload.");
+            return;
+        }
+
         // This currently only grabs item 0, TODO refactor it to grab them all
         for (let selectedFile of [(<HTMLInputElement>document.getElementById('file')).files[0]]) {
+            
             console.log(selectedFile);
             // Make local copies of services because "this" will be clobbered
             let router = this.router;

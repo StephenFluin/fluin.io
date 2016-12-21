@@ -10,6 +10,6 @@ import { PostService } from '../shared/post.service';
 export class HomeComponent {
   posts: Observable<any[]>;
   constructor(http: Http, posts: PostService) {
-    this.posts = posts.postList;
+    this.posts = posts.postList.map(list => list.filter(item => new Date(item.date).getTime() <= Date.now()));
   }
 }

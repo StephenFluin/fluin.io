@@ -12,7 +12,7 @@ import { PostService } from '../shared/post.service';
 			</ul>
 
 			<div style="overflow:hidden;">
-				<a *ngFor="let post of posts | async | refirebase" [routerLink]="post.$key">
+				<a *ngFor="let post of posts | async" [routerLink]="post.$key">
 					<md-card style="margin:0 16px 16px 0;width:300px;float:left;">
 						<img [src]="post.image" style="height:40px;margin:0px auto;display:block;">
 						<div><strong>{{post.title}}</strong></div>
@@ -22,7 +22,7 @@ import { PostService } from '../shared/post.service';
 			</div>
 
 			<div>
-				<h2>New Talk</h2>
+				<h2>New Post</h2>
 				<button routerLink="new">Create</button>
 			</div>
 
@@ -44,17 +44,19 @@ import { PostService } from '../shared/post.service';
 			<button (click)="auth.login()">Login</button>
 		</div>
 		`,
-		// providers: [AuthService]
+	// providers: [AuthService]
 })
-export class AdminComponent  {
+export class AdminComponent {
 	posts;
 	talkName: string;
 	talkList;
 	selectedTalk;
 
-	constructor(public auth : AuthService, posts: PostService, public af: AngularFire) {
+	constructor(public auth: AuthService, posts: PostService, public af: AngularFire) {
 		console.log("Admin component running.");
-		this.posts = posts.data;
+		this.posts = af.database.list('/posts').map(
+			list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
+		);
 		this.talkList = af.database.list('/talks/');
 	}
- }
+}

@@ -26,6 +26,7 @@ export class PostService {
                 return result;
             }).shareResults();
 
+        // Turn an object into an array, similar to refirebase
         this.postList = this.data.map(data => {
 
             let list = [];
