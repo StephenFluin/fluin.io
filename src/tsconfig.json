@@ -1,34 +1,18 @@
 {
-    "compilerOptions": {
-        "baseUrl": "",
-        "declaration": false,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "lib": [
-            "es6",
-            "dom",
-            "es2015"
-        ],
-        "mapRoot": "./",
-        "module": "es6",
-        "moduleResolution": "node",
-        "outDir": "../dist/out-tsc",
-        "sourceMap": true,
-        "target": "es5",
-        "typeRoots": [
-            "../node_modules/@types"
-        ],
-        "types": [
-            "jasmine"
-        ],
-        "skipLibCheck": true
-    },
-    "files": [
-        "typings.d.ts",
-        "main.ts",
-        "app/admin/admin.module.ts"
-    ],
-    "angularCompilerOptions": {
-        "debug": false
-    }
+  "compilerOptions": {
+    "baseUrl": "",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "lib": ["es6", "dom"],
+    "mapRoot": "./",
+    "module": "es6",
+    "moduleResolution": "node",
+    "outDir": "../dist/out-tsc",
+    "sourceMap": true,
+    "target": "es5",
+    "typeRoots": [
+      "../node_modules/@types"
+    ]
+  }
 }
