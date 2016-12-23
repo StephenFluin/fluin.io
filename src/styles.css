@@ -162,10 +162,13 @@ nav>* {
     display:block;
     padding:16px;
 }
-.post p code {
+.post p code, .post li code {
     display:inline;
     padding:4px;
     border:none;
+}
+.post ul, .post ol {
+	padding: 16px;
 }
 
 
