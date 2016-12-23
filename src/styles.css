@@ -138,6 +138,7 @@ nav>* {
 #posts-block {
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     /*border: 1px solid mediumpurple;*/
     width: 90%;
     margin: 50px auto 0px;
@@ -305,8 +306,5 @@ router-outlet {
 
     #intro-block div {
         width:100%;
-    }
-    #posts-block {
-        flex-wrap: wrap;
     }
 }
