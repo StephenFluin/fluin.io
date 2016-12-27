@@ -79,7 +79,6 @@ export class EditPostComponent {
     renderBody() {
         //console.log("rendering new body");
         this.post.renderedBody = this.converter.makeHtml(this.post.body);
-        console.log(this.post.renderedBody);
     }
 
     save() {

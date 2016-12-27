@@ -4,7 +4,7 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 import { Observable } from 'rxjs';
 
-declare var firebase: any;
+import * as firebase from 'firebase';
 
 export interface Image {
     path: string;
@@ -25,7 +25,7 @@ export interface Image {
     <h2>File Gallery</h2>
     <div style="overflow:hidden;">
         <div *ngFor="let img of imageList | async" style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;">
-            <img [src]="img.downloadURL | async" style="max-width:100px;max-height:100px;">
+            <img *ngIf="img.downloadURL | async" [src]="img.downloadURL | async" style="max-width:100px;max-height:100px;">
             <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
         </div>
     </div>
@@ -56,6 +56,7 @@ export class UploadComponent {
         this.imageList = this.fileList.map( itemList =>
             itemList.map( item => {
                 var pathReference = storage.ref(item.path);
+		console.log("path ref is:",pathReference);
                 let result = {$key: item.$key, downloadURL: pathReference.getDownloadURL(), path: item.path, filename: item.filename};
                 console.log(result);
                 return result;
