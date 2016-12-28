@@ -33,7 +33,11 @@ export class PostService {
             for (let key of Object.keys(data)) {
                 let item = data[key];
                 item.key = key;
-                list.push(item);
+                
+                // Only include past items
+                if(new Date(item.date).getTime() <= Date.now()) {
+                    list.push(item);
+                }
             }
             list.sort((a, b) => {
                 if (a.date > b.date) {

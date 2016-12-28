@@ -7,6 +7,9 @@
 h1, h2, h3 {
     margin:0px;
 }
+h2 {
+    font-size:18px;
+}
 img {
     max-width:100%;
 }
@@ -150,6 +153,7 @@ nav>* {
     text-align: center;
     border: 0.25px solid #929292;
     height: 300px;
+    width:300px;
 }
 
 .post p {

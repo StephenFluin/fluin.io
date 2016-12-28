@@ -9,6 +9,6 @@ import { PostService } from '../shared/post.service';
 export class BlogComponent {
     posts: Observable<any[]>;
     constructor(posts: PostService) {
-        this.posts = posts.data;
+        this.posts = posts.postList.map(list => list.slice(0,5));
     }
 }

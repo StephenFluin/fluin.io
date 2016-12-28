@@ -12,7 +12,7 @@ import { TalkViewComponent } from './pages/talk-view.component';
 export const routeConfig: Routes = [
     { path: '', component: HomeComponent, data: { title: "fluin.io" } },
     {
-        path: 'blog', data: { title: false }, children: [
+        path: 'blog', data: { title: false }, component: BlogComponent, children: [
             { path: '', component: BlogPostComponent },
             { path: ':id', component: BlogPostComponent },
         ]

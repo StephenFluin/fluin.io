@@ -20,8 +20,8 @@ export class BlogPostComponent {
         activatedRoute.params.switchMap((params) => {
             let filter;
             if (!params['id']) {
-                // If none specified, just get first, it should already be sorted by date
-                filter = list => list[Object.keys(list)[0]]
+                // If none specified, just get last, it should already be sorted by date
+                filter = list => list[Object.keys(list)[Object.keys(list).length-1]]
             } else {
                 // Otherwise, get specified
                 filter = list => list[params['id']];
@@ -31,7 +31,9 @@ export class BlogPostComponent {
                 let item = filter(response);
                 title.setTitle(item.title + ' | fluin.io blog');
                 let converter = new Showdown.Converter();
+                converter.setOption('noHeaderId', 'true');
                 item.renderedBody = converter.makeHtml(item.body);
+                item.renderedBody = item.renderedBody.replace(/[\r\n]/g, '');
                 return item;
             })
         }).subscribe(post => {

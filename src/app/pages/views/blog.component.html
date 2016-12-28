@@ -12,13 +12,11 @@
             </section>
 
             <hr>
-
+<!--
             <section>
                 <input type="search" placeholder="search">
             </section>
-            <!-- end searchbar-->
-
-            <hr>
+            <hr>-->
 
             <section id="social">
                 <a href="https://twitter.com/stephenfluin" target="_blank"><img src="/assets/images/sm-twitter.svg" alt="Twitter"></a>
@@ -38,7 +36,7 @@
             <hr>
 
             <section id="featured-blogs">
-                <a *ngFor="let post of posts | async | refirebase" [routerLink]="['/blog',post.id]">
+                <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
                     <img *ngIf="!post.image" src="/assets/images/imgpostholder.png">
                     <img *ngIf="post.image" [src]="post.image">
                     {{post.title}}
