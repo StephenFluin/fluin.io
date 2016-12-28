@@ -154,6 +154,7 @@ nav>* {
     border: 0.25px solid #929292;
     height: 300px;
     width:300px;
+    overflow:hidden;
 }
 
 .post p {
