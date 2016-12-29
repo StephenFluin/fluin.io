@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-// I import everything because otherwise switchMap isn't defined
-//import 'rxjs/Rx';
-import 'rxjs';
 
 import { PostService } from '../shared/post.service';
 
