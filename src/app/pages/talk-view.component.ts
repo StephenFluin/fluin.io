@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, Title } from "@angular/platform-browser";
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { TalkService, Talk } from '../shared/talk.service';
-
+import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector: 'talk-view',

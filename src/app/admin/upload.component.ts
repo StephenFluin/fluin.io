@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 import * as firebase from 'firebase';
 

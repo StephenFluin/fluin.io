@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { PostService } from '../shared/post.service';
-
+import 'rxjs/add/operator/switchMap';
 
 import * as Showdown from 'showdown';
 

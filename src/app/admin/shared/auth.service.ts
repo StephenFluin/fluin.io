@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Observable';
 import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 
 import "../../shared/shareResults";

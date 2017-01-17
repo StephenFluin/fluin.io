@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { PostService } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
-import { Observable } from 'rxjs';
-
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/switchMap';
 
 import * as Showdown from 'showdown';
 
