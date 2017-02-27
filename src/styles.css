@@ -36,11 +36,6 @@ p {
     line-height: 1.5;
 }
 
-#main body {
-    background: url('/assets/images/etheral-bg.jpg') no-repeat center center fixed;
-    background-size: cover;
-}
-
 hr {
     border: 0;
     height: 0;
