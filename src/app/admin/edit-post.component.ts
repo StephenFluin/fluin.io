@@ -14,10 +14,10 @@ import * as Showdown from 'showdown';
   <div *ngIf="post" class="container" style="flex-grow:1;">
     <div class="columns" style="display:flex;">
         <form style="width:50%;padding:16px;" ngNoForm>
-            <md-input placeholder="title" [(ngModel)]="post.title"></md-input>
-            <md-input placeholder="image url" [(ngModel)]="post.image"></md-input>
-            <md-input placeholder="id" [(ngModel)]="post.id"></md-input>
-            <md-input placeholder="date" type="date" [(ngModel)]="post.date"></md-input>
+            <md-input-container><input mdInput placeholder="title" [(ngModel)]="post.title"></md-input-container>
+            <md-input-container><input mdInput placeholder="image url" [(ngModel)]="post.image"></md-input-container>
+            <md-input-container><input mdInput placeholder="id" [(ngModel)]="post.id"></md-input-container>
+            <md-input-container><input mdInput placeholder="date" type="date" [(ngModel)]="post.date"></md-input-container>
             <textarea placeholder="body" (ngModelChange)="renderBody()" [(ngModel)]="post.body" style="height:400px;width:100%;"></textarea>
             <button type="button" (click)="save()">Save</button>
         </form>

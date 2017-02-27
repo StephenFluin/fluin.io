@@ -34,7 +34,7 @@ import { PostService } from '../shared/post.service';
 				</select>
 				<div *ngIf="selectedTalk">
 					<h3>Talk Image Upload</h3>
-					<md-input [(ngModel)]="talkName"></md-input>
+					<md-input-container><input mdInput [(ngModel)]="talkName"></md-input-container>
 					<image-upload [folder]="'talks/'+selectedTalk.$key"></image-upload>
 				</div>
 			</div>
