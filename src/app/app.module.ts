@@ -11,6 +11,8 @@ import { AppHeaderComponent } from './app-header.component';
 import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 // routes
 import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
