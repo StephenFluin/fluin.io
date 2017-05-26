@@ -17,19 +17,4 @@
 <!-- end intro-block-->
 
 <hr>
-
-<!-- posts-block-->
-<div id="posts-block">
-    <div class="post-block" *ngFor="let post of posts | async | refirebase" [routerLink]="['blog',post.id]">
-        <div class="post-image" *ngIf="!post.image" style="background-image: url('/assets/images/imgpostholder.png')"></div>
-        <div class="post-image" *ngIf="post.image" [style.background-image]="'url('+post.image+')'"></div>
-        <div class="post-title">
-            <h2>{{post.title}}</h2>
-        </div>
-        <div class="post-date">
-            <h3 class="date">{{post.date}}</h3>
-        </div>
-    </div>
-
-</div>
-<!-- end posts-block-->
+<post-list></post-list>

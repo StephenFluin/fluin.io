@@ -9,9 +9,4 @@ import "rxjs/add/operator/map";
 @Component({
   templateUrl: './views/home.component.html',
 })
-export class HomeComponent {
-  posts: Observable<any[]>;
-  constructor(http: Http, posts: PostService) {
-    this.posts = posts.postList.map(list => list.slice(0,10));
-  }
-}
+export class HomeComponent {}

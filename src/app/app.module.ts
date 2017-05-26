@@ -11,7 +11,6 @@ import { PostService } from './shared/post.service';
 import { TalkService } from './shared/talk.service';
 
 import { FluinioAppComponent } from './fluinio.component';
-import { AppHeaderComponent } from './app-header.component';
 import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
 
@@ -22,6 +21,8 @@ import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
 import { TalksComponent } from './pages/talks.component';
 import { TalkViewComponent } from './pages/talk-view.component';
+
+import { EmbeddableModule } from './embeddable/embeddable.module';
 
 import { BioComponent } from './pages/bio.component';
 import { routeConfig } from './app.routes';
@@ -43,9 +44,9 @@ export class RavenErrorHandler implements ErrorHandler {
         HttpModule,
         FirebaseToolsModule,
         BrowserAnimationsModule,
+        EmbeddableModule
     ],
     declarations: [
-        AppHeaderComponent,
         FluinioAppComponent,
         HomeComponent,
         BlogComponent,
