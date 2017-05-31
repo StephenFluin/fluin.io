@@ -4,9 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { PostService } from '../shared/post.service';
 
-import "rxjs/add/operator/map";
-
 @Component({
-  templateUrl: './views/home.component.html',
+  templateUrl: './home.component.html',
 })
 export class HomeComponent {}

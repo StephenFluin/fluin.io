@@ -1,8 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import * as Raven from 'raven-js';
-Raven
-    .config('https://f5a0a99524a445b5a1a3d462a8399030@sentry.io/163035')
-    .install();
+
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
@@ -30,12 +27,6 @@ import { routeConfig } from './app.routes';
 // Pipes
 import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
 
-export class RavenErrorHandler implements ErrorHandler {
-  handleError(err:any) : void {
-    Raven.captureException(err.originalError);
-    throw err;
-  }
-}
 
 @NgModule({
     imports: [
@@ -61,8 +52,6 @@ export class RavenErrorHandler implements ErrorHandler {
         Title,
         PostService,
         TalkService,
-
-        { provide: ErrorHandler, useClass: RavenErrorHandler },
     ],
 })
 export class AppModule { }

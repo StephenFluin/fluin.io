@@ -7,7 +7,7 @@ import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector: 'talk-view',
-    templateUrl: './views/talk-view.component.html',
+    templateUrl: './talk-view.component.html',
 })
 export class TalkViewComponent {
     public talk;

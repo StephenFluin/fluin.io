@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Observable } from "rxjs/Observable";
-import { Http } from "@angular/http";
-import { PostService } from "app/shared/post.service";
+import { Observable } from 'rxjs/Observable';
+import { Http } from '@angular/http';
+import { PostService, Post } from 'app/shared/post.service';
 
 @Component({
     selector: 'post-list',
@@ -25,6 +25,6 @@ export class PostListComponent {
     @Input() limit = 12;
     posts: Observable<any[]>;
     constructor(http: Http, posts: PostService) {
-        this.posts = posts.postList.map(list => list.slice(0, this.limit));
+        this.posts = posts.postList.map(list => list.filter(post => !posts.isFuture(post)).slice(0, this.limit));
     }
 }

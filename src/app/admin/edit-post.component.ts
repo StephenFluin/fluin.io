@@ -1,25 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
-import { PostService } from '../shared/post.service';
+import { PostService, Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
 import * as Showdown from 'showdown';
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     template: `
-  <div *ngIf="post" class="container" style="flex-grow:1;">
+  <div *ngIf="postData | async as post; else loading" class="container" style="flex-grow:1;">
     <div class="columns" style="display:flex;">
         <form style="width:50%;padding:16px;" ngNoForm>
             <md-input-container><input mdInput placeholder="title" [(ngModel)]="post.title"></md-input-container>
             <md-input-container><input mdInput placeholder="image url" [(ngModel)]="post.image"></md-input-container>
             <md-input-container><input mdInput placeholder="id" [(ngModel)]="post.id"></md-input-container>
             <md-input-container><input mdInput placeholder="date" type="date" [(ngModel)]="post.date"></md-input-container>
-            <textarea placeholder="body" (ngModelChange)="renderBody()" [(ngModel)]="post.body" style="height:400px;width:100%;"></textarea>
-            <button type="button" (click)="save()">Save</button>
+            <textarea placeholder="body"
+                (ngModelChange)="renderBody(post)"
+                [(ngModel)]="post.body"
+                style="height:400px;width:100%;"></textarea>
+            <button type="button" (click)="save(post)">Save</button>
         </form>
         <div style="width:50%;padding:16px;" class="post">
             <div class="highlight-image">
@@ -34,57 +38,74 @@ import * as Showdown from 'showdown';
             <div class="date">
                 <h3>{{post.date}}</h3>
             </div>
-            <div [innerHTML]="post.renderedBody">
+            <div [innerHTML]="renderedBody">
             </div>
         </div>
     </div>
     <div>
         <image-upload *ngIf="post.id" [folder]="'posts/'+post.id"></image-upload>
     </div>
+    <div>
+        <h2>Delete Post</h2>
+        <button (click)="delete(post)">Delete This Post</button>
+    </div>
 </div>
+<ng-template #loading>Loading posts...</ng-template>
 `,
     styles: ['md-input {display:block;margin:0 0 32px 0;}'],
 })
 export class EditPostComponent {
-    post;
+    renderedBody;
+    postData: Observable<Post>;
     converter;
 
-    constructor(activatedRoute: ActivatedRoute, public posts: PostService, public ep: EditablePostService, title: Title, public router: Router) {
+    constructor(
+        activatedRoute: ActivatedRoute,
+        public posts: PostService,
+        public ep: EditablePostService,
+        title: Title,
+        public router: Router
+    ) {
         this.converter = new Showdown.Converter();
-        activatedRoute.params.switchMap((params) => {
+
+        this.postData = activatedRoute.params.switchMap((params) => {
             let filter;
             if (!params['id']) {
-                console.error("No post specified");
+                console.error('No post specified');
                 return;
             } else if (params['id'] === 'new') {
+
                 return Observable.of({});
-            } else {
-                // Otherwise, get specified
-                filter = list => list[params['id']];
             }
-            return posts.data.map(response => {
-                let item = filter(response);
-                title.setTitle('Edit ' + item.title + ' | fluin.io blog');
+
+            return posts.postMap.map(postListObject => {
+                console.log('Looking for post from', params, postListObject);
+                console.log(postListObject);
+                let item = postListObject[params['id']];
+                if (item) {
+                    title.setTitle('Edit ' + item.title + ' | fluin.io blog');
+                    this.renderBody(item);
+                }
 
 
-                item.renderedBody = this.converter.makeHtml(item.body);
                 return item;
             })
-        }).subscribe(post => {
-            this.post = post;
-        });
+        })
 
     }
 
-    renderBody() {
-        //console.log("rendering new body");
-        this.post.renderedBody = this.converter.makeHtml(this.post.body);
+    renderBody(post) {
+        this.renderedBody = this.converter.makeHtml(post.body || '');
     }
 
-    save() {
-        delete this.post.renderedBody;
-        this.ep.save(this.post);
+    save(post) {
+        this.ep.save(post);
         this.router.navigateByUrl('/admin');
-        this.renderBody();
     }
+
+    delete(post) {
+        this.ep.delete(post);
+        this.router.navigateByUrl('/admin');
+    }
+
 }

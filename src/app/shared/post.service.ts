@@ -2,9 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
-import "../shared/shareResults";
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/shareReplay';
+import 'rxjs/add/operator/map';
 
 export interface Post {
+    key: string;
     body: string;
     date: string;
     id: string;
@@ -14,28 +18,36 @@ export interface Post {
 
 @Injectable()
 export class PostService {
-    url: string = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
-    data: Observable<any>;
+    url = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
+    /**
+     * An object with post keys as keys, and post data as values
+     */
+    postMap: Observable<any>;
+    /**
+     * An sorted array of posts with keys directly on the object.
+     */
     postList: Observable<Post[]>;
 
-    constructor(private http: Http) {
-        this.data = this.http.get(this.url)
-            .map(response => {
+    private forceRefresher = new Subject();
 
-                let result = response.json() as any[];
+    constructor(private http: Http) {
+        this.postMap = this.forceRefresher.startWith(null).switchMap(() => this.http.get(this.url)
+            .map(response => {
+                let result = response.json();
                 return result;
-            }).shareResults();
+            }));
+
 
         // Turn an object into an array, similar to refirebase
-        this.postList = this.data.map(data => {
+        this.postList = this.postMap.map(data => {
 
             let list = [];
             for (let key of Object.keys(data)) {
                 let item = data[key];
                 item.key = key;
-                
+
                 // Only include past items
-                if(new Date(item.date).getTime() <= Date.now()) {
+                if (!this.isFuture(item)) {
                     list.push(item);
                 }
             }
@@ -49,7 +61,18 @@ export class PostService {
                 }
             });
             return list;
-        }).shareResults();
+        }).shareReplay(1);
+
+    }
+    refreshData() {
+        this.forceRefresher.next();
     }
 
+    isFuture(post: Post) {
+        if (new Date(post.date + 'T00:00').getTime() > Date.now() || !post.date) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

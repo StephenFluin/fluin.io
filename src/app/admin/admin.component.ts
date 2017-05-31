@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFire } from 'angularfire2';
 import { AuthService } from './shared/auth.service';
 import { PostService } from '../shared/post.service';
+import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
-	template: `
+    template: `
 		<div class="container" *ngIf="auth.isAdmin | async">
 			<h2><span [title]="auth.uid | async">{{auth.name | async}}</span> Supervision (<a (click)="auth.logout()">logout</a>)</h2>
 			<ul>
@@ -13,8 +13,8 @@ import { PostService } from '../shared/post.service';
 
 			<div style="overflow:hidden;">
 				<a *ngFor="let post of posts | async" [routerLink]="post.$key">
-					<md-card style="margin:0 16px 16px 0;width:300px;float:left;">
-						<img [src]="post.image" style="height:40px;margin:0px auto;display:block;">
+					<md-card style="margin:0 16px 16px 0;width:300px;height:125px;float:left;">
+						<img *ngIf="post.image" [src]="post.image" style="height:40px;margin:0px auto;display:block;">
 						<div><strong>{{post.title}}</strong></div>
 						<div>{{post.date}}</div>
 					</md-card>
@@ -44,19 +44,19 @@ import { PostService } from '../shared/post.service';
 			<button (click)="auth.login()">Login</button>
 		</div>
 		`,
-	// providers: [AuthService]
+    // providers: [AuthService]
 })
 export class AdminComponent {
-	posts;
-	talkName: string;
-	talkList;
-	selectedTalk;
+    posts;
+    talkName: string;
+    talkList;
+    selectedTalk;
 
-	constructor(public auth: AuthService, posts: PostService, public af: AngularFire) {
-		console.log("Admin component running.");
-		this.posts = af.database.list('/posts').map(
-			list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
-		);
-		this.talkList = af.database.list('/talks/');
-	}
+    constructor(public auth: AuthService, posts: PostService, public db: AngularFireDatabase) {
+        console.log('Admin component running.');
+        this.posts = db.list('/posts').map(
+            list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
+        );
+        this.talkList = db.list('/talks/');
+    }
 }

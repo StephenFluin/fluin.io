@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 
 import { Observable } from 'rxjs/Observable';
 
@@ -32,7 +32,7 @@ export interface Image {
     </div>
   `,
 })
-export class UploadComponent {
+export class UploadComponent implements OnChanges {
     /**
      * The name of the folder for images
      * eg. posts/angular-is-awesome
@@ -42,26 +42,23 @@ export class UploadComponent {
     fileList: FirebaseListObservable<Image[]>;
     imageList: Observable<Image[]>;
 
-    constructor(public af: AngularFire, public router: Router) {
-    }
-    ngOnInit() {
-
+    constructor(public db: AngularFireDatabase, public router: Router) {
     }
 
     ngOnChanges() {
-        console.log("new values for folder");
+        console.log('new values for folder');
         let storage = firebase.storage();
 
-        this.fileList = this.af.database.list(`/${this.folder}/images`);
-        console.log("Rendering all images in ", `/${this.folder}/images`)
+        this.fileList = this.db.list(`/${this.folder}/images`);
+        console.log('Rendering all images in ', `/${this.folder}/images`)
         this.imageList = this.fileList.map(itemList =>
             itemList.map(item => {
-                var pathReference = storage.ref(item.path);
+                let pathReference = storage.ref(item.path);
                 let result = { $key: item.$key, path: item.path, downloadURL: null, filename: item.filename };
-                // This Promise must be wrapped in Promise.resolve because the thennable from 
+                // This Promise must be wrapped in Promise.resolve because the thennable from
                 // firebase isn't monkeypatched by zones and therefore doesn't trigger CD
                 result.downloadURL = Promise.resolve(pathReference.getDownloadURL());
-                
+
                 return result;
             })
         );
@@ -75,7 +72,7 @@ export class UploadComponent {
         let success = false;
 
         if ((<HTMLInputElement>document.getElementById('file')).files.length <= 0) {
-            console.log("No files found to upload.");
+            console.log('No files found to upload.');
             return;
         }
 
@@ -85,13 +82,13 @@ export class UploadComponent {
             console.log(selectedFile);
             // Make local copies of services because "this" will be clobbered
             let router = this.router;
-            let af = this.af;
             let folder = this.folder;
             let path = `/${this.folder}/${selectedFile.name}`;
-            var iRef = storageRef.child(path);
+            let iRef = storageRef.child(path);
+            let db = this.db;
             iRef.put(selectedFile).then((snapshot) => {
                 console.log('Uploaded a blob or file! Now storing the reference at', `/${this.folder}/images/`);
-                af.database.list(`/${folder}/images/`).push({ path: path, filename: selectedFile.name })
+                db.list(`/${folder}/images/`).push({ path: path, filename: selectedFile.name })
             });
         }
 
@@ -106,11 +103,11 @@ export class UploadComponent {
         firebase.storage().ref().child(storagePath).delete()
             .then(
             () => { },
-            (error) => console.error("Error deleting stored file", storagePath)
+            (error) => console.error('Error deleting stored file', storagePath)
             );
 
         // Delete references
-        this.af.database.object(referencePath).remove()
+        this.db.object(referencePath).remove()
 
 
 

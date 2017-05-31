@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { TalkService } from '../shared/talk.service';
 
 @Component({
-    templateUrl: './views/talks.component.html',
+    templateUrl: './talks.component.html',
 })
 export class TalksComponent {
     talks: Observable<any[]>;

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { PostService } from '../shared/post.service';
 
 @Component({
-    templateUrl: './views/blog.component.html',
+    templateUrl: './blog.component.html',
 })
 export class BlogComponent {
     posts: Observable<any[]>;
