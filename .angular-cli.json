@@ -27,6 +27,7 @@
         "prod": "environments/environment.prod.ts"
       },
       "serviceWorker": true
+      
     }
   ],
   "addons": [],

@@ -34,7 +34,7 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
         RouterModule.forRoot(routeConfig),
         HttpModule,
         FirebaseToolsModule,
-        BrowserAnimationsModule,
+        //BrowserAnimationsModule,
         EmbeddableModule
     ],
     declarations: [

@@ -1,4 +1,48 @@
 {
+    "external": {
+        "urls": [
+            {"url": "https://fonts.googleapis.com/css?family=Montserrat|Raleway|Roboto|Roboto+Mono"},
+            {"url": "https://www.google-analytics.com/analytics.js"},
+            {"url": "https://fonts.gstatic.com/s/montserrat/v10/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2"}
+        ]
+    },
+    "static.ignore": [
+        "\\.js\\.map$"
+    ],
+    "static.versioned": [
+        "\\.[0-9a-z]{20}\\."
+    ],
+    "dynamic": {
+        "group": [
+            {
+                "name": "firebase",
+                "urls": {
+                    "https://firebasestorage.googleapis.com/v0/b/fluindotio-website-93127.appspot.com": {
+                        "match": "prefix"
+                    }
+                },
+                "cache": {
+                    "optimizeFor":"performance",
+                    "maxAgeMs": 360000000,
+                    "maxEntries": 40,
+                    "strategy": "lru"
+                }
+            },
+            {
+                "name": "offline",
+                "urls": {
+                    "https://fluindotio-website-93127.firebaseio.com/posts.json": { "match": "prefix"}
+                },
+                "cache": {
+                    "optimizeFor": "freshness",
+                    "maxAgeMs": 360000000,
+                    "maxEntries": 1,
+                    "strategy": "lru"
+                }
+            }
+        ]
+        
+    },
     "routing": {
         "index": "/index.html",
         "routes": {
@@ -6,7 +50,7 @@
                 "prefix": false
             },
             "/blog": {
-                "prefix": false
+                "prefix": true
             },
             "/bio": {
                 "prefix": false
