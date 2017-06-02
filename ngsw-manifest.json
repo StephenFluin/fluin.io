@@ -2,7 +2,6 @@
     "external": {
         "urls": [
             {"url": "https://fonts.googleapis.com/css?family=Montserrat|Raleway|Roboto|Roboto+Mono"},
-            {"url": "https://www.google-analytics.com/analytics.js"},
             {"url": "https://fonts.gstatic.com/s/montserrat/v10/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8.woff2"}
         ]
     },
