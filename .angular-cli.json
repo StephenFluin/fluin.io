@@ -1,6 +1,5 @@
 {
   "project": {
-    "version": "1.0.0-beta.24",
     "name": "test-proje"
   },
   "apps": [
@@ -16,7 +15,7 @@
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
       "prefix": "app",
-      "mobile": false,
+      "serviceWorker": true,
       "styles": [
         "styles.css"
       ],
@@ -25,27 +24,18 @@
       "environments": {
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
-      },
-      "serviceWorker": true
-      
+      }
     }
   ],
-  "addons": [],
-  "packages": [],
   "defaults": {
     "styleExt": "css",
-    "prefixInterfaces": false,
-    "inline": {
-      "style": true,
-      "template": true
+    "class": {
+      "spec": false
     },
-    "spec": {
-      "class": false,
-      "component": false,
-      "directive": false,
-      "module": false,
-      "pipe": false,
-      "service": false
+    "component": {
+      "spec": false,
+      "inlineStyle": true,
+      "inlineTemplate": true
     }
   }
 }

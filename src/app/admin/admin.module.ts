@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { MaterialRootModule } from '@angular/material';
 
-
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
 import { EditPostComponent } from './edit-post.component';

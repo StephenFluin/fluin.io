@@ -37,7 +37,7 @@ export class BlogPostComponent {
                 converter.setOption('noHeaderId', 'true');
 
                 item.renderedBody = converter.makeHtml(item.body || '');
-                item.renderedBody = this.sanitized.bypassSecurityTrustHtml(item.renderedBody.replace(/[\r\n]/g, ''));
+                // item.renderedBody = this.sanitized.bypassSecurityTrustHtml(item.renderedBody.replace(/[\r\n]/g, ''));
                 return item;
             })
         }).subscribe(post => {
