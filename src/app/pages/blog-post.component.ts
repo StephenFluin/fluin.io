@@ -4,7 +4,7 @@ import { Title } from '@angular/platform-browser';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { PostService } from '../shared/post.service';
+import { Post, PostService } from '../shared/post.service';
 import 'rxjs/add/operator/switchMap';
 
 import * as Showdown from 'showdown';
@@ -20,28 +20,22 @@ export class BlogPostComponent {
         title: Title,
         private sanitized: DomSanitizer) {
 
-        activatedRoute.params.switchMap((params) => {
-            let filter;
+        // Based on the requested ID, return a Post
+        this.post = activatedRoute.params.switchMap((params) => {
             if (!params['id']) {
                 // If none specified, just get last, it should already be sorted by date
-                filter = list => list[Object.keys(list)[Object.keys(list).length - 1]]
+                return posts.postList.map(list => list[0]);
             } else {
                 // Otherwise, get specified
-                filter = list => list[params['id']];
+                return posts.postMap.map(postMap => postMap[params['id']]);
             }
-            return posts.postMap.map(response => {
-
-                let item = filter(response);
+        }).map(item => {
                 title.setTitle(item.title + ' | fluin.io blog');
                 let converter = new Showdown.Converter();
                 converter.setOption('noHeaderId', 'true');
 
                 item.renderedBody = converter.makeHtml(item.body || '');
-                // item.renderedBody = this.sanitized.bypassSecurityTrustHtml(item.renderedBody.replace(/[\r\n]/g, ''));
                 return item;
-            })
-        }).subscribe(post => {
-            this.post = post;
-        });
+        })
     }
 }

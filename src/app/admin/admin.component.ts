@@ -44,7 +44,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 			<button (click)="auth.login()">Login</button>
 		</div>
 		`,
-    // providers: [AuthService]
 })
 export class AdminComponent {
     posts;
@@ -52,7 +51,7 @@ export class AdminComponent {
     talkList;
     selectedTalk;
 
-    constructor(public auth: AuthService, posts: PostService, public db: AngularFireDatabase) {
+    constructor(public auth: AuthService, public db: AngularFireDatabase) {
         console.log('Admin component running.');
         this.posts = db.list('/posts').map(
             list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
