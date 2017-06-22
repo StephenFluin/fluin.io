@@ -44,7 +44,7 @@ hr {
 }
 
 .date {
-    color: gray;
+    color: #464646;
     font-weight: normal;    
 }
 
@@ -118,7 +118,7 @@ nav>* {
     color:rgba(255,255,255,.95);
     position:relative;
     font-size:16px;
-    background-color:rgba(53,63,73,0.6);
+    background-color:rgba(53,63,73,0.7);
 }
 
 #intro-block div {
@@ -139,6 +139,7 @@ nav>* {
     flex-wrap: wrap;
     /*border: 1px solid mediumpurple;*/
     width: 90%;
+    max-width:1600px;
     margin: 50px auto 0px;
 }
 

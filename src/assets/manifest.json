@@ -2,6 +2,7 @@
   "name": "fluin.io",
   "short_name": "fluin.io",
   "display": "standalone",
+  "start_url": "/",
   "orientation": "portrait",
   "background_color": "#858b91",
   "theme_color": "#545d65", 
@@ -28,6 +29,10 @@
   }, {
     "src": "/assets/icons/icon-256x256.png",
     "sizes": "256x256",
+    "type": "image/png"
+  }, {
+    "src": "/assets/icons/icon-512x512.png",
+    "sizes": "512x512",
     "type": "image/png"
   }]
 }
