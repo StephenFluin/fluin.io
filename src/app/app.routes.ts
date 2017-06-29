@@ -9,7 +9,7 @@ import { TalksComponent } from './pages/talks.component';
 import { TalkViewComponent } from './pages/talk-view.component';
 
 export const routeConfig: Routes = [
-    { path: '', component: HomeComponent, data: { title: "fluin.io" } },
+    { path: '', component: HomeComponent, data: { title: 'fluin.io' } },
     {
         path: 'blog', data: { title: false }, component: BlogComponent, children: [
             { path: '', component: BlogPostComponent },
@@ -24,5 +24,5 @@ export const routeConfig: Routes = [
             { path: ':id', component: TalkViewComponent, data: { title: false } },
         ]
     },
-    { path: 'admin', loadChildren: "app/admin/admin.module#AdminModule" },
+    { path: 'admin', loadChildren: 'app/admin/admin.module#AdminModule' },
 ];

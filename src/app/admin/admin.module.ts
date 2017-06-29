@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { MaterialRootModule } from '@angular/material';
+import { MdCardModule, MdInputModule } from '@angular/material';
 
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
@@ -35,7 +35,7 @@ import { AppModule } from '../app.module';
         }),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
-        MaterialRootModule,
+        MdCardModule, MdInputModule,
         FirebaseToolsModule,
     ],
     declarations: [
