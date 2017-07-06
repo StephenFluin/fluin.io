@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div id="page" [@routeAnimation]="prepRouteState(routerOutlet)" class="route-container">
+<div id="page" [@routeAnimation]="{value:prepRouteState(routerOutlet), params: { height: getHeight() }}" class="route-container">
     <router-outlet #routerOutlet="outlet"></router-outlet>
 </div>
 

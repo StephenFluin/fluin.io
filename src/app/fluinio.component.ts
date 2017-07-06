@@ -59,4 +59,7 @@ export class FluinioAppComponent {
         console.log(`Page is currently ${outlet.activatedRouteData['page']}.`);
         return outlet.activatedRouteData['page'];
     }
+    getHeight() {
+        return document.body.offsetHeight;
+    }
 }
