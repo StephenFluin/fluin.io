@@ -93,6 +93,14 @@ nav>* {
 
 }
 
+.route-container {
+    position:relative;
+}
+.route-container>* {
+    display:block;
+}
+
+
 .spacer {
     flex-grow: 1;
 }

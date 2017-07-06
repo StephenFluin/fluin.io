@@ -1,7 +1,7 @@
 <app-header></app-header>
 
-<div id="page">
-    <router-outlet></router-outlet>
+<div id="page" [@routeAnimation]="prepRouteState(routerOutlet)" class="route-container">
+    <router-outlet #routerOutlet="outlet"></router-outlet>
 </div>
 
 <div class="footer">
