@@ -13,9 +13,22 @@
     "headers": [
       {
         "source": "/",
-        "headers": [{"key": "Link", "value": "</0.bcbf25d8e5f5a9836d3d.chunk.js>;rel=preload;as=script,</3rdpartylicenses.txt>;rel=preload;as=script,</inline.c6b478f22da4ff06aea0.bundle.js>;rel=preload;as=script,</main.fdac13bdd87bf0a4094d.bundle.js>;rel=preload;as=script,</ngsw-manifest.json>;rel=preload;as=script,</styles.899a8f7d5bc520957b56.bundle.css>;rel=preload;as=style,</sw-register.c3a9f56ebf829a0880d3.bundle.js>;rel=preload;as=script,</vendor.a2c3a128e727bfb54eab.bundle.js>;rel=preload;as=script,</webfont.js>;rel=preload;as=script,</worker-basic.min.js>;rel=preload;as=script,"}]
+        "headers": [
+          {
+            "key": "Link",
+            "value": "</0.c473bf464081a1e5269a.chunk.js>;rel=preload;as=script,</3rdpartylicenses.txt>;rel=preload;as=script,</inline.1fa59758e567a1360506.bundle.js>;rel=preload;as=script,</main.af757566d0c51e0802ae.bundle.js>;rel=preload;as=script,</ngsw-manifest.json>;rel=preload;as=script,</styles.4edc31daa8bec17c6423.bundle.css>;rel=preload;as=style,</sw-register.c3a9f56ebf829a0880d3.bundle.js>;rel=preload;as=script,</vendor.40f7ad5ad469dca84ab0.bundle.js>;rel=preload;as=script,</webfont.js>;rel=preload;as=script,</worker-basic.min.js>;rel=preload;as=script,"
+          }
+        ]
+      },
+      {
+        "source": "**/*.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=14400"
+          }
+        ]
       }
     ]
-    
   }
 }

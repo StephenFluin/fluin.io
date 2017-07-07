@@ -86,7 +86,8 @@ export class UploadComponent implements OnChanges {
             let path = `/${this.folder}/${selectedFile.name}`;
             let iRef = storageRef.child(path);
             let db = this.db;
-            iRef.put(selectedFile).then((snapshot) => {
+            // cache files for up to a week
+            iRef.put(selectedFile, {cacheControl: 'max-age=604800'}).then((snapshot) => {
                 console.log('Uploaded a blob or file! Now storing the reference at', `/${this.folder}/images/`);
                 db.list(`/${folder}/images/`).push({ path: path, filename: selectedFile.name })
             });
