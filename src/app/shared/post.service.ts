@@ -7,6 +7,7 @@ import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/shareReplay';
 import 'rxjs/add/operator/map';
 
+
 export interface Post {
     key: string;
     body: string;
@@ -36,7 +37,10 @@ export class PostService {
             .map(response => {
                 let result = response.json();
                 return result;
-            }));
+            })).shareReplay(1);
+
+        // Force it to be hot and available for everyone without additional http requests
+        this.postMap.subscribe(n => n);
 
 
         // Turn an object into an array, similar to refirebase
@@ -62,7 +66,7 @@ export class PostService {
                 }
             });
             return list;
-        }).shareReplay(1);
+        }).shareResults();
 
     }
     refreshData() {

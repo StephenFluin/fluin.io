@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { trigger, transition, state, group, query, style, animate, animateChild } from '@angular/animations';
 import 'rxjs/add/operator/filter';
 
@@ -11,7 +11,7 @@ declare var ga: any;
     animations: [
         trigger('routeAnimation', [
             transition('home => blog', [
-                style({ height: '!' }),
+                style({ height: '{{height}}' }),
                 query(':enter', style({ transform: 'translateX(100%)' })),
                 query(':enter, :leave', style({ position: 'absolute', top: 0, left: 0, right: 0 })),
                 // animate the leave page away
@@ -25,7 +25,7 @@ declare var ga: any;
                 // animate('1s', style({ height: '*'})),
             ]),
             transition('blog => home', [
-                style({ height: '!' }),
+                style({ height: '{{height}}' }),
                 query(':enter', style({ transform: 'translateX(-100%)' })),
                 query(':enter, :leave', style({ position: 'absolute', top: 0, left: 0, right: 0 })),
                 // animate the leave page away
@@ -42,6 +42,20 @@ declare var ga: any;
     ]
 })
 export class FluinioAppComponent {
+    /**
+     * Save the maxHeight upon each request after a navigation event to ensure
+     * it doesn't change, but contains the max height of the routed components.
+     */
+    private _maxHeight = '0px';
+    get maxHeight() {
+        if (!this._maxHeight) {
+            this.updateHeight();
+        }
+        return this._maxHeight
+
+    }
+    @ViewChild('container') container: ElementRef;
+
     constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
         router.events.filter(e => e instanceof NavigationEnd).subscribe((n: NavigationEnd) => {
             let pageTitle = router.routerState.snapshot.root.children[0].data['title'];
@@ -53,13 +67,30 @@ export class FluinioAppComponent {
             window.scrollTo(0, 0);
             ga('send', 'pageview', n.urlAfterRedirects);
         });
+        router.events.filter(e => e instanceof NavigationStart).subscribe(next => {
+
+            if (this.container) {
+                this._maxHeight = null;
+            }
+        });
     }
 
+    /** Get the current page for route animation purposes */
     prepRouteState(outlet) {
-        console.log(`Page is currently ${outlet.activatedRouteData['page']}.`);
         return outlet.activatedRouteData['page'];
     }
-    getHeight() {
-        return document.body.offsetHeight;
+
+    /**
+     * Get the max height of the container based on children
+     */
+    updateHeight() {
+        let maxHeight = 0;
+        for (let i = 0; i < this.container.nativeElement.children.length; i++) {
+            let item = this.container.nativeElement.children[i] as HTMLElement;
+            maxHeight = Math.max(item.offsetHeight, maxHeight);
+        }
+
+        this._maxHeight = maxHeight + 'px';
     }
+
 }
