@@ -69,11 +69,6 @@ hr {
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.date {
-    color: #464646;
-    font-weight: normal;    
-}
-
 /* HEADER-TOOLBAR SECTION */
 
 #header {
@@ -85,7 +80,7 @@ hr {
     z-index: 9999;
     width: 100%;
     height: 75px;
-    background-color: rgba(53,63,73,0.6);
+    background-color: rgba(00,00,00,0.8);
 }
 #header a {
     color: white;
@@ -149,7 +144,7 @@ nav>* {
     color:rgba(255,255,255,.95);
     position:relative;
     font-size:16px;
-    background-color:rgba(53,63,73,0.7);
+    background-color:#3e4346;
 }
 
 #intro-block div {
@@ -178,10 +173,29 @@ nav>* {
     background: white;
     margin: 16px;
     text-align: center;
-    border: 0.25px solid #929292;
+    border: 0.25px solid rgba(0,0,0,.2);
     height: 300px;
     width:300px;
     overflow:hidden;
+    box-shadow: 4px 4px 6px 0px rgba(0,0,0,.2)
+}
+
+
+.post-image {
+    width: 300px;
+    height:200px;
+    background-size:cover;
+    background-position: center center;
+    border-bottom: solid 0.25px rgba(0,0,0,.2);
+}
+
+.post-title {
+    margin: 10px 0px;
+    font-size:18px;
+    padding:0 8px;
+}
+.post-date {
+    color:grey;
 }
 
 .post {
@@ -209,17 +223,6 @@ nav>* {
 }
 
 
-.post-image {
-    width: 300px;
-    height:200px;
-    background-size:cover;
-    background-position: center center;
-    border-bottom: solid 0.25px #929292;
-}
-
-.post-title {
-    margin: 10px 0px;
-}
 
 /* FOOTER SECTION */
 
@@ -334,6 +337,7 @@ router-outlet {
     }
     #intro-block img {
         width:100%;
+        height:calc( ( 100vw - 16px ) );
         padding: 0;
     }
     #posts-block {

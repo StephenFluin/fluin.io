@@ -11,10 +11,10 @@ import { PostService, Post } from 'app/shared/post.service';
         <div class="post-image" *ngIf="!post.image" style="background-image: url('/assets/images/imgpostholder.png')"></div>
         <div class="post-image" *ngIf="post.image" [style.background-image]="'url('+post.image+')'"></div>
         <div class="post-title">
-            <h2>{{post.title}}</h2>
+            {{post.title}}
         </div>
         <div class="post-date">
-            <h3 class="date">{{post.date}}</h3>
+            {{post.date}}
         </div>
     </div>
 
