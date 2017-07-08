@@ -207,7 +207,7 @@ nav>* {
 }
 .post code {
     margin-bottom:16px;
-    background-color:#DDD;
+    background-color:#f1f1f1;
     border:1px solid #ccc;
     display:block;
     padding:16px;
@@ -215,7 +215,7 @@ nav>* {
 }
 .post p code, .post li code {
     display:inline;
-    padding:4px;
+    padding:4px 8px;;
     border:none;
 }
 .post ul, .post ol {
