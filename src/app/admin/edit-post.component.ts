@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 @Component({
     template: `
-  <div *ngIf="postData | async as post; else loading" class="container" style="flex-grow:1;">
+  <div *ngIf="postData | async as post; else loading" class="padded" style="flex-grow:1;">
     <div class="columns" style="display:flex;">
         <form style="width:50%;padding:16px;" ngNoForm>
             <md-input-container><input mdInput placeholder="title" [(ngModel)]="post.title"></md-input-container>

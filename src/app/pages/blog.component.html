@@ -3,7 +3,7 @@
     <router-outlet></router-outlet>
     
         <!-- sidebar-->
-        <div id="sidebar" class="container" style="flex-grow:0">
+        <div id="sidebar" class="padded">
             <section style="margin-top:0px;text-align:center;">
                 <img style="width:50%;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
                 <div>
@@ -12,7 +12,7 @@
             </section>
 
             <hr>
-<!--
+            <!--
             <section>
                 <input type="search" placeholder="search">
             </section>
@@ -39,7 +39,7 @@
                 <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
                     <img *ngIf="!post.image" src="/assets/images/imgpostholder.png">
                     <img *ngIf="post.image" [src]="post.image">
-                    {{post.title}}
+                    <div>{{post.title}}</div>
                 </a>
             </section>
             <!-- end featured-blogs-->

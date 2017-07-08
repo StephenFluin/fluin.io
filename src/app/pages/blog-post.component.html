@@ -1,8 +1,4 @@
 <div *ngIf="post | async as post" class="container post" style="flex-grow:1">
-    <div class="highlight-image">
-        <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
-        <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
-    </div>
 
     <h1>{{post.title}}</h1>
     <div>
@@ -10,6 +6,10 @@
     </div>
     <div class="date">
         <h3>{{post.date}}</h3>
+    </div>
+    <div class="highlight-image">
+        <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
+        <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
     </div>
     <div [innerHTML]="post.renderedBody">
     </div>

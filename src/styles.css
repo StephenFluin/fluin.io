@@ -7,16 +7,28 @@
 h1, h2, h3 {
     margin:0px;
 }
+h1 {
+    font-size: 40px;
+    font-weight:400;
+    margin: 16px 0;
+}
 h2 {
-    font-size:18px;
+    font-size:28px;
+    margin-bottom:16px;
+    margin-top:32px;
+    font-weight:300;
+}
+h3 {
+    margin-top:16px;
+    margin-bottom:12px;
 }
 img {
     max-width:100%;
 }
 
 body {
-    font-size: 14px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 300;
     color: #383f49;
 }
 
@@ -28,9 +40,23 @@ code {
 a:active {
     text-decoration: none;
 }
+a {
+    color: #0083c5;
+    font-weight:bold;
+    text-decoration:none;
+    opacity: .90
+}
+a:visited {
+    color: #0083c5
+}
+a:hover {
+    text-decoration: none;
+    opacity:1;
+}
+
 
 .container {
-    padding: 30px;
+    padding: 32px;
 }
 p {
     line-height: 1.5;
@@ -61,23 +87,17 @@ hr {
     height: 75px;
     background-color: rgba(53,63,73,0.6);
 }
+#header a {
+    color: white;
+}
 
 #page {
     margin-top:75px;
     min-height:750px;
 }
 
-a:visited, a:link {
-    text-decoration: none;
-}
 
-a:hover {
-    text-decoration: none;
-}
 
-#header a:hover {
-    color: white;
-}
 
 
 nav {
@@ -100,6 +120,9 @@ nav>* {
     display:block;
 }
 
+.padded {
+    padding:32px;
+}
 
 .spacer {
     flex-grow: 1;
@@ -146,7 +169,6 @@ nav>* {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    /*border: 1px solid mediumpurple;*/
     width: 90%;
     max-width:1600px;
     margin: 50px auto 0px;
@@ -162,6 +184,10 @@ nav>* {
     overflow:hidden;
 }
 
+.post {
+    max-width:1300px;
+    margin:0px auto;
+}
 .post p {
     margin-bottom:16px;
 }
@@ -171,6 +197,7 @@ nav>* {
     border:1px solid #ccc;
     display:block;
     padding:16px;
+    border-radius: 4px;
 }
 .post p code, .post li code {
     display:inline;
@@ -227,7 +254,7 @@ router-outlet {
 #sidebar {
   width: 300px;
   background-color: rgba(53,63,73,0.1);
-  display:none;
+  flex-grow:0;
 }
 
 #sidebar input[type=search] {
@@ -242,7 +269,10 @@ router-outlet {
 }
 
 #blogpost .highlight-image {
-    max-width: 600px;
+    margin:32px 0;
+}
+#blogpost .highlight-image img {
+    max-height: 400px;
 }
 
 #social {
@@ -258,10 +288,16 @@ router-outlet {
     max-height: 150px;
     display:block;
     margin:0px auto;
+    margin-bottom:8px;
 }
 #featured-blogs>* {
-    margin-bottom:15px;
+    margin-bottom:32px;
     display:block;
+    background-color:#FFF;
+
+}
+#featured-blogs>*>div {
+    padding:16px;
 }
 
 /* ------------------- BIO PAGE CSS ------------------- */

@@ -5,7 +5,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 @Component({
     template: `
-		<div class="container" *ngIf="auth.isAdmin | async">
+		<div class="padded" *ngIf="auth.isAdmin | async">
 			<h2><span [title]="auth.uid | async">{{auth.name | async}}</span> Supervision (<a (click)="auth.logout()">logout</a>)</h2>
 			<ul>
 				<li><a routerLink="upload">Upload a file</a></li>
@@ -39,7 +39,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 				</div>
 			</div>
 		</div>
-		<div class="container" *ngIf="(auth.isAdmin | async) == false">
+		<div class="padded" *ngIf="(auth.isAdmin | async) == false">
 			<p>You need more access.</p>
 			<button (click)="auth.login()">Login</button>
 		</div>
