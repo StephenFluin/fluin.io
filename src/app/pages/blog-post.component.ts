@@ -8,6 +8,7 @@ import { Post, PostService } from '../shared/post.service';
 import 'rxjs/add/operator/switchMap';
 
 import * as Showdown from 'showdown';
+import 'showdown-youtube/dist/showdown-youtube.min.js';
 
 @Component({
     templateUrl: './blog-post.component.html',
@@ -31,10 +32,10 @@ export class BlogPostComponent {
             }
         }).map(item => {
                 title.setTitle(item.title + ' | fluin.io blog');
-                let converter = new Showdown.Converter();
+                let converter = new Showdown.Converter({extensions: ['youtube']});
                 converter.setOption('noHeaderId', 'true');
 
-                item.renderedBody = converter.makeHtml(item.body || '');
+                item.renderedBody = sanitized.bypassSecurityTrustHtml(converter.makeHtml(item.body || ''));
                 return item;
         })
     }

@@ -2,13 +2,19 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
+
 import { PostService, Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
+
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
 
 import * as Showdown from 'showdown';
-import { Subscription } from 'rxjs/Subscription';
+import 'showdown-youtube/dist/showdown-youtube.min.js';
 
 @Component({
     template: `
@@ -64,9 +70,10 @@ export class EditPostComponent {
         public posts: PostService,
         public ep: EditablePostService,
         title: Title,
-        public router: Router
+        public router: Router,
+        public sanitized: DomSanitizer
     ) {
-        this.converter = new Showdown.Converter();
+        this.converter = new Showdown.Converter({extensions: ['youtube']});
 
         this.postData = activatedRoute.params.switchMap((params) => {
             let filter;
@@ -95,7 +102,7 @@ export class EditPostComponent {
     }
 
     renderBody(post) {
-        this.renderedBody = this.converter.makeHtml(post.body || '');
+        this.renderedBody = this.sanitized.bypassSecurityTrustHtml(this.converter.makeHtml(post.body || ''));
     }
 
     save(post) {
