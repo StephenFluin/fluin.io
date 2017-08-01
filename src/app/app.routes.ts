@@ -9,9 +9,9 @@ import { TalksComponent } from './pages/talks.component';
 import { TalkViewComponent } from './pages/talk-view.component';
 
 export const routeConfig: Routes = [
-    { path: '', component: HomeComponent, data: { title: 'fluin.io' } },
+    { path: '', component: HomeComponent, data: { title: 'fluin.io', depth: 1 } },
     {
-        path: 'blog', data: { title: false }, component: BlogComponent, children: [
+        path: 'blog', data: { title: false, depth: 2 }, component: BlogComponent, children: [
             { path: '', component: BlogPostComponent },
             { path: ':id', component: BlogPostComponent },
         ]

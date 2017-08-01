@@ -36,7 +36,9 @@ export class PostService {
             .map(response => {
                 let result = response.json();
                 return result;
-            }));
+            }))
+            .shareReplay(1);
+        this.postMap.subscribe(next => next);
 
 
         // Turn an object into an array, similar to refirebase
