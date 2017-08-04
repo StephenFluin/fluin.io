@@ -7,6 +7,10 @@
     <div class="date">
         <h3>{{post.date}}</h3>
     </div>
+    <div *ngIf="adminService.isAdmin">
+	    <a [routerLink]="['/admin/',post.id]">Edit This Post</a>
+    </div>
+
     <div class="highlight-image">
         <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
         <img *ngIf="post.image" [src]="post.image" [alt]="post.title">

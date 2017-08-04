@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 
 import { PostService } from './shared/post.service';
 import { TalkService } from './shared/talk.service';
+import { AdminService } from './shared/admin.service';
 
 import { FluinioAppComponent } from './fluinio.component';
 import { HomeComponent } from './pages/home.component';
@@ -52,6 +53,7 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
         Title,
         PostService,
         TalkService,
+	AdminService,
     ],
 })
 export class AppModule { }

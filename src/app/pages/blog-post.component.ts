@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
+import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
 import 'rxjs/add/operator/switchMap';
 
@@ -19,6 +20,7 @@ export class BlogPostComponent {
     constructor(activatedRoute: ActivatedRoute,
         posts: PostService,
         title: Title,
+	public adminService: AdminService,
         private sanitized: DomSanitizer) {
 
         // Based on the requested ID, return a Post

@@ -18,6 +18,11 @@ import 'showdown-youtube/dist/showdown-youtube.min.js';
 
 @Component({
     template: `
+    <style>
+    md-input-container {
+    	display: block;
+    }
+    </style>
   <div *ngIf="postData | async as post; else loading" class="padded" style="flex-grow:1;">
     <div class="columns" style="display:flex;">
         <form style="width:50%;padding:16px;" ngNoForm>
@@ -37,7 +42,7 @@ import 'showdown-youtube/dist/showdown-youtube.min.js';
                 <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
             </div>
 
-            <h1>{{post.title}}</h1>
+            <h1><a [routerLink]="['/blog',post.id]" target="preview">{{post.title}}</a></h1>
             <div>
                 <h3>by Stephen Fluin</h3>
             </div>
