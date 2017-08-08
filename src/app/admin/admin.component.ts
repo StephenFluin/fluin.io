@@ -52,10 +52,9 @@ export class AdminComponent {
     selectedTalk;
 
     constructor(public auth: AuthService, public db: AngularFireDatabase) {
-        console.log('Admin component running.');
         this.posts = db.list('/posts').map(
             list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
         );
-        this.talkList = db.list('/talks/');
+		this.talkList = db.list('/talks/');
     }
 }

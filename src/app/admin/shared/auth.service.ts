@@ -14,7 +14,7 @@ export class AuthService {
         // this.af = {auth:{map:()=>{}}};
         let state = auth.authState;
 
-        this.isAdmin = state.map(authState => !!authState);
+        this.isAdmin = state.map(authState => (!!authState && authState.uid == 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'));
         this.name = state.map(authState => authState ? authState.displayName : null);
         this.uid = state.map(authState => authState ? authState.uid : null);
 
