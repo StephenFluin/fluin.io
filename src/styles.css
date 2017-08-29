@@ -1,3 +1,5 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
 * {
     margin: 0;
     padding: 0;
@@ -264,6 +266,9 @@ router-outlet {
     height: 30px; 
     width: 100%;
     text-indent: 10px;
+}
+md-input-container.mat-input-container {
+    width: 100%;
 }
 
 #sidebar section {
