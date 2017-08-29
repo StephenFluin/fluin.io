@@ -53,7 +53,7 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
         Title,
         PostService,
         TalkService,
-	AdminService,
+        AdminService,
     ],
 })
 export class AppModule { }
