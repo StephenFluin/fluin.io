@@ -41,7 +41,12 @@ export class PostService {
             })).shareReplay(1);
 
         // Force it to be hot and available for everyone without additional http requests
-        this.postMap.subscribe(n => n);
+        // Then Cache it
+        this.postMap.subscribe(n => {
+            console.log('Data source includes bytes', JSON.stringify(n).length);
+            localStorage['fluinPostCache'] = JSON.stringify(n);
+        });
+        this.postMap = this.postMap.startWith(JSON.parse(localStorage['fluinPostCache'] || ''));
 
 
         // Turn an object into an array, similar to refirebase

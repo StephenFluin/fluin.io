@@ -27,18 +27,6 @@
                     "maxEntries": 40,
                     "strategy": "lru"
                 }
-            },
-            {
-                "name": "offline",
-                "urls": {
-                    "https://fluindotio-website-93127.firebaseio.com/posts.json": { "match": "prefix"}
-                },
-                "cache": {
-                    "optimizeFor": "freshness",
-                    "maxAgeMs": 360000000,
-                    "maxEntries": 1,
-                    "strategy": "lru"
-                }
             }
         ]
         
