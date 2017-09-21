@@ -6,7 +6,8 @@
         ]
     },
     "static.ignore": [
-        "\\.js\\.map$"
+        "\\.js\\.map$",
+        "\\.js\\.chunk.js$"
     ],
     "static.versioned": [
         "\\.[0-9a-z]{20}\\."

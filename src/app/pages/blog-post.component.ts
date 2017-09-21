@@ -6,6 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/switchMap';
 
 import * as Showdown from 'showdown';
@@ -15,12 +16,12 @@ import 'showdown-youtube/dist/showdown-youtube.min.js';
     templateUrl: './blog-post.component.html',
 })
 export class BlogPostComponent {
-    post;
+    post: Observable<Post>;
 
     constructor(activatedRoute: ActivatedRoute,
         posts: PostService,
         title: Title,
-	public adminService: AdminService,
+        public adminService: AdminService,
         private sanitized: DomSanitizer) {
 
         // Based on the requested ID, return a Post
@@ -33,12 +34,12 @@ export class BlogPostComponent {
                 return posts.postMap.map(postMap => postMap[params['id']]);
             }
         }).map(item => {
-                title.setTitle(item.title + ' | fluin.io blog');
-                let converter = new Showdown.Converter({extensions: ['youtube']});
-                converter.setOption('noHeaderId', 'true');
+            title.setTitle(item.title + ' | fluin.io blog');
+            let converter = new Showdown.Converter({ extensions: ['youtube'] });
+            converter.setOption('noHeaderId', 'true');
 
-                item.renderedBody = sanitized.bypassSecurityTrustHtml(converter.makeHtml(item.body || ''));
-                return item;
+            item.renderedBody = sanitized.bypassSecurityTrustHtml(converter.makeHtml(item.body || ''));
+            return item;
         })
     }
 }

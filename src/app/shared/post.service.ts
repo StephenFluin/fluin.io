@@ -6,6 +6,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/shareReplay';
 import 'rxjs/add/operator/map';
+import { SafeHtml } from '@angular/platform-browser';
 
 
 export interface Post {
@@ -15,7 +16,7 @@ export interface Post {
     id: string;
     image: string;
     title: string;
-    renderedBody?: string;
+    renderedBody?: SafeHtml;
 }
 
 @Injectable()
@@ -24,7 +25,7 @@ export class PostService {
     /**
      * An object with post keys as keys, and post data as values
      */
-    postMap: Observable<any>;
+    postMap: Observable<{[key: string]: Post}>;
     /**
      * An sorted array of posts with keys directly on the object.
      */
