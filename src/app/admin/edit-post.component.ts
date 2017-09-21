@@ -19,17 +19,17 @@ import 'showdown-youtube/dist/showdown-youtube.min.js';
 @Component({
     template: `
     <style>
-    md-input-container {
+    mat-form-field {
     	display: block;
     }
     </style>
   <div *ngIf="postData | async as post; else loading" class="padded" style="flex-grow:1;">
     <div class="columns" style="display:flex;">
         <form style="width:50%;padding:16px;" ngNoForm>
-            <md-input-container><input mdInput placeholder="title" [(ngModel)]="post.title"></md-input-container>
-            <md-input-container><input mdInput placeholder="image url" [(ngModel)]="post.image"></md-input-container>
-            <md-input-container><input mdInput placeholder="id" [(ngModel)]="post.id"></md-input-container>
-            <md-input-container><input mdInput placeholder="date" type="date" [(ngModel)]="post.date"></md-input-container>
+            <mat-form-field><input matInput placeholder="title" [(ngModel)]="post.title"></mat-form-field>
+            <mat-form-field><input matInput placeholder="image url" [(ngModel)]="post.image"></mat-form-field>
+            <mat-form-field><input matInput placeholder="id" [(ngModel)]="post.id"></mat-form-field>
+            <mat-form-field><input matInput placeholder="date" type="date" [(ngModel)]="post.date"></mat-form-field>
             <textarea placeholder="body"
                 (ngModelChange)="renderBody(post)"
                 [(ngModel)]="post.body"

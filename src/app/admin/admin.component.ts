@@ -13,11 +13,11 @@ import { AngularFireDatabase } from 'angularfire2/database';
 
 			<div style="overflow:hidden;">
 				<a *ngFor="let post of posts | async" [routerLink]="post.$key">
-					<md-card style="margin:0 16px 16px 0;width:300px;height:125px;float:left;">
+					<mat-card style="margin:0 16px 16px 0;width:300px;height:125px;float:left;">
 						<img *ngIf="post.image" [src]="post.image" style="height:40px;margin:0px auto;display:block;">
 						<div><strong>{{post.title}}</strong></div>
 						<div>{{post.date}}</div>
-					</md-card>
+					</mat-card>
 				</a>
 			</div>
 
@@ -34,7 +34,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 				</select>
 				<div *ngIf="selectedTalk">
 					<h3>Talk Image Upload</h3>
-					<md-input-container><input mdInput [(ngModel)]="talkName"></md-input-container>
+					<mat-form-field><input matInput [(ngModel)]="talkName"></mat-form-field>
 					<image-upload [folder]="'talks/'+selectedTalk.$key"></image-upload>
 				</div>
 			</div>

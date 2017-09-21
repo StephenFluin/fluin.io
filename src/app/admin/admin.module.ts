@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { MdCardModule, MdInputModule } from '@angular/material';
+import { MatCardModule, MatInputModule, MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
 
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
@@ -35,7 +35,7 @@ import { AppModule } from '../app.module';
         }),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
-        MdCardModule, MdInputModule,
+        MatCardModule, MatInputModule,
         FirebaseToolsModule,
     ],
     declarations: [
@@ -46,6 +46,7 @@ import { AppModule } from '../app.module';
     providers: [
         AuthService,
         EditablePostService,
+        { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
     ]
 })
 export class AdminModule { }
