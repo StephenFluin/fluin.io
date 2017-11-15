@@ -87,7 +87,7 @@ export class EditPostComponent {
                 return;
             } else if (params['id'] === 'new') {
 
-                return Observable.of({});
+                return Observable.of(null);
             }
 
             return posts.postMap.map(postListObject => {

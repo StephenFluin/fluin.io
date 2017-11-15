@@ -16,7 +16,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</0.8ef76d66193d4034fcc5.chunk.js>;rel=preload;as=script,</3rdpartylicenses.txt>;rel=preload;as=script,</inline.d58f0a801ffe2fd1f12b.bundle.js>;rel=preload;as=script,</main.ac9ddc8efb1a1cb82423.bundle.js>;rel=preload;as=script,</ngsw-manifest.json>;rel=preload;as=script,</styles.5341e0def61b0cde1351.bundle.css>;rel=preload;as=style,</sw-register.079c1e32d3011a9a95ca.bundle.js>;rel=preload;as=script,</webfont.js>;rel=preload;as=script,</worker-basic.min.js>;rel=preload;as=script,"
+            "value": "</3rdpartylicenses.txt>;rel=preload;as=script,</admin.module.91a6bf9350c788542097.chunk.js>;rel=preload;as=script,</inline.f0483fa185931044857a.bundle.js>;rel=preload;as=script,</main.a57b0d4030e6edbae09b.bundle.js>;rel=preload;as=script,</ngsw-worker.js>;rel=preload;as=script,</ngsw.json>;rel=preload;as=script,</styles.5d25c36a5325157ed771.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
           }
         ]
       },

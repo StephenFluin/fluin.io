@@ -13,6 +13,7 @@ import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 // routes
 import { BlogPostComponent } from './pages/blog-post.component';
@@ -36,7 +37,8 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
         HttpModule,
         FirebaseToolsModule,
         BrowserAnimationsModule,
-        EmbeddableModule
+        EmbeddableModule,
+        ServiceWorkerModule.register('ngsw-worker.js'),
     ],
     declarations: [
         FluinioAppComponent,

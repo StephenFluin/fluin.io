@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule, MatInputModule, MATERIAL_COMPATIBILITY_MODE } from '@angular/material';
+import { MatCardModule, MatInputModule } from '@angular/material';
 
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
@@ -24,8 +24,8 @@ import { AppModule } from '../app.module';
         FormsModule,
         RouterModule.forChild([
             // path should be '' in Lazy loading, 'admin' in not
-            { path: '', component: AdminComponent, data: {title: 'Admin'} },
-            { path: ':id', component: EditPostComponent, data: {title: false}  },
+            { path: '', component: AdminComponent, data: { title: 'Admin' } },
+            { path: ':id', component: EditPostComponent, data: { title: false } },
         ]),
         AngularFireModule.initializeApp({
             apiKey: 'AIzaSyAJawulOMYRp0eXjMHLqiffzuS9tToCfAI',
@@ -35,18 +35,11 @@ import { AppModule } from '../app.module';
         }),
         AngularFireDatabaseModule,
         AngularFireAuthModule,
-        MatCardModule, MatInputModule,
+        MatCardModule,
+        MatInputModule,
         FirebaseToolsModule,
     ],
-    declarations: [
-        AdminComponent,
-        UploadComponent,
-        EditPostComponent,
-    ],
-    providers: [
-        AuthService,
-        EditablePostService,
-        { provide: MATERIAL_COMPATIBILITY_MODE, useValue: true}
-    ]
+    declarations: [AdminComponent, UploadComponent, EditPostComponent],
+    providers: [AuthService, EditablePostService],
 })
-export class AdminModule { }
+export class AdminModule {}
