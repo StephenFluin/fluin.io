@@ -9,14 +9,18 @@ import 'rxjs/add/operator/map';
 import { SafeHtml } from '@angular/platform-browser';
 
 
-export interface Post {
+export class Post {
     key: string;
-    body: string;
-    date: string;
-    id: string;
-    image: string;
-    title: string;
+    body?: string;
+    date?: string;
+    id?: string;
+    image?: string;
+    title?: string;
     renderedBody?: SafeHtml;
+    constructor() {
+        this.key = '';
+    }
+
 }
 
 @Injectable()
