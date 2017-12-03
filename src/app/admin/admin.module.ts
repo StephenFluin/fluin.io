@@ -10,12 +10,14 @@ import { UploadComponent } from './upload.component';
 import { EditPostComponent } from './edit-post.component';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthService } from './shared/auth.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseToolsModule } from '../firebasetools/firebasetools.module';
 import { AppModule } from '../app.module';
+import { environment } from 'environments/environment';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
     imports: [

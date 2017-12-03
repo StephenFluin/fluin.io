@@ -28,6 +28,7 @@ import { routeConfig } from './app.routes';
 
 // Pipes
 import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
+import { environment } from 'environments/environment';
 
 
 @NgModule({
@@ -38,7 +39,7 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
         FirebaseToolsModule,
         BrowserAnimationsModule,
         EmbeddableModule,
-        ServiceWorkerModule.register('ngsw-worker.js'),
+        environment.production ? ServiceWorkerModule.register('/ngsw-worker.js') : [],
     ],
     declarations: [
         FluinioAppComponent,

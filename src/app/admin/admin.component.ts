@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { PostService } from '../shared/post.service';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { map } from 'rxjs/operators';
 
 @Component({
     template: `
@@ -52,9 +53,9 @@ export class AdminComponent {
     selectedTalk;
 
     constructor(public auth: AuthService, public db: AngularFireDatabase) {
-        this.posts = db.list('/posts').map(
+        this.posts = db.list('/posts').pipe(map(
             list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
-        );
+        ));
 		this.talkList = db.list('/talks/');
     }
 }
