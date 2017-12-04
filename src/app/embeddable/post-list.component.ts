@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Http } from '@angular/http';
+import { map } from 'rxjs/operators';
 import { PostService, Post } from 'app/shared/post.service';
 
 @Component({
@@ -24,7 +24,7 @@ import { PostService, Post } from 'app/shared/post.service';
 export class PostListComponent {
     @Input() limit = 12;
     posts: Observable<any[]>;
-    constructor(http: Http, posts: PostService) {
-        this.posts = posts.postList.map(list => list.slice(0, this.limit));
+    constructor(posts: PostService) {
+        this.posts = posts.postList.pipe(map(list => list.slice(0, this.limit)));
     }
 }

@@ -2,7 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { trigger, transition, state, group, query, style, animate, animateChild } from '@angular/animations';
-import 'rxjs/add/operator/filter';
+import { filter } from 'rxjs/operators';
 
 declare var ga: any;
 @Component({
@@ -57,7 +57,7 @@ export class FluinioAppComponent {
     @ViewChild('container') container: ElementRef;
 
     constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
-        router.events.filter(e => e instanceof NavigationEnd).subscribe((n: NavigationEnd) => {
+        router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((n: NavigationEnd) => {
             let pageTitle = router.routerState.snapshot.root.children[0].data['title'];
             if (pageTitle) {
                 title.setTitle(pageTitle);
@@ -67,7 +67,7 @@ export class FluinioAppComponent {
             window.scrollTo(0, 0);
             ga('send', 'pageview', n.urlAfterRedirects);
         });
-        router.events.filter(e => e instanceof NavigationStart).subscribe(next => {
+        router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(next => {
 
             if (this.container) {
                 this._maxHeight = null;

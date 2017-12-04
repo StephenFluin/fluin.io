@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 
 import { Observable } from 'rxjs/Observable';
-
+import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
 
 export interface Image {
@@ -51,7 +51,7 @@ export class UploadComponent implements OnChanges {
 
         this.fileList = this.db.list(`/${this.folder}/images`);
         console.log('Rendering all images in ', `/${this.folder}/images`)
-        this.imageList = this.fileList.map(itemList =>
+        this.imageList = this.fileList.pipe(map(itemList =>
             itemList.map(item => {
                 let pathReference = storage.ref(item.path);
                 let result = { $key: item.$key, path: item.path, downloadURL: null, filename: item.filename };
@@ -61,7 +61,7 @@ export class UploadComponent implements OnChanges {
 
                 return result;
             })
-        );
+        ));
     }
 
 

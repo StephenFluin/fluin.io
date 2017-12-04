@@ -1923,9 +1923,9 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-firebase-http2-push-config@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/firebase-http2-push-config/-/firebase-http2-push-config-0.0.5.tgz#346aeb82b4c76a71b00837fb6f0be9b88f633f95"
+firebase-http2-push-config@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/firebase-http2-push-config/-/firebase-http2-push-config-0.0.10.tgz#71feb81d41b9a15e02cc5bb821c9362c67a3a4ff"
 
 firebase@^4.7.0:
   version "4.7.0"

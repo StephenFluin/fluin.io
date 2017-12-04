@@ -16,7 +16,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</3rdpartylicenses.txt>;rel=preload;as=script,</admin.module.91a6bf9350c788542097.chunk.js>;rel=preload;as=script,</inline.f0483fa185931044857a.bundle.js>;rel=preload;as=script,</main.a57b0d4030e6edbae09b.bundle.js>;rel=preload;as=script,</ngsw-worker.js>;rel=preload;as=script,</ngsw.json>;rel=preload;as=script,</styles.5d25c36a5325157ed771.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
+            "value": "</3rdpartylicenses.txt>;rel=preload;as=script,</admin.module.dd1e45f49d071faee4bb.chunk.js>;rel=preload;as=script,</inline.bc3f62c99b7f8ccd5d75.bundle.js>;rel=preload;as=script,</main.741333d38805d0999903.bundle.js>;rel=preload;as=script,</styles.963948360e6ee4f3c081.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
           }
         ]
       },

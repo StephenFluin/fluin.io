@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
 import { AdminService } from '../../shared/admin.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
@@ -14,14 +15,13 @@ export class AuthService {
         // this.af = {auth:{map:()=>{}}};
         let state = auth.authState;
 
-        this.isAdmin = state.map(authState => (!!authState && authState.uid == 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'));
-        this.name = state.map(authState => authState ? authState.displayName : null);
-        this.uid = state.map(authState => authState ? authState.uid : null);
+        this.isAdmin = state.pipe(map(authState => !!authState && authState.uid === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'));
+        this.name = state.pipe(map(authState => (authState ? authState.displayName : null)));
+        this.uid = state.pipe(map(authState => (authState ? authState.uid : null)));
 
-	this.isAdmin.subscribe(state => {
-		this.admin.isAdmin = state;
-	});
-
+        this.isAdmin.subscribe(isAdmin => {
+            this.admin.isAdmin = isAdmin;
+        });
     }
     login() {
         this.auth.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
@@ -30,5 +30,4 @@ export class AuthService {
     logout() {
         this.auth.auth.signOut();
     }
-
 }

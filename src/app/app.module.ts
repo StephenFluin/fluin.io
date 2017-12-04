@@ -2,10 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
 
 import { PostService } from './shared/post.service';
-import { TalkService } from './shared/talk.service';
 import { AdminService } from './shared/admin.service';
 
 import { FluinioAppComponent } from './fluinio.component';
@@ -18,8 +16,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 // routes
 import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
-import { TalksComponent } from './pages/talks.component';
-import { TalkViewComponent } from './pages/talk-view.component';
 
 import { EmbeddableModule } from './embeddable/embeddable.module';
 
@@ -29,13 +25,14 @@ import { routeConfig } from './app.routes';
 // Pipes
 import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
 import { environment } from 'environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
     imports: [
         BrowserModule,
         RouterModule.forRoot(routeConfig),
-        HttpModule,
+        HttpClientModule,
         FirebaseToolsModule,
         BrowserAnimationsModule,
         EmbeddableModule,
@@ -45,8 +42,6 @@ import { environment } from 'environments/environment';
         FluinioAppComponent,
         HomeComponent,
         BlogComponent,
-        TalksComponent,
-        TalkViewComponent,
         BlogPostComponent,
         BioComponent,
         ProjectsComponent,
@@ -55,7 +50,6 @@ import { environment } from 'environments/environment';
     providers: [
         Title,
         PostService,
-        TalkService,
         AdminService,
     ],
 })
