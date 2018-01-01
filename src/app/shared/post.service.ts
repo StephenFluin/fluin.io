@@ -45,7 +45,8 @@ export class PostService {
         this.postMap.subscribe(n => {
             localStorage['fluinPostCache'] = JSON.stringify(n);
         });
-        this.postMap = this.postMap.pipe(startWith(JSON.parse(localStorage['fluinPostCache'] || '')));
+
+        this.postMap = this.postMap.pipe(startWith(JSON.parse(localStorage['fluinPostCache'] || '{}')));
 
         // Turn an object into an array, similar to refirebase
         this.postList = this.postMap.pipe(
