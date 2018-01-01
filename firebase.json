@@ -3,32 +3,16 @@
     "rules": "database.rules.json"
   },
   "hosting": {
-    "public": "dist",
+    "directory": "dist",
     "rewrites": [
       {
         "source": "**",
-        "destination": "/index.html"
-      }
-    ],
-    "headers": [
-      {
-        "source": "/",
-        "headers": [
-          {
-            "key": "Link",
-            "value": "</3rdpartylicenses.txt>;rel=preload;as=script,</admin.module.dd1e45f49d071faee4bb.chunk.js>;rel=preload;as=script,</inline.bc3f62c99b7f8ccd5d75.bundle.js>;rel=preload;as=script,</main.741333d38805d0999903.bundle.js>;rel=preload;as=script,</styles.963948360e6ee4f3c081.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
-          }
-        ]
-      },
-      {
-        "source": "**/*.js",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "max-age=14400"
-          }
-        ]
+        "function": "ssrapp"
       }
     ]
+  },
+  "functions": {
+    "predeploy": "npm --prefix functions run build"
   }
 }
+

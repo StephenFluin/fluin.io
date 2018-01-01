@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^8.5.2",
+    "angular-universal-express-firebase": "^0.0.4",
+    "firebase-admin": "^5.6.0",
+    "firebase-functions": "^0.7.5",
+    "firebase-tools": "^3.16.0"
+  },
+  "private": true
+}
