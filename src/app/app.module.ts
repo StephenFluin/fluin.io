@@ -27,6 +27,13 @@ import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
 import { environment } from 'environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 
+export class MyErrorHandler {
+    constructor() {}
+    handleError(error: any): void {
+        console.log('Error in Angular!');
+        console.error(error);
+    }
+}
 
 @NgModule({
     imports: [
@@ -51,7 +58,10 @@ import { HttpClientModule } from '@angular/common/http';
         Title,
         PostService,
         AdminService,
+        {
+            provide: ErrorHandler,
+            useClass: MyErrorHandler,
+        },
     ],
 })
-export class AppModule { }
-
+export class AppModule {}

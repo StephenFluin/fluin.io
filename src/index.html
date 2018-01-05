@@ -21,13 +21,19 @@
 
         ga('create', 'UA-66278430-2', 'auto');
     </script>
-    <script src="./webfont.js"></script>
+    
     <script>
-        WebFont.load({
+        WebFontConfig = ({
             google: {
                 families: ['Montserrat', 'Roboto Mono']
             }
         });
+        (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = './webfont.js';
+      wf.async = true;
+      s.parentNode.insertBefore(wf, s);
+   })(document);
     </script>
 </head>
 

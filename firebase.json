@@ -6,6 +6,10 @@
     "public": "dist",
     "rewrites": [
       {
+        "source": "/worker-basic.min.js",
+        "destination": "/ngsw-worker.js"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
@@ -16,7 +20,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</3rdpartylicenses.txt>;rel=preload;as=script,</admin.module.dd1e45f49d071faee4bb.chunk.js>;rel=preload;as=script,</inline.bc3f62c99b7f8ccd5d75.bundle.js>;rel=preload;as=script,</main.741333d38805d0999903.bundle.js>;rel=preload;as=script,</styles.963948360e6ee4f3c081.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
+            "value": "</admin.module.9e0e6e3f6f8b4ef2e073.chunk.js>;rel=preload;as=script,</inline.dd8cdd389519e7e336ee.bundle.js>;rel=preload;as=script,</main.d705e5db2da58053b53d.bundle.js>;rel=preload;as=script,</styles.47d29a8e402381ae02af.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
           }
         ]
       },
