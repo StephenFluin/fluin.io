@@ -36,11 +36,14 @@ export class BlogPostComponent {
                 }
             }),
             map(item => {
-                title.setTitle(item.title + ' | fluin.io blog');
-                let converter = new Showdown.Converter({ extensions: ['youtube'] });
-                converter.setOption('noHeaderId', 'true');
+                if (item) {
+                    title.setTitle(item.title + ' | fluin.io blog');
 
-                item.renderedBody = sanitized.bypassSecurityTrustHtml(converter.makeHtml(item.body || ''));
+                    let converter = new Showdown.Converter({ extensions: ['youtube'] });
+                    converter.setOption('noHeaderId', 'true');
+
+                    item.renderedBody = sanitized.bypassSecurityTrustHtml(converter.makeHtml(item.body || ''));
+                }
                 return item;
             })
         );
