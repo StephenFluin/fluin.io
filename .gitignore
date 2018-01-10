@@ -10,6 +10,7 @@
 /node_modules
 /bower_components
 /functions/node_modules
+/functions/lib
 
 # IDEs and editors
 /.idea

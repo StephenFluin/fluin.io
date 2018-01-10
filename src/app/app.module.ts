@@ -14,6 +14,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 // routes
+import { NotFoundComponent } from './not-found.component';
+import { Send404Component } from 'app/send-404.component';
 import { BlogPostComponent } from './pages/blog-post.component';
 import { ProjectsComponent } from './pages/projects.component';
 
@@ -40,11 +42,13 @@ import { HttpClientModule } from '@angular/common/http';
     ],
     declarations: [
         FluinioAppComponent,
+        NotFoundComponent,
         HomeComponent,
         BlogComponent,
         BlogPostComponent,
         BioComponent,
         ProjectsComponent,
+        Send404Component,
     ],
     bootstrap: [FluinioAppComponent],
     providers: [
