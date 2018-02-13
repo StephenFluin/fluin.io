@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Title, Meta } from '@angular/platform-browser';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
 import { trigger, transition, state, group, query, style, animate, animateChild } from '@angular/animations';
 import { filter } from 'rxjs/operators';
@@ -56,7 +56,7 @@ export class FluinioAppComponent {
     }
     @ViewChild('container') container: ElementRef;
 
-    constructor(router: Router, activatedRoute: ActivatedRoute, title: Title) {
+    constructor(router: Router, activatedRoute: ActivatedRoute, title: Title, meta: Meta) {
         router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((n: NavigationEnd) => {
             let pageTitle = router.routerState.snapshot.root.children[0].data['title'];
             if (pageTitle) {
@@ -68,6 +68,7 @@ export class FluinioAppComponent {
             ga('send', 'pageview', n.urlAfterRedirects);
         });
         router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(next => {
+            meta.removeTag('name=robots');
 
             if (this.container) {
                 this._maxHeight = null;
