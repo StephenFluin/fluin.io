@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
 import { shareReplay, startWith, map, switchMap } from 'rxjs/operators';
 import { SafeHtml } from '@angular/platform-browser';
 

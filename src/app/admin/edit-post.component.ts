@@ -7,9 +7,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostService, Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { map, switchMap, debounceTime } from 'rxjs/operators';
 
 import * as Showdown from 'showdown';
