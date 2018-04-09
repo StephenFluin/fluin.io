@@ -90,7 +90,7 @@ export function shareResults<T>(this: Observable<T>): Observable<T> {
 
 Observable.prototype.shareResults = shareResults;
 
-declare module 'rxjs/Observable' {
+declare module 'rxjs/internal/Observable' {
   interface Observable<T> {
     shareResults: typeof shareResults;
   }
