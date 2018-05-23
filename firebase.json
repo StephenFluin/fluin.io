@@ -22,7 +22,7 @@
         "headers": [
           {
             "key": "Link",
-            "value": "</admin.module.f50c7214b100be70e04b.chunk.js>;rel=preload;as=script,</inline.f0c59aff53005a1b2429.bundle.js>;rel=preload;as=script,</main.c18722e2c864bb7e09e9.bundle.js>;rel=preload;as=script,</styles.1b9bd52fa59f4f607404.bundle.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
+            "value": "</app-admin-admin-module-ngfactory.c238cc83e9597f3b1593.js>;rel=preload;as=script,</main.14df1986f4959c379a78.js>;rel=preload;as=script,</runtime.55af723e44788f68523c.js>;rel=preload;as=script,</safety-worker.js>;rel=preload;as=script,</styles.4f278958c767cb999df1.css>;rel=preload;as=style,</webfont.js>;rel=preload;as=script,"
           }
         ]
       },

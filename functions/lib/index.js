@@ -24,4 +24,14 @@ exports.generateSitemap = functions.https.onRequest((request, response) => {
         response.send({ msg: 'Error generating sitemap.', error: err });
     });
 });
+exports.notFoundError = functions.https.onRequest((request, response) => {
+    const data = fetch('https://fluin.io');
+    data
+        .then(result => result.text())
+        .then(result => {
+        response.set('Content-Type', 'text/html');
+        response.status(404).send(result);
+    })
+        .catch(response.status(404).send('Page could not be found.'));
+});
 //# sourceMappingURL=index.js.map
