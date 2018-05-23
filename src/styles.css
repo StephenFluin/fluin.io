@@ -267,7 +267,7 @@ router-outlet {
     width: 100%;
     text-indent: 10px;
 }
-md-input-container.mat-input-container {
+md-input-container.mat-form-field {
     width: 100%;
 }
 
