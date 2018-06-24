@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { AngularFireDatabase, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
+import { Observable } from 'rxjs';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { Post, PostService } from '../../shared/post.service';
 
 
@@ -10,10 +10,10 @@ export class EditablePostService {
     constructor(public db: AngularFireDatabase, public ps: PostService) {
 
     }
-    getObject(id: string): FirebaseObjectObservable<Post> {
+    getObject(id: string): AngularFireObject<Post> {
         return this.db.object(`posts/${id}/`);
     }
-    getPostList(): FirebaseListObservable<Post[]> {
+    getPostList(): AngularFireList<Post> {
         return this.db.list('posts');
     }
     save(post: Post) {

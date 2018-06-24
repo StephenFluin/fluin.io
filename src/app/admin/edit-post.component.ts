@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -7,10 +7,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostService, Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 
-import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { Subject } from 'rxjs/Subject';
-import { map, switchMap, debounceTime } from 'rxjs/operators';
+import { Observable ,  Subject, of as observableOf } from 'rxjs';
+import { map, switchMap, debounceTime, tap } from 'rxjs/operators';
 
 import * as Showdown from 'showdown';
 import 'showdown-youtube/dist/showdown-youtube.min.js';
@@ -58,7 +56,7 @@ export class EditPostComponent {
                     console.error('No post specified');
                     return;
                 } else if (params['id'] === 'new') {
-                    return Observable.of(new Post());
+                    return observableOf(new Post());
                 }
 
                 return posts.postMap.pipe(
@@ -72,7 +70,8 @@ export class EditPostComponent {
                         }
 
                         return item;
-                    })
+                    }),
+                    tap(post => this.contentChange(post)),
                 );
             })
         );

@@ -10,14 +10,11 @@ import { UploadComponent } from './upload.component';
 import { EditPostComponent } from './edit-post.component';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database-deprecated';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AuthService } from './shared/auth.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseToolsModule } from '../firebasetools/firebasetools.module';
-import { AppModule } from '../app.module';
-import { environment } from 'environments/environment';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 @NgModule({
     imports: [
@@ -35,8 +32,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
             databaseURL: 'https://fluindotio-website-93127.firebaseio.com',
             storageBucket: 'fluindotio-website-93127.appspot.com',
         }),
-        AngularFireDatabaseModule,
         AngularFireAuthModule,
+        AngularFireDatabaseModule,
         MatCardModule,
         MatInputModule,
         FirebaseToolsModule,

@@ -1,16 +1,16 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase';
+import { keyify } from './shared/keyify.operator';
 
 export interface Image {
     path: string;
     filename: string;
     downloadURL?: string;
-    $key?: string;
 }
 
 @Component({
@@ -39,8 +39,8 @@ export class UploadComponent implements OnChanges {
      */
     @Input() folder: string;
 
-    fileList: FirebaseListObservable<Image[]>;
-    imageList: Observable<Image[]>;
+    fileList: AngularFireList<Image>;
+    imageList: Observable<any>;
 
     constructor(public db: AngularFireDatabase, public router: Router) {
     }
@@ -49,12 +49,14 @@ export class UploadComponent implements OnChanges {
         console.log('new values for folder');
         let storage = firebase.storage();
 
-        this.fileList = this.db.list(`/${this.folder}/images`);
+        this.fileList = this.db.list<Image>(`/${this.folder}/images`);
         console.log('Rendering all images in ', `/${this.folder}/images`)
-        this.imageList = this.fileList.pipe(map(itemList =>
+        this.imageList = this.fileList.snapshotChanges().pipe(
+            keyify,
+            map(itemList =>
             itemList.map(item => {
                 let pathReference = storage.ref(item.path);
-                let result = { $key: item.$key, path: item.path, downloadURL: null, filename: item.filename };
+                let result = { $key: item.key, path: item.path, downloadURL: null, filename: item.filename };
                 // This Promise must be wrapped in Promise.resolve because the thennable from
                 // firebase isn't monkeypatched by zones and therefore doesn't trigger CD
                 result.downloadURL = Promise.resolve(pathReference.getDownloadURL());
@@ -94,21 +96,21 @@ export class UploadComponent implements OnChanges {
         }
 
     }
-    delete(image: Image) {
+    delete(image: Image & {key: string}) {
         let storagePath = image.path;
-        let referencePath = `${this.folder}/images/` + image.$key;
+        let referencePath = `${this.folder}/images/` + image.key;
 
         // Do these as two separate steps so you can still try delete ref if file no longer exists
 
         // Delete from Storage
-        firebase.storage().ref().child(storagePath).delete()
-            .then(
-            () => { },
-            (error) => console.error('Error deleting stored file', storagePath)
-            );
+        // firebase.storage().ref().child(storagePath).delete()
+        //     .then(
+        //     () => { },
+        //     (error) => console.error('Error deleting stored file', storagePath)
+        //     );
 
-        // Delete references
-        this.db.object(referencePath).remove()
+        // // Delete references
+        // this.db.object(referencePath).remove()
 
 
 

@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import * as Showdown from 'showdown';
 import 'showdown-youtube/dist/showdown-youtube.min.js';

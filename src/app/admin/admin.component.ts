@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './shared/auth.service';
-import { PostService } from '../shared/post.service';
-import { AngularFireDatabase } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { map } from 'rxjs/operators';
+import { Post } from '../shared/post.service';
+import { keyify } from './shared/keyify.operator';
+import { OperatorFunction } from 'rxjs';
+
+export interface Talk {
+	title: string;
+}
 
 @Component({
     template: `
@@ -13,7 +19,7 @@ import { map } from 'rxjs/operators';
 			</ul>
 
 			<div style="overflow:hidden;">
-				<a *ngFor="let post of posts | async" [routerLink]="post.$key">
+				<a *ngFor="let post of posts | async" [routerLink]="post.key">
 					<mat-card style="margin:0 16px 16px 0;width:300px;height:125px;float:left;">
 						<img *ngIf="post.image" [src]="post.image" style="height:40px;margin:0px auto;display:block;">
 						<div><strong>{{post.title}}</strong></div>
@@ -36,7 +42,7 @@ import { map } from 'rxjs/operators';
 				<div *ngIf="selectedTalk">
 					<h3>Talk Image Upload</h3>
 					<mat-form-field><input matInput [(ngModel)]="talkName"></mat-form-field>
-					<image-upload [folder]="'talks/'+selectedTalk.$key"></image-upload>
+					<image-upload [folder]="'talks/'+selectedTalk.key"></image-upload>
 				</div>
 			</div>
 		</div>
@@ -47,15 +53,18 @@ import { map } from 'rxjs/operators';
 		`,
 })
 export class AdminComponent {
-    posts;
+    posts = this.db.list<Post>('/posts').snapshotChanges().pipe(
+		keyify,
+		map(list => list.sort((a, b) => a.date >= b.date ? -1 : 1)),
+	);
+
     talkName: string;
-    talkList;
+    talkList = this.db.list<Talk>('/talks/').snapshotChanges().pipe(
+		keyify,
+	);
+	
     selectedTalk;
 
     constructor(public auth: AuthService, public db: AngularFireDatabase) {
-        this.posts = db.list('/posts').pipe(map(
-            list => (<{ date: Date }[]>list).sort((a, b) => a.date >= b.date ? -1 : 1)
-        ));
-		this.talkList = db.list('/talks/');
     }
 }
