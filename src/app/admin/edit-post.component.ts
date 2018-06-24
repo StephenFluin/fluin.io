@@ -44,7 +44,6 @@ export class EditPostComponent {
         this.postPreview = this.postChanges.pipe(
             debounceTime(300),
             map(post => {
-                console.log('rendering preview...');
                 return this.sanitized.bypassSecurityTrustHtml(this.converter.makeHtml((post && post.body) || ''));
             })
         );

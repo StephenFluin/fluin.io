@@ -17,19 +17,15 @@ export class EditablePostService {
         return this.db.list('posts');
     }
     save(post: Post) {
+        if(post.key !== undefined || post.key !== null) {
+            delete post.key;
+        }
         if (post.id) {
             let e = this.getObject(post.id);
-            console.log('starting update', e,post);
             e.update(post).then(console.log, console.error);
-            console.log('Finished upate.');
         } else {
             let l = this.getPostList();
-            let result = l.push(post);
-
-            result.then(r => {
-                console.log('promise finished with', r)
-            });
-
+            l.push(post);
         }
         this.ps.refreshData();
     }

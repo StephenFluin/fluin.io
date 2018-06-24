@@ -50,7 +50,6 @@ export class UploadComponent implements OnChanges {
         let storage = firebase.storage();
 
         this.fileList = this.db.list<Image>(`/${this.folder}/images`);
-        console.log('Rendering all images in ', `/${this.folder}/images`)
         this.imageList = this.fileList.snapshotChanges().pipe(
             keyify,
             map(itemList =>
@@ -103,14 +102,14 @@ export class UploadComponent implements OnChanges {
         // Do these as two separate steps so you can still try delete ref if file no longer exists
 
         // Delete from Storage
-        // firebase.storage().ref().child(storagePath).delete()
-        //     .then(
-        //     () => { },
-        //     (error) => console.error('Error deleting stored file', storagePath)
-        //     );
+        firebase.storage().ref().child(storagePath).delete()
+            .then(
+            () => { },
+            (error) => console.error('Error deleting stored file', storagePath)
+            );
 
-        // // Delete references
-        // this.db.object(referencePath).remove()
+        // Delete references
+        this.db.object(referencePath).remove()
 
 
 
