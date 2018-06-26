@@ -51,14 +51,14 @@ export class FluinioAppComponent {
         if (!this._maxHeight) {
             this.updateHeight();
         }
-        return this._maxHeight
+        return this._maxHeight;
 
     }
     @ViewChild('container') container: ElementRef;
 
     constructor(router: Router, activatedRoute: ActivatedRoute, title: Title, meta: Meta) {
         router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((n: NavigationEnd) => {
-            let pageTitle = router.routerState.snapshot.root.children[0].data['title'];
+            const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
             if (pageTitle) {
                 title.setTitle(pageTitle);
             } else if (pageTitle !== false) {
@@ -87,7 +87,7 @@ export class FluinioAppComponent {
     updateHeight() {
         let maxHeight = 0;
         for (let i = 0; i < this.container.nativeElement.children.length; i++) {
-            let item = this.container.nativeElement.children[i] as HTMLElement;
+            const item = this.container.nativeElement.children[i] as HTMLElement;
             maxHeight = Math.max(item.offsetHeight, maxHeight);
         }
 

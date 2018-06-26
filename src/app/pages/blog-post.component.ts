@@ -39,7 +39,7 @@ export class BlogPostComponent {
                 if (item) {
                     title.setTitle(item.title + ' | fluin.io blog');
 
-                    let converter = new Showdown.Converter({ extensions: ['youtube'] });
+                    const converter = new Showdown.Converter({ extensions: ['youtube'] });
                     converter.setOption('noHeaderId', 'true');
 
                     item.renderedBody = sanitized.bypassSecurityTrustHtml(converter.makeHtml(item.body || ''));

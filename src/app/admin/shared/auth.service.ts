@@ -13,8 +13,8 @@ export class AuthService {
 
     constructor(public auth: AngularFireAuth, public admin: AdminService) {
         // this.af = {auth:{map:()=>{}}};
-        let state = auth.authState;
-        console.log("State is", state);
+        const state = auth.authState;
+        console.log('State is', state);
 
         this.isAdmin = state.pipe(map(authState => !!authState && authState.uid === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'));
         this.name = state.pipe(map(authState => (authState ? authState.displayName : null)));

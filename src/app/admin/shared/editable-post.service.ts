@@ -17,14 +17,14 @@ export class EditablePostService {
         return this.db.list('posts');
     }
     save(post: Post) {
-        if(post.key !== undefined || post.key !== null) {
+        if (post.key !== undefined || post.key !== null) {
             delete post.key;
         }
         if (post.id) {
-            let e = this.getObject(post.id);
+            const e = this.getObject(post.id);
             e.update(post).then(console.log, console.error);
         } else {
-            let l = this.getPostList();
+            const l = this.getPostList();
             l.push(post);
         }
         this.ps.refreshData();

@@ -1,109 +1,103 @@
 {
-  "version": 1,
-  "newProjectRoot": "projects",
-  "projects": {
-    "test-proje": {
-      "root": "",
-      "projectType": "application",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "tsConfig": "src/tsconfig.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "favicon.ico",
-                "input": "src",
-                "output": "/"
-              },
-              {
-                "glob": "webfont.js",
-                "input": "src",
-                "output": "/"
-              }
-            ],
-            "styles": [
-              {
-                "input": "src/styles.css"
-              }
-            ],
-            "scripts": []
-          },
-          "configurations": {
-            "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "serviceWorker": true,
-              "fileReplacements": [
-                {
-                  "src": "src/environments/environment.ts",
-                  "replaceWith": "src/environments/environment.prod.ts"
+    "version": 1,
+    "newProjectRoot": "projects",
+    "projects": {
+        "fluinio": {
+            "root": "",
+            "projectType": "application",
+            "architect": {
+                "build": {
+                    "builder": "@angular-devkit/build-angular:browser",
+                    "options": {
+                        "outputPath": "dist",
+                        "index": "src/index.html",
+                        "main": "src/main.ts",
+                        "tsConfig": "src/tsconfig.json",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets",
+                                "output": "/assets"
+                            },
+                            {
+                                "glob": "favicon.ico",
+                                "input": "src",
+                                "output": "/"
+                            },
+                            {
+                                "glob": "webfont.js",
+                                "input": "src",
+                                "output": "/"
+                            }
+                        ],
+                        "styles": [
+                            {
+                                "input": "src/styles.css"
+                            }
+                        ],
+                        "scripts": []
+                    },
+                    "configurations": {
+                        "production": {
+                            "optimization": true,
+                            "outputHashing": "all",
+                            "sourceMap": false,
+                            "extractCss": true,
+                            "namedChunks": false,
+                            "aot": true,
+                            "extractLicenses": true,
+                            "vendorChunk": false,
+                            "buildOptimizer": true,
+                            "serviceWorker": true,
+                            "fileReplacements": [
+                                {
+                                    "src": "src/environments/environment.ts",
+                                    "replaceWith": "src/environments/environment.prod.ts"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "serve": {
+                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "options": {
+                        "browserTarget": "test-proje:build"
+                    },
+                    "configurations": {
+                        "production": {
+                            "browserTarget": "test-proje:build:production"
+                        }
+                    }
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n",
+                    "options": {
+                        "browserTarget": "test-proje:build"
+                    }
+                },
+                "lint": {
+                    "builder": "@angular-devkit/build-angular:tslint",
+                    "options": {
+                        "tsConfig": ["src/tsconfig.json"],
+                        "exclude": ["**/node_modules/**"]
+                    }
                 }
-              ]
             }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "test-proje:build"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "test-proje:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "test-proje:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [],
-            "exclude": []
-          }
         }
-      }
     },
-    "test-proje-e2e": {
-      "root": "",
-      "projectType": "application",
-      "cli": {},
-      "schematics": {}
+    "schematics": {
+        "@schematics/angular:class": {
+            "spec": false
+        },
+        "@schematics/angular:component": {
+            "spec": false,
+            "inlineStyle": true,
+            "inlineTemplate": true,
+            "prefix": "app",
+            "styleext": "css"
+        },
+        "@schematics/angular:directive": {
+            "prefix": "app"
+        }
     }
-  },
-  "schematics": {
-    "@schematics/angular:class": {
-      "spec": false
-    },
-    "@schematics/angular:component": {
-      "spec": false,
-      "inlineStyle": true,
-      "inlineTemplate": true,
-      "prefix": "app",
-      "styleext": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  }
 }

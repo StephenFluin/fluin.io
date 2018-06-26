@@ -50,7 +50,6 @@ export class EditPostComponent {
 
         this.postData = activatedRoute.params.pipe(
             switchMap(params => {
-                let filter;
                 if (!params['id']) {
                     console.error('No post specified');
                     return;
@@ -62,7 +61,7 @@ export class EditPostComponent {
                     map(postListObject => {
                         console.log('Looking for post from', params, postListObject);
                         console.log(postListObject);
-                        let item = postListObject[params['id']];
+                        const item = postListObject[params['id']];
                         if (item) {
                             title.setTitle('Edit ' + item.title + ' | fluin.io blog');
                             this.contentChange(item);

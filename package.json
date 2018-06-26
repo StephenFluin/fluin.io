@@ -41,8 +41,8 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.5.0",
     "@types/showdown": "^1.4.28",
-    "codelyzer": "^4.4.0",
-    "tslint": "^5.1.0"
+    "codelyzer": "^4.4.2",
+    "tslint": "~5.9.1"
   },
   "prettier": {
     "trailingComma": "es5",

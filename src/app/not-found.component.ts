@@ -6,7 +6,7 @@ import { Meta } from '@angular/platform-browser';
 })
 export class NotFoundComponent {
     constructor(meta: Meta) {
-        console.log("adding tag");
+        console.log('adding tag');
         meta.addTag({name: 'robots', content: 'noindex'});
     }
 }

@@ -48,9 +48,9 @@ export class PostService {
         // Turn an object into an array, similar to refirebase
         this.postList = this.postMap.pipe(
             map(data => {
-                let list = [];
-                for (let key of Object.keys(data)) {
-                    let item = data[key];
+                const list = [];
+                for (const key of Object.keys(data)) {
+                    const item = data[key];
                     item.key = key;
 
                     // Only include past items
