@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ng serve",
-    "lint": "tslint \"src/**/*.ts\""
+    "lint": "tslint \"src/**/*.ts\"",
+    "lh": "wait-on http://localhost:8080 && lighthouse-ci http://localhost:8080"
   },
   "author": "fluins",
   "license": "MIT",
@@ -30,6 +31,7 @@
     "core-js": "^2.4.0",
     "firebase": "~5.0.0",
     "firebase-http2-push-config": "^0.0.10",
+    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci",
     "raven-js": "^3.14.2",
     "rxjs": "6.2.1",
     "rxjs-compat": "^6.1.0",

@@ -8,6 +8,8 @@ branches:
 
 before_script:
   - yarn global add @angular/cli
+  - yarn global add http-server
+  - yarn global add wait-on
 
 cache:
   yarn: true
@@ -17,3 +19,5 @@ cache:
 script:
   - ng lint
   - ng build --prod
+  - http-server dist/ &
+  - yarn lh
