@@ -7,7 +7,7 @@ import { PostService, Post } from 'app/shared/post.service';
     selector: 'post-list',
     template: `
 <div id="posts-block" [style.min-height]="332*limit/4 + 'px'">
-    <div class="post-block" *ngFor="let post of posts | async | refirebase" [routerLink]="['blog',post.id]">
+    <div class="post-block" *ngFor="let post of posts | async" [routerLink]="['blog',post.id]">
         <div class="post-image" *ngIf="!post.image" style="background-image: url('/assets/images/imgpostholder.png')"></div>
         <div class="post-image" *ngIf="post.image" [style.background-image]="'url('+post.image+')'"></div>
         <div class="post-title">
