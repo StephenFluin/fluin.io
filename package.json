@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ng serve",
-    "lint": "tslint \"src/**/*.ts\"",
-    "lh": "wait-on http://localhost:8080 && lighthouse-ci http://localhost:8080"
+    "lint": "tslint \"src/**/*.ts\""
   },
   "author": "fluins",
   "license": "MIT",

@@ -7,9 +7,7 @@ branches:
     - master
 
 before_script:
-  - yarn global add @angular/cli
-  - yarn global add http-server
-  - yarn global add wait-on
+  - yarn global add @angular/cli http-server wait-on firebase-tools
 
 cache:
   yarn: true
@@ -19,5 +17,14 @@ cache:
 script:
   - ng lint
   - ng build --prod
-  - http-server dist/ &
-  - yarn lh
+  - tools/lighthouse-test.sh
+
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  local-dir: ./dist/
+  on:
+    branch: master

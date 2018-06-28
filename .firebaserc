@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "fluindotio-website-93127"
+    "default": "fluindotio-website-93127",
+    "ci": "fluinio-ci"
   }
 }
