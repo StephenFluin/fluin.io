@@ -1,29 +1,47 @@
-<!DOCTYPE html>
-<html>
-
-<head>
+<!DOCTYPE html><html lang="en-us"><head>
     <title>fluin.io</title>
     <meta charset="utf-8">
-    <base href="/fluin.io/">
+    <base href="/">
     <!--<link rel="stylesheet" href="css/main.css" type="text/css" />-->
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="The fluin.io site about Stephen Fluin and his Angular adventures.">
+    <link rel="manifest" href="/assets/manifest.json">
+    <meta name="theme-color" content="#545d65">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway|Roboto" rel="stylesheet">
+    <link rel="icon" sizes="192x192" href="/assets/icons/icon-192x192.png">
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-</head>
+        ga('create', 'UA-66278430-2', 'auto');
+    </script>
+    
+    <script>
+        WebFontConfig = ({
+            google: {
+                families: ['Montserrat', 'Roboto Mono']
+            }
+        });
+        (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = './webfont.js';
+      wf.async = true;
+      s.parentNode.insertBefore(wf, s);
+   })(document);
+    </script>
+<link rel="stylesheet" href="styles.e27f82f9898bee6edf19.css"></head>
 
 <body>
-    <app-root>Loading...</app-root>
-  
-    <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    <app-root>
+        <div id="header" class="padded">
+            <a href="/" style="font-weight: bold;font-size: 42px;color: white;">fluin.io</a>
+        </div>
+    </app-root>
 
-    ga('create', 'UA-66278430-2', 'auto');
 
-    </script>
-<script type="text/javascript" src="inline.js"></script><script type="text/javascript" src="styles.8528d868d7d3cb3f5554.bundle.js"></script><script type="text/javascript" src="main.28b96f14350ce962915d.bundle.js"></script></body>
 
-</html>
+<script type="text/javascript" src="runtime.ac238413b3d507c81fb6.js"></script><script type="text/javascript" src="main.098e4b6866035f1c7348.js"></script></body></html>
