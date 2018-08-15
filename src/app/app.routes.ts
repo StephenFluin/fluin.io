@@ -5,8 +5,8 @@ import { BlogComponent } from './pages/blog.component';
 import { BlogPostComponent } from './pages/blog-post.component';
 import { BioComponent } from './pages/bio.component';
 import { ProjectsComponent } from './pages/projects.component';
-import { NotFoundComponent } from 'app/not-found.component';
-import { Send404Component } from 'app/send-404.component';
+import { NotFoundComponent } from './not-found.component';
+import { Send404Component } from './send-404.component';
 
 export const routeConfig: Routes = [
     { path: '', component: HomeComponent, data: { title: 'fluin.io', page: 'home' } },

@@ -1,103 +1,115 @@
 {
-    "version": 1,
-    "newProjectRoot": "projects",
-    "projects": {
-        "fluinio": {
-            "root": "",
-            "projectType": "application",
-            "architect": {
-                "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
-                    "options": {
-                        "outputPath": "dist",
-                        "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "tsConfig": "src/tsconfig.json",
-                        "assets": [
-                            {
-                                "glob": "**/*",
-                                "input": "src/assets",
-                                "output": "/assets"
-                            },
-                            {
-                                "glob": "favicon.ico",
-                                "input": "src",
-                                "output": "/"
-                            },
-                            {
-                                "glob": "webfont.js",
-                                "input": "src",
-                                "output": "/"
-                            }
-                        ],
-                        "styles": [
-                            {
-                                "input": "src/styles.css"
-                            }
-                        ],
-                        "scripts": []
-                    },
-                    "configurations": {
-                        "production": {
-                            "optimization": true,
-                            "outputHashing": "all",
-                            "sourceMap": false,
-                            "extractCss": true,
-                            "namedChunks": false,
-                            "aot": true,
-                            "extractLicenses": true,
-                            "vendorChunk": false,
-                            "buildOptimizer": true,
-                            "serviceWorker": true,
-                            "fileReplacements": [
-                                {
-                                    "src": "src/environments/environment.ts",
-                                    "replaceWith": "src/environments/environment.prod.ts"
-                                }
-                            ]
-                        }
-                    }
-                },
-                "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
-                    "options": {
-                        "browserTarget": "fluinio:build"
-                    },
-                    "configurations": {
-                        "production": {
-                            "browserTarget": "fluinio:build:production"
-                        }
-                    }
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "fluinio:build"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-devkit/build-angular:tslint",
-                    "options": {
-                        "tsConfig": ["src/tsconfig.json"],
-                        "exclude": ["**/node_modules/**"]
-                    }
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "fluinio": {
+      "root": "",
+      "projectType": "application",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/fluinio",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "tsConfig": "src/tsconfig.json",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src",
+                "output": "/"
+              },
+              {
+                "glob": "webfont.js",
+                "input": "src",
+                "output": "/"
+              }
+            ],
+            "styles": [
+              {
+                "input": "src/styles.css"
+              }
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "serviceWorker": true,
+              "fileReplacements": [
+                {
+                  "src": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.prod.ts"
                 }
+              ]
             }
-        }
-    },
-    "schematics": {
-        "@schematics/angular:class": {
-            "spec": false
+          }
         },
-        "@schematics/angular:component": {
-            "spec": false,
-            "inlineStyle": true,
-            "inlineTemplate": true,
-            "prefix": "app",
-            "styleext": "css"
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "fluinio:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "fluinio:build:production"
+            }
+          }
         },
-        "@schematics/angular:directive": {
-            "prefix": "app"
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "fluinio:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "src/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/fluinio-server",
+            "main": "src/main.server.ts",
+            "tsConfig": "src/tsconfig.server.json"
+          }
         }
+      }
     }
+  },
+  "schematics": {
+    "@schematics/angular:class": {
+      "spec": false
+    },
+    "@schematics/angular:component": {
+      "spec": false,
+      "inlineStyle": true,
+      "inlineTemplate": true,
+      "prefix": "app",
+      "styleext": "css"
+    },
+    "@schematics/angular:directive": {
+      "prefix": "app"
+    }
+  }
 }
