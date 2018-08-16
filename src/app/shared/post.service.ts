@@ -4,6 +4,8 @@ import { Observable ,  Subject } from 'rxjs';
 import { shareReplay, startWith, map, switchMap } from 'rxjs/operators';
 import { SafeHtml } from '@angular/platform-browser';
 
+import { shareAndCache } from 'http-operators';
+
 export class Post {
     key: string;
     body?: string;
@@ -35,15 +37,8 @@ export class PostService {
         this.postMap = this.forceRefresher.pipe(
             startWith(null),
             switchMap(() => this.http.get<any>(this.url)),
-            shareReplay(1)
+            shareAndCache('fluinPostCache'),
         );
-
-        // Force it to be hot and available for everyone without additional http requests
-        // Then Cache it
-        this.postMap.subscribe(n => {
-            localStorage['fluinPostCache'] = JSON.stringify(n);
-        });
-        this.postMap = this.postMap.pipe(startWith(JSON.parse(localStorage['fluinPostCache'] || '{}')));
 
         // Turn an object into an array, similar to refirebase
         this.postList = this.postMap.pipe(

@@ -2970,6 +2970,11 @@ http-errors@~1.6.2:
     setprototypeof "1.1.0"
     statuses ">= 1.4.0 < 2"
 
+http-operators@^0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/http-operators/-/http-operators-0.0.3.tgz#af13ae44ffb08b94f301556b41e7e5199d3b061f"
+  integrity sha512-d9/vrdArzCYHwWCxgQ7vzXo3ArhF2uVPcAfiA18rk/0nmzakZTsggEuUOsgcGkANOrWJj2xCYtOIfqpweoYlgw==
+
 http-parser-js@>=0.4.0:
   version "0.4.9"
   resolved "https://registry.yarnpkg.com/http-parser-js/-/http-parser-js-0.4.9.tgz#ea1a04fb64adff0242e9974f297dd4c3cad271e1"
@@ -6466,7 +6471,7 @@ trim-right@^1.0.1:
   dependencies:
     glob "^7.1.2"
 
-tslib@1.9.0, tslib@^1.9.0:
+tslib@1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.0.tgz#e37a86fda8cbbaf23a057f473c9f4dc64e5fc2e8"
   integrity sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==
@@ -6476,7 +6481,7 @@ tslib@^1.7.1:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.8.0.tgz#dc604ebad64bcbf696d613da6c954aa0e7ea1eb6"
   integrity sha512-ymKWWZJST0/CkgduC2qkzjMOWr4bouhuURNXCn/inEX0L57BnRG6FhX76o7FOnsjHazCjfU2LKeSrlS2sIKQJg==
 
-tslib@^1.8.0:
+tslib@^1.8.0, tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
   integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
