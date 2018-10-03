@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { AdminService } from '../../shared/admin.service';
-import { auth as firebaseAuth} from 'firebase';
+import { auth as firebaseAuth} from 'firebase/app';
 import { map } from 'rxjs/operators';
 
 @Injectable()

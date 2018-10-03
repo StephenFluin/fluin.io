@@ -9,12 +9,12 @@ import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
 import { EditPostComponent } from './edit-post.component';
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AuthService } from './shared/auth.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseToolsModule } from '../firebasetools/firebasetools.module';
-import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 @NgModule({
     imports: [
