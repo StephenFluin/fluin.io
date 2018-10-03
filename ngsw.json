@@ -6,7 +6,32 @@
       "name": "files",
       "installMode": "prefetch",
       "updateMode": "prefetch",
-      "urls": [],
+      "urls": [
+        "/3.ef4333aa2523343cce6e.js",
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-256x256.png",
+        "/assets/icons/icon-32x32.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/images/background-1sm.jpg",
+        "/assets/images/black-background.svg",
+        "/assets/images/imgpostholder.png",
+        "/assets/images/logo.png",
+        "/assets/images/mainpic.jpg",
+        "/assets/images/sm-github.svg",
+        "/assets/images/sm-gplus.svg",
+        "/assets/images/sm-linkedin.svg",
+        "/assets/images/sm-twitter.svg",
+        "/assets/images/twitter.svg",
+        "/assets/manifest.json",
+        "/assets/speaker.jpg",
+        "/index.html",
+        "/main.e1cb784f0adaa2f7f11a.js",
+        "/runtime.dae6c346b9ba68802e36.js",
+        "/webfont.js"
+      ],
       "patterns": [
         "https:\\/\\/fonts\\.googleapis\\.com\\/css\\?family=Montserrat|Roboto\\+Mono",
         "https:\\/\\/fonts\\.gstatic\\.com\\/s\\/montserrat\\/v10\\/zhcz-_WihjSQC0oHJ9TCYPk_vArhqVIZ0nv9q090hN8\\.woff2"
@@ -26,7 +51,32 @@
       "version": 1
     }
   ],
-  "hashTable": {},
+  "hashTable": {
+    "/3.ef4333aa2523343cce6e.js": "28fbb3d9941d4e35b5393130e94b64cb0aea9362",
+    "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
+    "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
+    "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
+    "/assets/icons/icon-192x192.png": "e2f39910ecec193d9646193e8d37ce11c94c32a1",
+    "/assets/icons/icon-256x256.png": "a1cec7818f3640cc21d8cc95a7b3b48a72506904",
+    "/assets/icons/icon-32x32.png": "6244dc39f5e687f5ccc8a7c9c51407e8c9892001",
+    "/assets/icons/icon-512x512.png": "3d764e358843bfc59ff10b3ed69826f6c38b892b",
+    "/assets/images/background-1sm.jpg": "9f06d15e6e752e621c7ecec037deb92b421a15e1",
+    "/assets/images/black-background.svg": "a8a9cf168c4d492c5521af794353b79c4c1a4c8f",
+    "/assets/images/imgpostholder.png": "d45cb5f3dc47e020c01ab20d9c551ffedb5df1ce",
+    "/assets/images/logo.png": "0be5b10750ca162e2057be78832585c1c07945f0",
+    "/assets/images/mainpic.jpg": "68882943f30846b8bf185bdbdfbea4f906bec95c",
+    "/assets/images/sm-github.svg": "80c95f106501cab23ac7b240eef5730c26f88360",
+    "/assets/images/sm-gplus.svg": "fc3188e126248be56498c36742afb95d7b934158",
+    "/assets/images/sm-linkedin.svg": "2e0481afaf4593bde5d8400a97f6241285a7254b",
+    "/assets/images/sm-twitter.svg": "63eeddfbe8938d204989452bac13da1909ef6ad0",
+    "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
+    "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
+    "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
+    "/index.html": "80ca8b1346857259bdcb54eb58b9cf0ec9cd9312",
+    "/main.e1cb784f0adaa2f7f11a.js": "76d10f81fe87a4eb0a4a15bdbd71ff7f3b7f5308",
+    "/runtime.dae6c346b9ba68802e36.js": "235f2b481d16baa16910a97ed528bd34b333126e",
+    "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
+  },
   "navigationUrls": [
     {
       "positive": true,
@@ -34,15 +84,15 @@
     },
     {
       "positive": false,
-      "regex": "^\\/(?:.+\\/)?[^\\/]*\\.[^\\/]*$"
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
     },
     {
       "positive": false,
-      "regex": "^\\/(?:.+\\/)?[^\\/]*__[^\\/]*$"
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
     },
     {
       "positive": false,
-      "regex": "^\\/(?:.+\\/)?[^\\/]*__[^\\/]*\\/.*$"
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
     }
   ]
 }
