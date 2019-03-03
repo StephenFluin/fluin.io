@@ -7,7 +7,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/3.ef4333aa2523343cce6e.js",
+        "/3.12f94ec3e16a20456afa.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -28,8 +28,8 @@
         "/assets/manifest.json",
         "/assets/speaker.jpg",
         "/index.html",
-        "/main.e1cb784f0adaa2f7f11a.js",
-        "/runtime.dae6c346b9ba68802e36.js",
+        "/main.611c72c9c6ef5cc18c92.js",
+        "/runtime.4fcb97cf9a5c9eb970e1.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -52,7 +52,7 @@
     }
   ],
   "hashTable": {
-    "/3.ef4333aa2523343cce6e.js": "28fbb3d9941d4e35b5393130e94b64cb0aea9362",
+    "/3.12f94ec3e16a20456afa.js": "b57109f4aa68b1580a6661d9dfaa925264878cf2",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -72,9 +72,9 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "80ca8b1346857259bdcb54eb58b9cf0ec9cd9312",
-    "/main.e1cb784f0adaa2f7f11a.js": "76d10f81fe87a4eb0a4a15bdbd71ff7f3b7f5308",
-    "/runtime.dae6c346b9ba68802e36.js": "235f2b481d16baa16910a97ed528bd34b333126e",
+    "/index.html": "d3332b5c7e9af64f7251f0972933b009627217f8",
+    "/main.611c72c9c6ef5cc18c92.js": "f8ed762d849391c0af85b81910dfda961904f215",
+    "/runtime.4fcb97cf9a5c9eb970e1.js": "6aea7ac0e1542a16edec5ec1ea458d312d16a759",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
