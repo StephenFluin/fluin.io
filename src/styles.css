@@ -6,24 +6,29 @@
     box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
+
 h1, h2, h3 {
     margin:0px;
 }
+
 h1 {
     font-size: 40px;
     font-weight:400;
     margin: 16px 0;
 }
+
 h2 {
     font-size:28px;
     margin-bottom:16px;
     margin-top:32px;
     font-weight:300;
 }
+
 h3 {
     margin-top:16px;
     margin-bottom:12px;
 }
+
 img {
     max-width:100%;
 }
@@ -42,24 +47,27 @@ code {
 a:active {
     text-decoration: none;
 }
+
 a {
     color: #0083c5;
     font-weight:bold;
     text-decoration:none;
     opacity: .90
 }
+
 a:visited {
     color: #0083c5
 }
+
 a:hover {
     text-decoration: none;
     opacity:1;
 }
 
-
 .container {
     padding: 32px;
 }
+
 p {
     line-height: 1.5;
 }
@@ -94,13 +102,11 @@ hr {
 }
 
 
-
-
-
 nav {
     display:flex;
     align-items:center;
 }
+
 nav>* {
     padding-left:30px;
     font-size: 16px;
@@ -113,6 +119,7 @@ nav>* {
 .route-container {
     position:relative;
 }
+
 .route-container>* {
     display:block;
 }
@@ -182,7 +189,6 @@ nav>* {
     box-shadow: 4px 4px 6px 0px rgba(0,0,0,.2)
 }
 
-
 .post-image {
     width: 300px;
     height:200px;
@@ -196,6 +202,7 @@ nav>* {
     font-size:18px;
     padding:0 8px;
 }
+
 .post-date {
     color:grey;
 }
@@ -204,22 +211,30 @@ nav>* {
     max-width:1300px;
     margin:0px auto;
 }
+
 .post p {
     margin-bottom:16px;
 }
+
+.post pre {
+    white-space: pre-wrap;
+}
+
 .post code {
-    margin-bottom:16px;
-    background-color:#f1f1f1;
-    border:1px solid #ccc;
-    display:block;
-    padding:16px;
+    margin-bottom: 16px;
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    display: block;
+    padding: 16px;
     border-radius: 4px;
 }
+
 .post p code, .post li code {
-    display:inline;
-    padding:4px 8px;;
-    border:none;
+    display: inline;
+    padding: 2px 6px;;
+    border: none;
 }
+
 .post ul, .post ol {
 	padding: 16px;
 }
@@ -358,6 +373,11 @@ md-input-container.mat-form-field {
     #sidebar {
         width:100%;
     }
+
+    .post iframe {
+        width: 100%;
+        height: 50vw;
+    }
 }
 
 /* Tablet */
@@ -366,4 +386,5 @@ md-input-container.mat-form-field {
     #intro-block div {
         width:100%;
     }
+
 }
