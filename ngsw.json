@@ -7,7 +7,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/3.12f94ec3e16a20456afa.js",
+        "/app-admin-admin-module-ngfactory.c518b7e6dde137910984.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -27,9 +27,11 @@
         "/assets/images/twitter.svg",
         "/assets/manifest.json",
         "/assets/speaker.jpg",
+        "/es2015-polyfills.93d33834f014c18240da.js",
         "/index.html",
-        "/main.611c72c9c6ef5cc18c92.js",
-        "/runtime.4fcb97cf9a5c9eb970e1.js",
+        "/main.269a849b27200e2a5bc4.js",
+        "/polyfills.13391cdb066748d88c83.js",
+        "/runtime.ffeb7f4fa97338258273.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -52,7 +54,7 @@
     }
   ],
   "hashTable": {
-    "/3.12f94ec3e16a20456afa.js": "b57109f4aa68b1580a6661d9dfaa925264878cf2",
+    "/app-admin-admin-module-ngfactory.c518b7e6dde137910984.js": "5075db2d0026c817a54ece682d15f5ac60001a5d",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -72,9 +74,11 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "d3332b5c7e9af64f7251f0972933b009627217f8",
-    "/main.611c72c9c6ef5cc18c92.js": "f8ed762d849391c0af85b81910dfda961904f215",
-    "/runtime.4fcb97cf9a5c9eb970e1.js": "6aea7ac0e1542a16edec5ec1ea458d312d16a759",
+    "/es2015-polyfills.93d33834f014c18240da.js": "e3254593c8b3483fe7ee542e29f24bbed2cb0289",
+    "/index.html": "8d7e546211af03fa0f29e7233c287051dd242453",
+    "/main.269a849b27200e2a5bc4.js": "08aa083d7839f7c5a0cced719f7315ae5616c600",
+    "/polyfills.13391cdb066748d88c83.js": "186c9702a8b8d01c5f25137cf23a42717ce75964",
+    "/runtime.ffeb7f4fa97338258273.js": "408cd901ae5160b76ba433447b8e885a0362ab8a",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
