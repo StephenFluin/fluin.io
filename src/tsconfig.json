@@ -16,5 +16,9 @@
       "es2016",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false,
+    "allowEmptyCodegenFiles": true,
   }
 }

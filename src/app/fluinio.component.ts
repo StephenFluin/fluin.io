@@ -1,7 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
-import { trigger, transition, state, group, query, style, animate, animateChild } from '@angular/animations';
+import { trigger, transition, group, query, style, animate } from '@angular/animations';
 import { filter } from 'rxjs/operators';
 
 declare var ga: any;

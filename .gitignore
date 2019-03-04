@@ -2,7 +2,7 @@
 
 # compiled output
 /dist
-/dist-*
+/dist*
 /tmp
 /src/ngfactory
 
