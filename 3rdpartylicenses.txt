@@ -360,6 +360,9 @@ firebase/auth
 
 firebase/database
 
+http-operators
+MIT
+
 promise-polyfill
 MIT
 Copyright (c) 2014 Taylor Hakes
