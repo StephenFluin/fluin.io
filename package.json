@@ -5,6 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "ng serve",
+    "build:client": "ng build --prod",
+    "build:server": "ng run fluinio:server",
+    "build": "yarn build:client && yarn build:server",
     "lint": "tslint \"src/**/*.ts\""
   },
   "author": "fluins",
@@ -40,6 +43,7 @@
     "showdown": "^1.5.4",
     "showdown-youtube": "^1.2.1",
     "ts-loader": "^4.4.2",
+    "ts-node": "^7.0.1",
     "typescript": ">=2.7.0 <2.8.0",
     "zone.js": "0.8.26"
   },
