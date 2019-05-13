@@ -1,5 +1,6 @@
 {
   "configVersion": 1,
+  "timestamp": 1557773334554,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -7,7 +8,7 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/app-admin-admin-module-ngfactory.c7d7e18354363d8ba68a.js",
+        "/app-admin-admin-module-ngfactory.e15c68d684c6af219a9b.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -27,11 +28,11 @@
         "/assets/images/twitter.svg",
         "/assets/manifest.json",
         "/assets/speaker.jpg",
-        "/es2015-polyfills.93d33834f014c18240da.js",
         "/index.html",
-        "/main.865deba26a36859ac069.js",
-        "/polyfills.13391cdb066748d88c83.js",
-        "/runtime.9203712a3fe31951c12c.js",
+        "/main.8ed46bac0016b757c19d.js",
+        "/polyfills-es5.77f83ccfb8e05ff469b9.js",
+        "/polyfills.e02fef4fdb574005c1f6.js",
+        "/runtime.76f973dd1485c38624f8.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -54,7 +55,7 @@
     }
   ],
   "hashTable": {
-    "/app-admin-admin-module-ngfactory.c7d7e18354363d8ba68a.js": "34007ddce98edf7fe5f850546ff25cc56ff68cec",
+    "/app-admin-admin-module-ngfactory.e15c68d684c6af219a9b.js": "4b7b255eff2a7fa4449e14b2fbf1de8ac260d116",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -74,11 +75,11 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/es2015-polyfills.93d33834f014c18240da.js": "e3254593c8b3483fe7ee542e29f24bbed2cb0289",
-    "/index.html": "89a57a94a975dc6402e66d57d4e31b35ba6689a0",
-    "/main.865deba26a36859ac069.js": "0a9eff0b6c948b04d6a4ad39f6d9a6a0e79882d4",
-    "/polyfills.13391cdb066748d88c83.js": "186c9702a8b8d01c5f25137cf23a42717ce75964",
-    "/runtime.9203712a3fe31951c12c.js": "3e5894c4580c1dcd059c3ea6594090510eae78cc",
+    "/index.html": "d718cf404ac9c975178745b95c671927009dcd0d",
+    "/main.8ed46bac0016b757c19d.js": "bab649165e866a88ff2b3cfbba645824225e278c",
+    "/polyfills-es5.77f83ccfb8e05ff469b9.js": "3505a8e49b8d95f4b6b3a07976293d223497a10f",
+    "/polyfills.e02fef4fdb574005c1f6.js": "948079e144fabaef175ed993a9f06a1abd30c129",
+    "/runtime.76f973dd1485c38624f8.js": "f2df9468b7af191ab0d3edc99b301632318fe424",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
