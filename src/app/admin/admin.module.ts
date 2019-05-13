@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule, MatInputModule } from '@angular/material';
+import { MatCardModule } from "@angular/material/card";
+import { MatInputModule } from "@angular/material/input";
 
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
@@ -19,7 +19,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 @NgModule({
     imports: [
         CommonModule,
-        HttpModule,
         FormsModule,
         RouterModule.forChild([
             // path should be '' in Lazy loading, 'admin' in not
