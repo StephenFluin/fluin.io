@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { MatCardModule } from "@angular/material/card";
-import { MatInputModule } from "@angular/material/input";
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 
 import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
@@ -40,4 +40,4 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     declarations: [AdminComponent, UploadComponent, EditPostComponent],
     providers: [AuthService, EditablePostService],
 })
-export class AdminModule {}
+export class AdminModule { }
