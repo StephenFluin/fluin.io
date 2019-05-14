@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "lib": ["es2015", "dom"],
     "module": "commonjs",
     "noImplicitReturns": true,
+    "noUnusedLocals": true,
     "outDir": "lib",
     "sourceMap": true,
-    "target": "es6"
+    "strict": false,
+    "target": "es2015"
   },
   "compileOnSave": true,
   "include": [
