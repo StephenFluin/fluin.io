@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1558308831414,
+  "timestamp": 1558309847899,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -79,7 +79,7 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "d2a3cee8b78e897a3a0729ed2270687e7d0b07a7",
+    "/index.html": "1ac330577a7013cd6da97be0e3048fed464cb2da",
     "/main-es2015.e8790a4a21df0cf1739f.js": "624a751b49cc377281ba5e21b549fc4dc7bf5254",
     "/main-es5.8ed46bac0016b757c19d.js": "1b6bcd347bccba1eb159d2eccef7b1d066780487",
     "/polyfills-es2015.7551d78f074f08f69eb8.js": "df897dcce6f002f59e392f909f26e7bf91667952",
