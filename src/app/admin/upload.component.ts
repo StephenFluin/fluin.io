@@ -5,6 +5,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as firebase from 'firebase/app';
+import 'firebase/storage';
 import { keyify } from './shared/keyify.operator';
 
 export interface Image {
