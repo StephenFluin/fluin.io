@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1558309847899,
+  "timestamp": 1558491367482,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -30,8 +30,8 @@
         "/assets/manifest.json",
         "/assets/speaker.jpg",
         "/index.html",
-        "/main-es2015.e8790a4a21df0cf1739f.js",
-        "/main-es5.8ed46bac0016b757c19d.js",
+        "/main-es2015.100c74138b3fe976274b.js",
+        "/main-es5.a4a627c9c4a47e22c55b.js",
         "/polyfills-es2015.7551d78f074f08f69eb8.js",
         "/polyfills-es5.0b3f792d0b0930f5efe7.js",
         "/runtime-es2015.b76229cb907df59d0f7b.js",
@@ -79,9 +79,9 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "1ac330577a7013cd6da97be0e3048fed464cb2da",
-    "/main-es2015.e8790a4a21df0cf1739f.js": "624a751b49cc377281ba5e21b549fc4dc7bf5254",
-    "/main-es5.8ed46bac0016b757c19d.js": "1b6bcd347bccba1eb159d2eccef7b1d066780487",
+    "/index.html": "f43b6e81ef0214c13ab7a3041c203218bc112dde",
+    "/main-es2015.100c74138b3fe976274b.js": "b2b3568375dc2ea7f7800fd2fec329e99b43cdfe",
+    "/main-es5.a4a627c9c4a47e22c55b.js": "788203c2703b7195f8c557fe0c38bade50757de8",
     "/polyfills-es2015.7551d78f074f08f69eb8.js": "df897dcce6f002f59e392f909f26e7bf91667952",
     "/polyfills-es5.0b3f792d0b0930f5efe7.js": "17c6ced382ca3442b31fed199a1f665d7709d667",
     "/runtime-es2015.b76229cb907df59d0f7b.js": "c86d910fb23d0e7890177c399c0c664cf214ffef",
