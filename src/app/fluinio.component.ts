@@ -53,7 +53,7 @@ export class FluinioAppComponent {
         }
         return this._maxHeight;
     }
-    @ViewChild('container') container: ElementRef;
+    @ViewChild('container', {static: false}) container: ElementRef;
 
     constructor(router: Router, activatedRoute: ActivatedRoute, title: Title, meta: Meta) {
         router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((n: NavigationEnd) => {
