@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1558491367482,
+  "timestamp": 1561666425805,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -8,8 +8,8 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/app-admin-admin-module-ngfactory-es2015.0557465a3bc9ed9aecec.js",
-        "/app-admin-admin-module-ngfactory-es5.24f03ad62c400de258f8.js",
+        "/app-admin-admin-module-ngfactory-es2015.49b331fac490092f7267.js",
+        "/app-admin-admin-module-ngfactory-es5.e58e84e516548b47f7e0.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -30,12 +30,12 @@
         "/assets/manifest.json",
         "/assets/speaker.jpg",
         "/index.html",
-        "/main-es2015.100c74138b3fe976274b.js",
-        "/main-es5.a4a627c9c4a47e22c55b.js",
-        "/polyfills-es2015.7551d78f074f08f69eb8.js",
-        "/polyfills-es5.0b3f792d0b0930f5efe7.js",
-        "/runtime-es2015.b76229cb907df59d0f7b.js",
-        "/runtime-es5.eb5929e21727f6075580.js",
+        "/main-es2015.cc1fc97a8d42d7d2791d.js",
+        "/main-es5.cbe24c6f46dee8a454b8.js",
+        "/polyfills-es2015.214c7a684f41a576b596.js",
+        "/polyfills-es5.59a0a16f1f2884e78ddd.js",
+        "/runtime-es2015.76ced1b5cac47d2a885a.js",
+        "/runtime-es5.c3fcd27b7d1faeb5b06d.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -58,8 +58,8 @@
     }
   ],
   "hashTable": {
-    "/app-admin-admin-module-ngfactory-es2015.0557465a3bc9ed9aecec.js": "36c8532eb514f5721f538ef7af87cc8d50a25d3e",
-    "/app-admin-admin-module-ngfactory-es5.24f03ad62c400de258f8.js": "73c65efaab3c4d4a138badedd3c325eb3c2c4c40",
+    "/app-admin-admin-module-ngfactory-es2015.49b331fac490092f7267.js": "f917faee7d3272098a6f4d5181370771353b0bcd",
+    "/app-admin-admin-module-ngfactory-es5.e58e84e516548b47f7e0.js": "e6963780f01273fc00871797e5d192a12f0f29e3",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -79,13 +79,13 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "f43b6e81ef0214c13ab7a3041c203218bc112dde",
-    "/main-es2015.100c74138b3fe976274b.js": "b2b3568375dc2ea7f7800fd2fec329e99b43cdfe",
-    "/main-es5.a4a627c9c4a47e22c55b.js": "788203c2703b7195f8c557fe0c38bade50757de8",
-    "/polyfills-es2015.7551d78f074f08f69eb8.js": "df897dcce6f002f59e392f909f26e7bf91667952",
-    "/polyfills-es5.0b3f792d0b0930f5efe7.js": "17c6ced382ca3442b31fed199a1f665d7709d667",
-    "/runtime-es2015.b76229cb907df59d0f7b.js": "c86d910fb23d0e7890177c399c0c664cf214ffef",
-    "/runtime-es5.eb5929e21727f6075580.js": "e8baa7f6abf741fb99f44109f38a4d712f71bbb2",
+    "/index.html": "0e727cba63b72c2bcf0ee8a306ce98810a0c9fad",
+    "/main-es2015.cc1fc97a8d42d7d2791d.js": "61e4547ecd95b4eaae3c93af56dd31a60d7a3dd9",
+    "/main-es5.cbe24c6f46dee8a454b8.js": "514e27200d931c9aae1d598c580f6291ba59072c",
+    "/polyfills-es2015.214c7a684f41a576b596.js": "a8a294404652b6437c9becdf751badf694a46727",
+    "/polyfills-es5.59a0a16f1f2884e78ddd.js": "c8b59ff1f6c13238d5ce5567c01c5b47523c1c39",
+    "/runtime-es2015.76ced1b5cac47d2a885a.js": "7dabcf11c9f5579957c64adf53a09fb44214a321",
+    "/runtime-es5.c3fcd27b7d1faeb5b06d.js": "7bf628531823387ae44745449adeb3b412296a7d",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
