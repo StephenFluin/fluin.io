@@ -41,7 +41,7 @@ declare var ga: any;
         ]),
     ],
 })
-export class FluinioAppComponent {
+export class AppComponent {
     /**
      * Save the maxHeight upon each request after a navigation event to ensure
      * it doesn't change, but contains the max height of the routed components.

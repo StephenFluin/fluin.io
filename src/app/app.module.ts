@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 import { PostService } from './shared/post.service';
 import { AdminService } from './shared/admin.service';
 
-import { FluinioAppComponent } from './fluinio.component';
+import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
 
@@ -41,7 +41,7 @@ import { HttpClientModule } from '@angular/common/http';
         ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     ],
     declarations: [
-        FluinioAppComponent,
+        AppComponent,
         NotFoundComponent,
         HomeComponent,
         BlogComponent,
@@ -50,7 +50,7 @@ import { HttpClientModule } from '@angular/common/http';
         ProjectsComponent,
         Send404Component,
     ],
-    bootstrap: [FluinioAppComponent],
+    bootstrap: [AppComponent],
     providers: [
         Title,
         PostService,
