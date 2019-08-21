@@ -10,8 +10,7 @@ import { EditablePostService } from './shared/editable-post.service';
 import { Observable ,  Subject, of as observableOf } from 'rxjs';
 import { map, switchMap, debounceTime, tap } from 'rxjs/operators';
 
-import * as Showdown from 'showdown';
-import 'showdown-youtube/dist/showdown-youtube.min.js';
+import snarkdown from 'snarkdown';
 import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -38,13 +37,12 @@ export class EditPostComponent {
         public router: Router,
         public sanitized: DomSanitizer
     ) {
-        this.converter = new Showdown.Converter({ extensions: ['youtube'] });
 
 
         this.postPreview = this.postChanges.pipe(
             debounceTime(300),
             map(post => {
-                return this.sanitized.bypassSecurityTrustHtml(this.converter.makeHtml((post && post.body) || ''));
+                return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
             })
         );
 

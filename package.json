@@ -34,15 +34,13 @@
     "raven-js": "^3.14.2",
     "rxjs": "6.5.2",
     "rxjs-compat": "^6.1.0",
-    "showdown": "^1.5.4",
-    "showdown-youtube": "^1.2.1",
+    "snarkdown": "^1.2.2",
     "tslib": "^1.9.0",
     "typescript": "3.5.3",
     "zone.js": "0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.0-rc.0",
-    "@types/showdown": "^1.4.28",
     "codelyzer": "^5.1.0",
     "tslint": "^5.18.0"
   },

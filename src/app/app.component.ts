@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 declare var ga: any;
 @Component({
     selector: 'app-root',
-    templateUrl: './fluinio.component.html',
+    templateUrl: './app.component.html',
     animations: [
         trigger('routeAnimation', [
             transition('home => blog', [
