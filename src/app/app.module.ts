@@ -32,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
-        BrowserModule,
+        BrowserModule.withServerTransition({ appId: 'serverApp' }),
         RouterModule.forRoot(routeConfig),
         HttpClientModule,
         FirebaseToolsModule,

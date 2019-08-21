@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc-server"
+  },
+  "angularCompilerOptions": {
+    "entryModule": "./app/app.server.module#AppServerModule"
+  }
+}
