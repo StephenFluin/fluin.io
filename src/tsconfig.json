@@ -17,6 +17,9 @@
       "dom"
     ]
   },
+  "exclude": [
+    "prerender.ts"
+  ],
   "angularCompilerOptions": {
     "enableIvy": true
   }
