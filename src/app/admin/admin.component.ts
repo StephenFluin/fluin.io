@@ -15,7 +15,7 @@ export interface Talk {
         <div class="padded" *ngIf="auth.isAdmin | async">
             <h2><span [title]="auth.uid | async">{{auth.name | async}}</span> Supervision (<a (click)="auth.logout()">logout</a>)</h2>
             <ul>
-                <li><a routerLink="upload">tUpload a file</a></li>
+                <li><a routerLink="upload">Upload a file</a></li>
             </ul>
 
             <div style="overflow:hidden;">
