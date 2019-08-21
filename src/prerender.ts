@@ -4,8 +4,8 @@ import * as child_process from 'child_process';
 
 async function main() {
     console.log('PRERENDER Running ng build --prod');
-    // const build = child_process.spawn('ng', ['build', '--prod']);
-    const build = child_process.spawn('ls');
+    const build = child_process.spawn('ng', ['build', '--prod']);
+    // const build = child_process.spawn('ls');
     // build.stdout.on('data', data => console.log('PRERENDER ng build output:', data));
     build.on('exit', () => {
         console.log('PRERENDER prod build complete');
@@ -35,10 +35,10 @@ async function render(url, destination) {
     const prerender = new Prerenderer({debug:true,timeout:30000,followRedirect:true});
 
     try {
-        const { status, redirect, meta, openGraph, links, html, staticHTML } = await prerender.render('http://localhost:8000/blog/5-things-to-do-after-ng-new');
+        const { status, redirect, meta, openGraph, links, html, staticHTML } = await prerender.render(url);
         console.log('status was',status,'redirect was',redirect,'meta was',meta);
         fs.mkdir(`${destination}/blog`, () => {});
-        // fs.writeFileSync(`${destination}/${path}`, staticHTML);
+        fs.writeFileSync(`${destination}/${path}`, staticHTML);
     } catch (e) {
         console.error(e);
     }
