@@ -4,7 +4,6 @@ import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
 import { Post } from '../shared/post.service';
 import { keyify } from './shared/keyify.operator';
-import { OperatorFunction } from 'rxjs';
 
 export interface Talk {
     title: string;
