@@ -30,6 +30,11 @@
                                 "glob": "webfont.js",
                                 "input": "src",
                                 "output": "/"
+                            },
+                            {
+                                "glob": "robots.txt",
+                                "input": "src",
+                                "output": "/"
                             }
                         ],
                         "styles": [

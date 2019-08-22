@@ -20,7 +20,7 @@ export interface Talk {
             <div style="overflow:hidden;">
                 <a *ngFor="let post of posts | async" [routerLink]="post.key">
                     <mat-card style="margin:0 16px 16px 0;width:300px;height:125px;float:left;">
-                        <img *ngIf="post.image" [src]="post.image" style="height:40px;margin:0px auto;display:block;">
+                        <img *ngIf="post.image" [src]="post.image" [alt]="post.title" style="height:40px;margin:0px auto;display:block;">
                         <div><strong>{{post.title}}</strong></div>
                         <div>{{post.date}}</div>
                     </mat-card>
