@@ -46,6 +46,7 @@ export class BlogPostComponent {
                         'twitter:card': 'summary',
                         'twitter:site': '@stephenfluin',
                         'twitter:creator': '@stephenfluin',
+                        'twitter:image': item.image,
                     };
                     const openGraphMeta = {
                         'og:url': `https://fluin.io/blog/${item.id}`,

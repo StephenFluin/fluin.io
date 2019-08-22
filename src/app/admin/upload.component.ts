@@ -29,6 +29,7 @@ export interface Image {
             style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;">
             <img *ngIf="img && img.downloadURL && img.downloadURL | async"
                 [src]="img.downloadURL | async"
+                alt="uploaded image"
                 style="max-width:100px;max-height:100px;">
 
             <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
