@@ -17,10 +17,11 @@
       "dom"
     ]
   },
-  "exclude": [
-    "prerender.ts"
+  "files": [
+    "main.ts",
+    "polyfills.ts"
   ],
-  "angularCompilerOptions": {
-    "enableIvy": true
-  }
+  "include": [
+    "**/*.d.ts"
+  ]
 }
