@@ -25,6 +25,6 @@ export class PostListComponent {
     @Input() limit = 12;
     posts: Observable<any[]>;
     constructor(posts: PostService) {
-        this.posts = posts.postList.pipe(map(list => list.slice(0, this.limit)));
+        this.posts = posts.postBrief.pipe(map(list => list.slice(0, this.limit)));
     }
 }

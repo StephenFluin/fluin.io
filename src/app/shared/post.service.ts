@@ -6,18 +6,24 @@ import { SafeHtml } from '@angular/platform-browser';
 
 import { shareAndCache } from 'http-operators';
 
-export class Post {
+export class PostBrief {
+    date: string;
+    image: string;
+    title: string;
+}
+
+export class Post extends PostBrief {
     key: string;
     body?: string;
-    date?: string;
     id?: string;
-    image?: string;
-    title?: string;
     renderedBody?: SafeHtml;
     constructor() {
+        super();
         this.key = '';
     }
 }
+
+
 
 @Injectable()
 export class PostService {
@@ -30,6 +36,8 @@ export class PostService {
      * An sorted array of posts with keys directly on the object.
      */
     postList: Observable<Post[]>;
+
+    postBrief: Observable<PostBrief[]> = this.http.get<PostBrief[]>('/api/postList');
 
     private forceRefresher = new Subject();
 
