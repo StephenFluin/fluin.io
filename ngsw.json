@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1567751358132,
+  "timestamp": 1575323987822,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -8,6 +8,8 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
+        "/app-admin-admin-module-es2015.1b86b73d62b481f0caaf.js",
+        "/app-admin-admin-module-es5.1b86b73d62b481f0caaf.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -28,12 +30,12 @@
         "/assets/manifest.json",
         "/assets/speaker.jpg",
         "/index.html",
-        "/main-es2015.a16b4a8a7afa85ce0c15.js",
-        "/main-es5.a16b4a8a7afa85ce0c15.js",
-        "/polyfills-es2015.05f76a21aed031115e1d.js",
-        "/polyfills-es5.d17638f62655f7807457.js",
-        "/runtime-es2015.03eab1b02f0603fed81e.js",
-        "/runtime-es5.03eab1b02f0603fed81e.js",
+        "/main-es2015.0c27e6e59fc52814d008.js",
+        "/main-es5.0c27e6e59fc52814d008.js",
+        "/polyfills-es2015.753fe0cebcf25c637607.js",
+        "/polyfills-es5.9202944fb09057ae1b81.js",
+        "/runtime-es2015.1134f4c49f66567a3f4a.js",
+        "/runtime-es5.1134f4c49f66567a3f4a.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -56,6 +58,8 @@
     }
   ],
   "hashTable": {
+    "/app-admin-admin-module-es2015.1b86b73d62b481f0caaf.js": "f20899a804618ac00d746e597b286734813bf97e",
+    "/app-admin-admin-module-es5.1b86b73d62b481f0caaf.js": "d55d3669cf6734b2b294b309c3b7865bb9c14430",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -75,13 +79,13 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "b166a3f51430000374bbba711d3f218486131d52",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "ef9851558fe69a8c44b63c6591353755522cb811",
-    "/main-es2015.a16b4a8a7afa85ce0c15.js": "c16f4fe536f26901ef5bb2cca4364883c3f1a2fd",
-    "/main-es5.a16b4a8a7afa85ce0c15.js": "866395b4a3a1b35756030c2cb0b257e0e1b8b39f",
-    "/polyfills-es2015.05f76a21aed031115e1d.js": "23365f1d2a08da9238622f1a50a5b2e5a0a0f434",
-    "/polyfills-es5.d17638f62655f7807457.js": "b2f10e6aa5f3a1924eeddb02f6504cce4c6d1583",
-    "/runtime-es2015.03eab1b02f0603fed81e.js": "de16aaf736fdc94975d995b2f724a3e25f20d541",
-    "/runtime-es5.03eab1b02f0603fed81e.js": "6525905025b7749b6e4a8cc3e861370ad2bddad3",
+    "/index.html": "c8d70537befb672a0cfc346f8eb525b637ec3b53",
+    "/main-es2015.0c27e6e59fc52814d008.js": "17ae2dd7f9ebd5bdb2c882712417ea31a5e8e818",
+    "/main-es5.0c27e6e59fc52814d008.js": "9d12b35aa96a778365bd7eb930eb2bffceb9ee61",
+    "/polyfills-es2015.753fe0cebcf25c637607.js": "d4fec14ed635744a27d6253d1aa64f34dcc81984",
+    "/polyfills-es5.9202944fb09057ae1b81.js": "565fcdfa697413491040b99b4db98299abb29ba2",
+    "/runtime-es2015.1134f4c49f66567a3f4a.js": "424868f54e289a94498bb9c72474a139d7e92bca",
+    "/runtime-es5.1134f4c49f66567a3f4a.js": "fbad22a1a3889b270d03f142dac07cf2d111c52f",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
