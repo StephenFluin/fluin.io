@@ -35,7 +35,7 @@ export class PostService {
 
     constructor(private http: HttpClient) {
         this.postMap = this.forceRefresher.pipe(
-            startWith(null),
+            startWith(false),
             switchMap(() => this.http.get<any>(this.url)),
             shareAndCache('fluinPostCache'),
         );
