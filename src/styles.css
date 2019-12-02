@@ -39,6 +39,12 @@ body {
     color: #383f49;
 }
 
+br {
+    content: 'A';
+    display: block;
+    margin-bottom: 0.75em;
+}
+
 code {
     font-family: 'Roboto Mono', monospace;
     

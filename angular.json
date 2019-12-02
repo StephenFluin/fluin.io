@@ -125,5 +125,6 @@
   },
   "cli": {
     "analytics": "897e81d9-535c-43e4-a026-a9d5301d2a9c"
-  }
+  },
+  "defaultProject": "fluinio"
 }
