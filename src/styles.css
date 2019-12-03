@@ -230,15 +230,16 @@ nav>* {
     margin-bottom: 16px;
     background-color: #f1f1f1;
     border: 1px solid #ccc;
+    display: inline-block;
+    padding: 2px 6px;;
+    border: none;
+}
+
+pre.code {
+    background-color: #f1f1f1;
     display: block;
     padding: 16px;
     border-radius: 4px;
-}
-
-.post p code, .post li code {
-    display: inline;
-    padding: 2px 6px;;
-    border: none;
 }
 
 .post ul, .post ol {
