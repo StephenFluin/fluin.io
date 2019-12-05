@@ -44,8 +44,9 @@ export class BlogPostComponent {
 
                     const twitterMetadata = {
                         'twitter:card': 'summary',
-                        'twitter:site': '@stephenfluin',
-                        'twitter:creator': '@stephenfluin',
+                        // Moved to global markup
+                        // 'twitter:site': '@stephenfluin',
+                        // 'twitter:creator': '@stephenfluin',
                         'twitter:image': item.image,
                     };
                     const openGraphMeta = {
