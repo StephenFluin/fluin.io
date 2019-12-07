@@ -1,6 +1,6 @@
 {
     "configVersion": 1,
-    "index": "/index.html",
+    "index": "/index-sw.html",
     "assetGroups": [
         {
             "name": "files",

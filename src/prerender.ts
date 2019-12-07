@@ -12,6 +12,7 @@ async function main() {
         console.log('PRERENDER prod build complete');
         console.log('PRERENDER setting up server');
         const cp = child_process.spawn('npx', ['http-server', 'dist', '-p8000', '--proxy', 'http://localhost:8000?']);
+        fs.copyFileSync('dist/index.html', 'dist/index-sw.html');
         cp.stdout.on('data', async data => {
             // console.log(`stdout data: ${data}`);
             if (/Available on/.test(data)) {
