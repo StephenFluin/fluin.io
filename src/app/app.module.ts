@@ -38,7 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
         FirebaseToolsModule,
         BrowserAnimationsModule,
         EmbeddableModule,
-        ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
+        //ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
     ],
     declarations: [
         AppComponent,
