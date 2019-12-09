@@ -9,7 +9,6 @@ import { AdminComponent } from './admin.component';
 import { UploadComponent } from './upload.component';
 import { EditPostComponent } from './edit-post.component';
 
-import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AuthService } from './shared/auth.service';
 import { EditablePostService } from './shared/editable-post.service';
@@ -25,12 +24,6 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
             { path: '', component: AdminComponent, data: { title: 'Admin' } },
             { path: ':id', component: EditPostComponent, data: { title: false } },
         ]),
-        AngularFireModule.initializeApp({
-            apiKey: 'AIzaSyAJawulOMYRp0eXjMHLqiffzuS9tToCfAI',
-            authDomain: 'fluindotio-website-93127.firebaseapp.com',
-            databaseURL: 'https://fluindotio-website-93127.firebaseio.com',
-            storageBucket: 'fluindotio-website-93127.appspot.com',
-        }),
         AngularFireAuthModule,
         AngularFireDatabaseModule,
         MatCardModule,
