@@ -94,9 +94,6 @@ MIT
 @angular/router
 MIT
 
-@angular/service-worker
-MIT
-
 @firebase/app
 Apache-2.0
 
