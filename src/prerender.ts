@@ -34,14 +34,15 @@ async function main() {
 
 async function render(url, destination) {
     const path = /^.*\/\/.*?\/(.*)$/.exec(url)[1];
-    console.log('PRERENDER prerendering', url, 'and', path);
+    console.log(`PRERENDER prerendering ${url} to ${path} in ${destination}.`);
 
     const prerender = new Prerenderer({ debug: false, timeout: 30000, followRedirect: true });
 
     try {
         const { status, redirect, meta, openGraph, links, html, staticHTML } = await prerender.render(url);
         // console.log('status was', status, 'redirect was', redirect, 'meta was', meta);
-        fs.mkdir(`${destination}/blog`, () => {});
+        // console.log('creating',`${destination}/${path.substring(0,path.lastIndexOf('/'))}`);
+        fs.mkdirSync(`${destination}/${path.substring(0,path.lastIndexOf('/'))}`, {recursive: true});
         fs.writeFileSync(`${destination}/${path}`, html);
     } catch (e) {
         console.error(e);
