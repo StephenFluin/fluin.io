@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1576003285444,
+  "timestamp": 1585151467201,
   "index": "/index-sw.html",
   "assetGroups": [
     {
@@ -8,8 +8,8 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/app-admin-admin-module-es2015.612819a932fae6026921.js",
-        "/app-admin-admin-module-es5.612819a932fae6026921.js",
+        "/app-admin-admin-module-es2015.52f3e374b6d18bbb318b.js",
+        "/app-admin-admin-module-es5.52f3e374b6d18bbb318b.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -29,13 +29,15 @@
         "/assets/images/twitter.svg",
         "/assets/manifest.json",
         "/assets/speaker.jpg",
+        "/firebase-auth-es2015.fb8704c35e483d6c1025.js",
+        "/firebase-auth-es5.fb8704c35e483d6c1025.js",
         "/index.html",
-        "/main-es2015.7709821651f5b01d2ee7.js",
-        "/main-es5.7709821651f5b01d2ee7.js",
-        "/polyfills-es2015.753fe0cebcf25c637607.js",
-        "/polyfills-es5.9202944fb09057ae1b81.js",
-        "/runtime-es2015.f439b411b69857440ac2.js",
-        "/runtime-es5.f439b411b69857440ac2.js",
+        "/main-es2015.e0ae7e853c7a8b9e10e0.js",
+        "/main-es5.e0ae7e853c7a8b9e10e0.js",
+        "/polyfills-es2015.1c6964afb059a5db4ad2.js",
+        "/polyfills-es5.646dbb91b5618196b32c.js",
+        "/runtime-es2015.3d82e927395542ddab82.js",
+        "/runtime-es5.3d82e927395542ddab82.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -58,8 +60,8 @@
     }
   ],
   "hashTable": {
-    "/app-admin-admin-module-es2015.612819a932fae6026921.js": "0cfba5cd073bb15531bf23a8cb3025416a5743d0",
-    "/app-admin-admin-module-es5.612819a932fae6026921.js": "7b30994d5e0ce2811a41a2bd2d3f66465e3c7351",
+    "/app-admin-admin-module-es2015.52f3e374b6d18bbb318b.js": "8a3f25cf37517748207c5906d9713398d2a81cc6",
+    "/app-admin-admin-module-es5.52f3e374b6d18bbb318b.js": "6810b7043c59f44d3e02cf99e80ba1546ea9a4a2",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -79,13 +81,15 @@
     "/assets/images/twitter.svg": "527b605673aab0fa107ff39c0c04f8eec404e68f",
     "/assets/manifest.json": "9018127c7f1ddc25149d0a6e4429221116304ebe",
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
-    "/index.html": "5155002fc4732fce94a5e7049ba22bd9500b6e02",
-    "/main-es2015.7709821651f5b01d2ee7.js": "59ec8f9eaeacaf5df5aca1a687358f6986ba9d82",
-    "/main-es5.7709821651f5b01d2ee7.js": "d97dcdac72e4b5e7730f34059115b7db3e71c8b2",
-    "/polyfills-es2015.753fe0cebcf25c637607.js": "d4fec14ed635744a27d6253d1aa64f34dcc81984",
-    "/polyfills-es5.9202944fb09057ae1b81.js": "565fcdfa697413491040b99b4db98299abb29ba2",
-    "/runtime-es2015.f439b411b69857440ac2.js": "5189fe17bcca1005a76230d175b6d1f35fc91d88",
-    "/runtime-es5.f439b411b69857440ac2.js": "5ce2fee8e89b85814a018afadb8aa3b8541a2b15",
+    "/firebase-auth-es2015.fb8704c35e483d6c1025.js": "bb3fe51c2c8e62a5452d28f90b9a77acf3d9f20d",
+    "/firebase-auth-es5.fb8704c35e483d6c1025.js": "5c751ec0fa0b7b9d4ebdfba8b5803818a20fa955",
+    "/index.html": "a22b33d17132062cb8ed46c07122c709e128c086",
+    "/main-es2015.e0ae7e853c7a8b9e10e0.js": "77ed5d5bc49902388dc6ecf4da99ee0eab05255c",
+    "/main-es5.e0ae7e853c7a8b9e10e0.js": "80c76fffa1d1ca21816cbdc7b177906cd3abb013",
+    "/polyfills-es2015.1c6964afb059a5db4ad2.js": "1e5e15701e55e6340fd09aa300603b7a0b1edb1a",
+    "/polyfills-es5.646dbb91b5618196b32c.js": "1897793ca44171c12e301edac6b631e6bc3b604e",
+    "/runtime-es2015.3d82e927395542ddab82.js": "1b35d8c4f69c8d805a4cadc976bc3e2715238ae4",
+    "/runtime-es5.3d82e927395542ddab82.js": "16ca9b6322bcd4ab1116356a536bb22c20dabd4b",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
