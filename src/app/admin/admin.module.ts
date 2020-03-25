@@ -12,6 +12,7 @@ import { EditPostComponent } from './edit-post.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AuthService } from './shared/auth.service';
+import 'firebase/database';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseToolsModule } from '../firebasetools/firebasetools.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';

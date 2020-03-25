@@ -25,10 +25,10 @@ export class AuthService {
         });
     }
     login() {
-        this.auth.auth.signInWithPopup(new firebaseAuth.GoogleAuthProvider());
+        this.auth.signInWithPopup(new firebaseAuth.GoogleAuthProvider());
     }
 
     logout() {
-        this.auth.auth.signOut();
+        this.auth.signOut();
     }
 }
