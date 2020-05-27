@@ -43,7 +43,6 @@
               }
             ],
             "scripts": [],
-            "es5BrowserSupport": true,
             "aot": true
           },
           "configurations": {
