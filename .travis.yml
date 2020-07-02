@@ -17,7 +17,6 @@ cache:
 script:
   - ng lint
   - ng build --prod
-  - tools/lighthouse-test.sh
 
 
 deploy:

@@ -32,7 +32,6 @@
     "firebase": "^7.15.5",
     "firebase-http2-push-config": "^0.0.10",
     "http-operators": "^0.0.3",
-    "lighthouse-ci": "https://github.com/ebidel/lighthouse-ci",
     "puppeteer-prerender": "^0.12.17",
     "raven-js": "^3.14.2",
     "rxjs": "6.6.0",

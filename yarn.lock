@@ -5048,13 +5048,6 @@ license-webpack-plugin@2.2.0:
     "@types/webpack-sources" "^0.1.5"
     webpack-sources "^1.2.0"
 
-"lighthouse-ci@https://github.com/ebidel/lighthouse-ci":
-  version "0.2.0"
-  resolved "https://github.com/ebidel/lighthouse-ci#a4bfc0857741c1cd6bde9ded967971fd27254ed6"
-  dependencies:
-    minimist "^1.2.0"
-    node-fetch "^2.2.0"
-
 loader-runner@^2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.4.0.tgz#ed47066bfe534d7e84c4c7b9998c2a75607d9357"
@@ -5572,11 +5565,6 @@ node-fetch@^1.0.1:
   dependencies:
     encoding "^0.1.11"
     is-stream "^1.0.1"
-
-node-fetch@^2.2.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
-  integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
 
 node-forge@0.9.0:
   version "0.9.0"
