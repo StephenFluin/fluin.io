@@ -489,6 +489,16 @@ md-input-container.mat-form-field {
         width: 100%;
         height: 50vw;
     }
+    .bio {
+        background-size: contain;
+        margin-top:0;
+        padding:300px 16px;
+        color: black;
+    }
+    .bio .content {
+        
+        position:inherit;
+    }
 }
 
 /* Tablet */
