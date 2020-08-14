@@ -1,12 +1,13 @@
-<div *ngIf="post | async as post" class="container post" style="flex-grow:1">
+<article *ngIf="post | async as post" class="container post" style="flex-grow:1">
 
     <h1>{{post.title}}</h1>
-    <div>
-        <h3>by Stephen Fluin</h3>
+    
+    <div class="post-details">
+        <span class="post-author">by Stephen Fluin</span>
+        <a href="https://twitter.com/stephenfluin?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-size="large" data-show-count="false">Follow @stephenfluin on Twitter</a>
+        <span class="post-date date">{{post.date}}</span>
     </div>
-    <div class="date">
-        <h3>{{post.date}}</h3>
-    </div>
+
     <div *ngIf="adminService.isAdmin">
 	    <a [routerLink]="['/admin/',post.id]">Edit This Post</a>
     </div>
@@ -15,6 +16,6 @@
         <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
         <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
     </div>
-    <div [innerHTML]="post.renderedBody">
-    </div>
-</div>
+
+    <div [innerHTML]="post.renderedBody" class="post-content"></div>
+</article>

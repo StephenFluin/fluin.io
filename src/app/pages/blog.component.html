@@ -5,7 +5,7 @@
         <!-- sidebar-->
         <div id="sidebar" class="padded">
             <section style="margin-top:0px;text-align:center;">
-                <img style="width:50%;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
+                <img style="width:50%; border-radius: 100%;" src="/assets/images/mainpic.jpg" alt="Stephen Fluin">
                 <div>
                     <p>Thank you for stopping by!</p>
                 </div>
@@ -36,10 +36,12 @@
             <hr>
 
             <section id="featured-blogs">
-                <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]">
-                    <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
-                    <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
-                    <div>{{post.title}}</div>
+                <a *ngFor="let post of posts | async" [routerLink]="['/blog',post.id]" class="featured-blog card">
+                    <div *ngIf="post.image" [style.background-image]="post.image ? 'url(' + post.image + ')' : 'url(' + postDefaultImage + ')'" src="/assets/images/imgpostholder.png" class="featured-blog-image"></div>
+                    <div class="featured-blog-details">
+                        <h4>{{post.title}}</h4>
+                        <p>Read More -></p>
+                    </div>
                 </a>
             </section>
             <!-- end featured-blogs-->
