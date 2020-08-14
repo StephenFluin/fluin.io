@@ -440,7 +440,7 @@ md-input-container.mat-form-field {
     background-position: center top;
     background-repeat: no-repeat;
     min-height: 100vh;
-    margin-top: -150px;
+    margin-top: -75px;
     color: white;
 }
 
@@ -491,7 +491,6 @@ md-input-container.mat-form-field {
     }
     .bio {
         background-size: contain;
-        margin-top:0;
         padding:300px 16px;
         color: black;
     }
