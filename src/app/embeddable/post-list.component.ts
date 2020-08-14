@@ -7,14 +7,16 @@ import { PostService, Post } from 'app/shared/post.service';
     selector: 'post-list',
     template: `
 <div id="posts-block" [style.min-height]="332*limit/4 + 'px'">
-    <a class="post-block" *ngFor="let post of posts | async" [routerLink]="['blog',post.id]">
+    <a class="card featured-blog-post" *ngFor="let post of posts | async" [routerLink]="['blog',post.id]">
         <div class="post-image" *ngIf="!post.image" style="background-image: url('/assets/images/imgpostholder.png')"></div>
         <div class="post-image" *ngIf="post.image" [style.background-image]="'url('+post.image+')'"></div>
-        <div class="post-title">
-            {{post.title}}
-        </div>
-        <div class="post-date">
-            {{post.date}}
+        <div class="post-details">
+            <h4 class="post-title">
+                {{post.title}}
+            </h4>
+            <div class="post-date">
+                {{post.date}}
+            </div>
         </div>
     </a>
 

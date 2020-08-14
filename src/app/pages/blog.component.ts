@@ -8,6 +8,7 @@ import { PostService } from '../shared/post.service';
 })
 export class BlogComponent {
     posts: Observable<any[]>;
+    postDefaultImage: '/assets/images/imgpostholder.png';
     constructor(posts: PostService) {
         this.posts = posts.postList.pipe(map(list => list.slice(0, 5)));
     }
