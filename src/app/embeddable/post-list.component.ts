@@ -6,7 +6,7 @@ import { PostService, Post } from 'app/shared/post.service';
 @Component({
     selector: 'post-list',
     template: `
-<div id="posts-block" [style.min-height]="332*limit/4 + 'px'">
+<div id="posts-block">
     <a class="card featured-blog-post" *ngFor="let post of posts | async" [routerLink]="['blog',post.id]">
         <div class="post-image" *ngIf="!post.image" style="background-image: url('/assets/images/imgpostholder.png')"></div>
         <div class="post-image" *ngIf="post.image" [style.background-image]="'url('+post.image+')'"></div>
