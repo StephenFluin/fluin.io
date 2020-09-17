@@ -1,6 +1,11 @@
 {
-  "rules": {
-    ".read": true,
-    ".write": "auth.uid === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'"
-  }
+    "rules": {
+        ".write": "auth.uid === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'",
+        "posts": {
+            ".read": true
+        },
+        "talks": {
+            ".read": true
+        }
+    }
 }

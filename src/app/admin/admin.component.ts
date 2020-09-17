@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { map } from 'rxjs/operators';
