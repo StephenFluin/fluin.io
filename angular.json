@@ -39,7 +39,8 @@
             ],
             "styles": [
               {
-                "input": "src/styles.css"
+                "input": "src/styles.css",
+                "inject": true
               }
             ],
             "scripts": [],
@@ -50,7 +51,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": true,
-              "extractCss": true,
               "namedChunks": true,
               "extractLicenses": true,
               "vendorChunk": false,
