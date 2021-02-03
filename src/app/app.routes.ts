@@ -19,6 +19,7 @@ export const routeConfig: Routes = [
     { path: 'bio', component: BioComponent, data: { title: 'About Stephen Fluin' } },
     { path: 'projects', component: ProjectsComponent, data: { title: 'Projects' } },
     { path: 'admin', loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule) },
+    { path: 'newsletter', loadChildren: () => import('app/newsletter/newsletter.module').then(m => m.NewsletterModule) },
     { path: '404', component: NotFoundComponent },
     { path: '**', component: Send404Component },
 ];

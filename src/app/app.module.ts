@@ -1,4 +1,4 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -11,7 +11,6 @@ import { HomeComponent } from './pages/home.component';
 import { BlogComponent } from './pages/blog.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ServiceWorkerModule } from '@angular/service-worker';
 
 // routes
 import { NotFoundComponent } from './not-found.component';
@@ -26,7 +25,6 @@ import { routeConfig } from './app.routes';
 
 // Pipes
 import { FirebaseToolsModule } from './firebasetools/firebasetools.module';
-import { environment } from 'environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 
 
