@@ -11,11 +11,8 @@ export interface Talk {
 
 @Component({
     template: `
-        <div class="padded" *ngIf="auth.isAdmin | async">
-            <h2><span [title]="auth.uid | async">{{auth.name | async}}</span> Supervision (<a (click)="auth.logout()">logout</a>)</h2>
-            <ul>
-                <li><a routerLink="upload">Upload a file</a></li>
-            </ul>
+        <div class="padded" style="margin-top: -75px" *ngIf="auth.isAdmin | async">
+            <h2>Administer Content (<a (click)="auth.logout()">logout</a>)</h2>
 
             <div style="overflow:hidden;">
                 <a *ngFor="let post of posts | async" [routerLink]="post.key">
@@ -33,7 +30,7 @@ export interface Talk {
             </div>
 
 
-            <div>
+            <!--<div>
                 <h2>Manage Talks</h2>
                 <select [(ngModel)]="selectedTalk">
                     <option *ngFor="let talk of talkList | async" [ngValue]="talk">{{talk.title}}</option>
@@ -43,7 +40,7 @@ export interface Talk {
                     <mat-form-field><input matInput [(ngModel)]="talkName"></mat-form-field>
                     <image-upload [folder]="'talks/'+selectedTalk.key"></image-upload>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="padded" *ngIf="(auth.isAdmin | async) == false">
             <p>You need more access.</p>
