@@ -61,7 +61,7 @@ export class EditPostComponent {
                         console.log(postListObject);
                         const item = postListObject[params['id']];
                         if (item) {
-                            title.setTitle('Edit ' + item.title + ' | fluin.io blog');
+                            title.setTitle('Edit ' + item.title + ' | ng.fluin.io blog');
                             this.contentChange(item);
                         }
 

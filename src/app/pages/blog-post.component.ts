@@ -39,7 +39,7 @@ export class BlogPostComponent {
             }),
             tap(item => {
                 if (item) {
-                    title.setTitle(item.title + ' | fluin.io blog');
+                    title.setTitle(item.title + ' | ng.fluin.io blog');
                     const description = item.body.split('\n')[0];
 
                     const twitterMetadata = {
@@ -50,7 +50,7 @@ export class BlogPostComponent {
                         'twitter:image': item.image,
                     };
                     const openGraphMeta = {
-                        'og:url': `https://fluin.io/blog/${item.id}`,
+                        'og:url': `https://ng.fluin.io/blog/${item.id}`,
                         'og:title': `${item.title}`,
                         'og:description': description,
                         'og:image': `${item.image}`,

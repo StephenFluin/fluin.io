@@ -9,7 +9,7 @@ import { NotFoundComponent } from 'app/not-found.component';
 import { Send404Component } from 'app/send-404.component';
 
 export const routeConfig: Routes = [
-    { path: '', component: HomeComponent, data: { title: 'fluin.io', page: 'home' } },
+    { path: '', component: HomeComponent, data: { title: 'ng.fluin.io', page: 'home' } },
     {
         path: 'blog', data: { title: false, page: 'blog' }, component: BlogComponent, children: [
             { path: '', component: BlogPostComponent },

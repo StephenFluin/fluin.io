@@ -17,17 +17,5 @@
             }
         }
     ],
-    "dataGroups": [
-        {
-            "name": "firebase", 
-            "urls": [
-                "https://firebasestorage.googleapis.com/v0/b/fluindotio-website-93127.appspot.com/**"
-            ],
-            "cacheConfig": {
-                "maxSize": 100000000,
-                "maxAge": "3d",
-                "timeout": "1m"
-            }
-        }
-    ]
+    "dataGroups": []
 }

@@ -9,7 +9,7 @@ import * as fetch from 'node-fetch';
 // });
 
 export const generateSitemap = functions.https.onRequest((request, response) => {
-    const data = fetch('https://fluindotio-website-93127.firebaseio.com/posts.json')
+    const data = fetch('https://ng-fluin-io-default-rtdb.firebaseio.com/posts.json')
     let sitemap = '';
 
     data
@@ -17,7 +17,7 @@ export const generateSitemap = functions.https.onRequest((request, response) => 
     .then(result => {
         const posts = result;
         for(const key in posts) {
-            sitemap += `https://fluin.io/blog/${posts[key].id}\n`;
+            sitemap += `https://ng.fluin.io/blog/${posts[key].id}\n`;
         }
         response.send(sitemap)
     })
@@ -27,7 +27,7 @@ export const generateSitemap = functions.https.onRequest((request, response) => 
 });
 
 export const notFoundError = functions.https.onRequest((request, response) => {
-    const data = fetch('https://fluin.io');
+    const data = fetch('https://ng.fluin.io');
     data
     .then(result => result.text())
     .then(result => {

@@ -31,6 +31,7 @@
     "core-js": "^2.4.0",
     "firebase": "^7.15.5",
     "firebase-http2-push-config": "^0.0.10",
+    "firebase-tools": "^9.6.1",
     "http-operators": "^0.0.3",
     "puppeteer-prerender": "^0.12.17",
     "raven-js": "^3.14.2",

@@ -61,7 +61,7 @@ export class AppComponent {
             if (pageTitle) {
                 title.setTitle(pageTitle);
             } else if (pageTitle !== false) {
-                title.setTitle('fluin.io');
+                title.setTitle('ng.fluin.io');
             }
             window.scrollTo(0, 0);
             ga('send', 'pageview', n.urlAfterRedirects);

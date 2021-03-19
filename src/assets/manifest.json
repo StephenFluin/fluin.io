@@ -1,6 +1,6 @@
 {
-  "name": "fluin.io",
-  "short_name": "fluin.io",
+  "name": "ng.fluin.io",
+  "short_name": "ng.fluin.io",
   "display": "standalone",
   "start_url": "/",
   "orientation": "portrait",

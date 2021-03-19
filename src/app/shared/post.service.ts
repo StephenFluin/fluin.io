@@ -21,7 +21,7 @@ export class Post {
 
 @Injectable()
 export class PostService {
-    url = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
+    url = 'https://ng-fluin-io-default-rtdb.firebaseio.com/posts.json';
     /**
      * An object with post keys as keys, and post data as values
      */
