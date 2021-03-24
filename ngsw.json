@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1612459166320,
+  "timestamp": 1616595279408,
   "index": "/index-sw.html",
   "assetGroups": [
     {
@@ -13,8 +13,8 @@
       "urls": [
         "/app-admin-admin-module-es2015.b8d21ddea798c1dd5aa5.js",
         "/app-admin-admin-module-es5.b8d21ddea798c1dd5aa5.js",
-        "/app-newsletter-newsletter-module-es2015.b90e116cd7fb5b1f8872.js",
-        "/app-newsletter-newsletter-module-es5.b90e116cd7fb5b1f8872.js",
+        "/app-newsletter-newsletter-module-es2015.87250424a4a154e37a12.js",
+        "/app-newsletter-newsletter-module-es5.87250424a4a154e37a12.js",
         "/assets/icons/icon-128x128.png",
         "/assets/icons/icon-144x144.png",
         "/assets/icons/icon-152x152.png",
@@ -37,12 +37,12 @@
         "/firebase-auth-es2015.63b9a62b518f9ea906f0.js",
         "/firebase-auth-es5.63b9a62b518f9ea906f0.js",
         "/index.html",
-        "/main-es2015.4876748becda08555060.js",
-        "/main-es5.4876748becda08555060.js",
+        "/main-es2015.c1abdc5315d32aacd5c1.js",
+        "/main-es5.c1abdc5315d32aacd5c1.js",
         "/polyfills-es2015.a710be96e4132218075e.js",
         "/polyfills-es5.02a0a61990e0c0e4b124.js",
-        "/runtime-es2015.91bbf8762fe43c3a2332.js",
-        "/runtime-es5.91bbf8762fe43c3a2332.js",
+        "/runtime-es2015.a3d8229ed967236655bc.js",
+        "/runtime-es5.a3d8229ed967236655bc.js",
         "/webfont.js"
       ],
       "patterns": [
@@ -70,8 +70,8 @@
   "hashTable": {
     "/app-admin-admin-module-es2015.b8d21ddea798c1dd5aa5.js": "bc88007a67f8c15706501238c6f7c22bc3a60364",
     "/app-admin-admin-module-es5.b8d21ddea798c1dd5aa5.js": "b929529a23c3307276505cd7e63fa45b48690bad",
-    "/app-newsletter-newsletter-module-es2015.b90e116cd7fb5b1f8872.js": "037f8c05cdf790a18b50009b6420a8bd2eea991f",
-    "/app-newsletter-newsletter-module-es5.b90e116cd7fb5b1f8872.js": "d81ea587530453164d39fe850d529fe4be6b6220",
+    "/app-newsletter-newsletter-module-es2015.87250424a4a154e37a12.js": "07403f68db37a1748de89e3cc0cb27ae5c79fa5c",
+    "/app-newsletter-newsletter-module-es5.87250424a4a154e37a12.js": "53cd3f4a3338be4b7d60a3bf91b1c05dc295bea7",
     "/assets/icons/icon-128x128.png": "8c2529ea6dbcc9d8c646b8f0a8546b6e8a5d562f",
     "/assets/icons/icon-144x144.png": "8e9e61b29a38591e454c5d774d343e697ea9354f",
     "/assets/icons/icon-152x152.png": "2c7b83fcf9dc64a7a5a8e9e951d5427286ee903e",
@@ -93,13 +93,13 @@
     "/assets/speaker.jpg": "8de27eaa039adaa065f53ae8501186f770960791",
     "/firebase-auth-es2015.63b9a62b518f9ea906f0.js": "38a827c26bc8fc22117b70f62a2483c6b46eb6b5",
     "/firebase-auth-es5.63b9a62b518f9ea906f0.js": "d2e8f485c2160e276e6d011726320d73dd0c97f3",
-    "/index.html": "395493b0a0cd21962c6c25dca5452fcdb8c56ed3",
-    "/main-es2015.4876748becda08555060.js": "f1f7ab3247381ab7b3aa19b631114bdc86a50c3b",
-    "/main-es5.4876748becda08555060.js": "856891ae353ad58835723ab8de1ef24bc0a50732",
+    "/index.html": "0bf8cb512331c83ce3fb373e722d5d3d02eb4c97",
+    "/main-es2015.c1abdc5315d32aacd5c1.js": "6e04abe9c397dea54d643e79574b4ea0cbb4249e",
+    "/main-es5.c1abdc5315d32aacd5c1.js": "c92b634ede29b505529e25ed34174871b75e8825",
     "/polyfills-es2015.a710be96e4132218075e.js": "31313779385f166abd3ecf2b4dc3723d4d5f0007",
     "/polyfills-es5.02a0a61990e0c0e4b124.js": "a2e119b94190be371768c5087c2e6e0c8658656b",
-    "/runtime-es2015.91bbf8762fe43c3a2332.js": "7a95d9efbb4255d0eca37b7eef65b4a503b738de",
-    "/runtime-es5.91bbf8762fe43c3a2332.js": "b5088cfb26671716449919bb5065a9557786d92e",
+    "/runtime-es2015.a3d8229ed967236655bc.js": "528b2214302cd1656d9be5d8f448bbc95f9f1ee7",
+    "/runtime-es5.a3d8229ed967236655bc.js": "f91a83cdd06d2c1ce5a258130724ee3fb9137f48",
     "/webfont.js": "e3f85562b77d70e04125d6a46a1399b4219fda88"
   },
   "navigationUrls": [
