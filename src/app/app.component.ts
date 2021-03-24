@@ -65,6 +65,8 @@ export class AppComponent {
             }
             window.scrollTo(0, 0);
             ga('send', 'pageview', n.urlAfterRedirects);
+            ga('integration.send','pageview',n.urlAfterRedirects);
+            ga('test.send','pageview',n.urlAfterRedirects);
         });
         router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(next => {
             meta.removeTag('name=robots');
