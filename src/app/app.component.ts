@@ -5,6 +5,8 @@ import { trigger, transition, group, query, style, animate } from '@angular/anim
 import { filter } from 'rxjs/operators';
 
 declare var ga: any;
+declare var gtag: any;
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -53,10 +55,10 @@ export class AppComponent {
         }
         return this._maxHeight;
     }
-    @ViewChild('container', {static: false}) container: ElementRef;
+    @ViewChild('container', { static: false }) container: ElementRef;
 
     constructor(router: Router, activatedRoute: ActivatedRoute, title: Title, meta: Meta) {
-        router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe((n: NavigationEnd) => {
+        router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe((n: NavigationEnd) => {
             const pageTitle = router.routerState.snapshot.root.children[0].data['title'];
             if (pageTitle) {
                 title.setTitle(pageTitle);
@@ -65,15 +67,15 @@ export class AppComponent {
             }
             window.scrollTo(0, 0);
             ga('send', 'pageview', n.urlAfterRedirects);
+            gtag('config', 'G-2CB60WKV1M', { page_path: n.urlAfterRedirects });
         });
-        router.events.pipe(filter(e => e instanceof NavigationStart)).subscribe(next => {
+        router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe((next) => {
             meta.removeTag('name=robots');
 
             if (this.container) {
                 this._maxHeight = null;
             }
         });
-
     }
 
     /** Get the current page for route animation purposes */

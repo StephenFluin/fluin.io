@@ -9,7 +9,7 @@ import { PostService, Post } from 'app/shared/post.service';
 <div id="posts-block">
     <a class="card featured-blog-post" *ngFor="let post of posts | async" [routerLink]="['blog',post.id]">
         <div class="post-image" *ngIf="!post.image" style="background-image: url('/assets/images/imgpostholder.png')"></div>
-        <div class="post-image" *ngIf="post.image" [style.background-image]="'url('+post.image+')'"></div>
+        <div class="post-image" *ngIf="post.image" [style.background-image]="'url(\\'' + post.image + '\\')'"></div>
         <div class="post-details">
             <h4 class="post-title">
                 {{post.title}}
