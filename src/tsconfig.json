@@ -26,6 +26,7 @@
     "**/*.d.ts"
   ],
   "angularCompilerOptions": {
-      "enableIvy": true
+      "enableIvy": true,
+      "strictTemplates": true
   }
 }

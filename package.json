@@ -29,7 +29,7 @@
     "@angular/service-worker": "15.0.0-rc.2",
     "@types/node": "^12.7.2",
     "core-js": "^2.4.0",
-    "firebase": "^7.15.5",
+    "firebase": "^9.13.0",
     "firebase-http2-push-config": "^0.0.10",
     "http-operators": "^0.0.3",
     "puppeteer-prerender": "^0.12.17",

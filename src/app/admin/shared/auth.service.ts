@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AdminService } from '../../shared/admin.service';
-import { auth as firebaseAuth} from 'firebase/compat/app';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
+import firebase from 'firebase/compat/app';
 import { map } from 'rxjs/operators';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class AuthService {
         });
     }
     login() {
-        this.auth.signInWithPopup(new firebaseAuth.GoogleAuthProvider());
+        this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
     }
 
     logout() {

@@ -3,15 +3,16 @@ import { Router } from '@angular/router';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as firebase from 'firebase/compat/app';
-import undefined from 'firebase/compat/storage';
+import { map, tap } from 'rxjs/operators';
+import firebase from 'firebase/compat/app';
 import { keyify } from './shared/keyify.operator';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 export interface Image {
     path: string;
     filename: string;
-    downloadURL?: string;
+    downloadURL?: Observable<string>;
+    key?: string;
 }
 
 @Component({
@@ -27,11 +28,10 @@ export interface Image {
     <div style="overflow:hidden;">
         <div *ngFor="let img of imageList | async"
             style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;">
-            <img *ngIf="img && img.downloadURL && img.downloadURL | async"
+            <img *ngIf="img && img.downloadURL && (img.downloadURL | async)"
                 [src]="img.downloadURL | async"
                 alt="uploaded image"
                 style="max-width:100px;max-height:100px;">
-
             <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
         </div>
     </div>
@@ -45,34 +45,35 @@ export class UploadComponent implements OnChanges {
     @Input() folder: string;
 
     fileList: AngularFireList<Image>;
-    imageList: Observable<any>;
+    imageList: Observable<Image[]>;
 
-    constructor(public db: AngularFireDatabase, public router: Router) {}
+    constructor(public db: AngularFireDatabase, public router: Router, public storage: AngularFireStorage) {}
 
     ngOnChanges() {
         console.log('new values for folder');
-        const storage = firebase.storage();
 
         this.fileList = this.db.list<Image>(`/${this.folder}/images`);
         this.imageList = this.fileList.snapshotChanges().pipe(
             keyify,
             map(itemList =>
                 itemList.map(item => {
-                    const pathReference = storage.ref(item.path);
+                    const pathReference = this.storage.ref(item.path);
                     const result = { $key: item.key, path: item.path, downloadURL: null, filename: item.filename };
                     // This Promise must be wrapped in Promise.resolve because the thennable from
                     // firebase isn't monkeypatched by zones and therefore doesn't trigger CD
-                    result.downloadURL = Promise.resolve(pathReference.getDownloadURL());
+                    result.downloadURL = pathReference.getDownloadURL();
+                    console.log('set the downloadUrl to',result.downloadURL);
 
                     return result;
                 })
-            )
+            ),
+            tap(console.log),
         );
     }
 
     upload() {
         // Create a root reference
-        const storageRef = firebase.storage().ref();
+        const storageRef = this.storage.ref('/');
 
         const success = false;
 
@@ -97,7 +98,7 @@ export class UploadComponent implements OnChanges {
             });
         }
     }
-    delete(image: Image & { key: string }) {
+    delete(image: Image ) {
         const storagePath = image.path;
         const referencePath = `${this.folder}/images/` + image.key;
 

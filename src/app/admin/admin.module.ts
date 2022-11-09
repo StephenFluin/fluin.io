@@ -12,10 +12,11 @@ import { EditPostComponent } from './edit-post.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AuthService } from './shared/auth.service';
-import undefined from 'firebase/compat/database';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseToolsModule } from '../firebasetools/firebasetools.module';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/compat/storage';
+
 
 @NgModule({
     imports: [
@@ -34,11 +35,14 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
         }),
         AngularFireAuthModule,
         AngularFireDatabaseModule,
+        AngularFireStorageModule,
         MatCardModule,
         MatInputModule,
         FirebaseToolsModule,
     ],
     declarations: [AdminComponent, UploadComponent, EditPostComponent],
-    providers: [AuthService, EditablePostService],
+    providers: [AuthService, EditablePostService, 
+        { provide: BUCKET, useValue: 'fluindotio-website-93127.appspot.com' }
+      ],
 })
 export class AdminModule { }
