@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './shared/auth.service';
-import { AngularFireDatabase } from '@angular/fire/database';
+import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
 import { Post } from '../shared/post.service';
 import { keyify } from './shared/keyify.operator';

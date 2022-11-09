@@ -1,6 +1,6 @@
 import { Observable, OperatorFunction } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AngularFireAction, DatabaseSnapshot } from '@angular/fire/database';
+import { AngularFireAction, DatabaseSnapshot } from '@angular/fire/compat/database';
 import { Input } from '@angular/core';
 
 // This is an OperatorFunction

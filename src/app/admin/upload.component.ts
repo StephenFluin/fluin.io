@@ -1,11 +1,11 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import * as firebase from 'firebase/app';
-import 'firebase/storage';
+import * as firebase from 'firebase/compat/app';
+import undefined from 'firebase/compat/storage';
 import { keyify } from './shared/keyify.operator';
 
 export interface Image {

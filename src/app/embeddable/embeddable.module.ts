@@ -8,9 +8,8 @@ import { FirebaseToolsModule } from 'app/firebasetools/firebasetools.module';
 export const EmbedComponents = [AppHeaderComponent, PostListComponent];
 
 @NgModule({
-  declarations: EmbedComponents,
-  imports: [CommonModule, RouterModule, FirebaseToolsModule],
-  exports: [EmbedComponents],
-  entryComponents: [EmbedComponents]
+    declarations: EmbedComponents,
+    imports: [CommonModule, RouterModule, FirebaseToolsModule],
+    exports: [EmbedComponents]
 })
 export class EmbeddableModule { }

@@ -1,4 +1,4 @@
-import * as functions from 'firebase-functions';
+import * as functions from 'firebase/compat-functions';
 import * as fetch from 'node-fetch';
 
 // // Start writing Firebase Functions

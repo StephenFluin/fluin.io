@@ -31,7 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     imports: [
         BrowserModule.withServerTransition({ appId: 'serverApp' }),
-        RouterModule.forRoot(routeConfig, { relativeLinkResolution: 'legacy' }),
+        RouterModule.forRoot(routeConfig, {}),
         HttpClientModule,
         FirebaseToolsModule,
         BrowserAnimationsModule,
