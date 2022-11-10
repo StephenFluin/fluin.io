@@ -1,11 +1,18 @@
-import * as Prerenderer from 'puppeteer-prerender';
 import * as fs from 'fs';
 import * as child_process from 'child_process';
+import * as puppeteer from 'puppeteer';
 import { getUrls } from './url-list';
 
+
+let browser;
+
 async function main() {
-    console.log('PRERENDER Running ng build --prod');
-    const build = child_process.spawn('ng', ['build', '--prod']);
+    console.log('Setup browser');
+    browser = await puppeteer.launch({headless:true});
+    
+    console.log('PRERENDER Running ng build');
+    const build = child_process.spawn('ng', ['build']);
+    
     // const build = child_process.spawn('ls');
     // build.stdout.on('data', data => console.log('PRERENDER ng build output:', data));
     build.on('exit', () => {
@@ -25,21 +32,34 @@ async function main() {
                     }
 
                     cp.kill();
+                    browser.close();
+                    console.log("server and browser closed.");
+
+                    setTimeout(() => {
+                        // @TODO this is a hack, figure out why the threads aren't closing properly
+                        process.exit();
+                        console.log("server force quit");
+                    },5000);
                 }, 1000);
             }
         });
         cp.stderr.on('data', data => console.error(`stderr data: ${data}`));
+
+        
     });
 }
 
 async function render(url, destination) {
-    const path = /^.*\/\/.*?\/(.*)$/.exec(url)[1];
+        const re = /^.*\/\/.*?\/(.*)$/;
+    const path = re.exec(url)[1];
     console.log(`PRERENDER prerendering ${url} to ${path} in ${destination}.`);
 
-    const prerender = new Prerenderer({ debug: false, timeout: 30000, followRedirect: true });
+    const page = await browser.newPage();
+
+    await page.goto(url,{waitUntil: 'networkidle0'});
 
     try {
-        const { status, redirect, meta, openGraph, links, html, staticHTML } = await prerender.render(url);
+        let html = await page.content();
         // console.log('status was', status, 'redirect was', redirect, 'meta was', meta);
         // console.log('creating',`${destination}/${path.substring(0,path.lastIndexOf('/'))}`);
         fs.mkdirSync(`${destination}/${path.substring(0,path.lastIndexOf('/'))}`, {recursive: true});
@@ -48,7 +68,8 @@ async function render(url, destination) {
         console.error(e);
     }
 
-    await prerender.close();
+    await page.close();
+    console.log('PRERENDER OF page exiting');
 }
 
 main().catch(error => console.error(error));

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const functions = require("firebase-functions");
+const functions = require("firebase/compat-functions");
 const fetch = require("node-fetch");
 // // Start writing Firebase Functions
 // // https://firebase.google.com/functions/write-firebase-functions

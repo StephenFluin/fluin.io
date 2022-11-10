@@ -28,5 +28,10 @@
   "angularCompilerOptions": {
       "enableIvy": true,
       "strictTemplates": true
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
   }
 }
