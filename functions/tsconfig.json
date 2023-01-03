@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "CommonJS",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "lib",
     "sourceMap": true,
-    "strict": false,
-    "target": "es2015"
+    "strict": true,
+    "noImplicitAny": false,
+    "target": "ES2022"
   },
   "compileOnSave": true,
   "include": [

@@ -8,10 +8,6 @@
             { "source": "/sitemap.txt", "function": "generateSitemap" },
             { "source": "/404", "function": "notFoundError" },
             {
-                "source": "/worker-basic.min.js",
-                "destination": "/ngsw-worker.js"
-            },
-            {
                 "source": "**",
                 "destination": "/index.html"
             }
