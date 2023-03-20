@@ -4,8 +4,8 @@ import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular
 import { trigger, transition, group, query, style, animate } from '@angular/animations';
 import { filter } from 'rxjs/operators';
 
-declare var ga: any;
-declare var gtag: any;
+declare let ga: any;
+declare let gtag: any;
 
 @Component({
     selector: 'app-root',

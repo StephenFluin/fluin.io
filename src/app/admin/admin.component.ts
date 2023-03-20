@@ -42,7 +42,7 @@ export interface Talk {
                 </div>
             </div> -->
         </div>
-        <div class="padded" *ngIf="(auth.isAdmin | async) == false">
+        <div class="padded" *ngIf="(auth.isAdmin | async) === false">
             <p>You need more access.</p>
             <button (click)="auth.login()">Login</button>
         </div>

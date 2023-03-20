@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PostService, Post } from 'app/shared/post.service';
+import { PostService } from 'app/shared/post.service';
 
 @Component({
     selector: 'post-list',

@@ -110,7 +110,9 @@ export class UploadComponent implements OnChanges {
             .ref()
             .child(storagePath)
             .delete()
-            .then(() => {}, error => console.error('Error deleting stored file', storagePath));
+            .then(() => {
+                //Expected case
+            }, error => console.error('Error deleting stored file', storagePath));
 
         // Delete references
         this.db.object(referencePath).remove();

@@ -59,7 +59,7 @@ async function render(url, destination) {
     await page.goto(url,{waitUntil: 'networkidle0'});
 
     try {
-        let html = await page.content();
+        const html = await page.content();
         // console.log('status was', status, 'redirect was', redirect, 'meta was', meta);
         // console.log('creating',`${destination}/${path.substring(0,path.lastIndexOf('/'))}`);
         fs.mkdirSync(`${destination}/${path.substring(0,path.lastIndexOf('/'))}`, {recursive: true});

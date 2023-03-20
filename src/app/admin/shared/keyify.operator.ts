@@ -1,7 +1,6 @@
-import { Observable, OperatorFunction } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AngularFireAction, DatabaseSnapshot } from '@angular/fire/compat/database';
-import { Input } from '@angular/core';
 
 // This is an OperatorFunction
 export function keyify<T extends object>(source: Observable<AngularFireAction<DatabaseSnapshot<T>>[]>): Observable<({key: string} & T)[]> {

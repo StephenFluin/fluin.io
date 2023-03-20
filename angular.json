@@ -1,70 +1,56 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "897e81d9-535c-43e4-a026-a9d5301d2a9c",
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
+  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "fluinio": {
-      "root": "",
       "projectType": "application",
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true,
+          "inlineStyle": true,
+          "inlineTemplate": true,
+          "prefix": "app",
+          "style": "css"
+        },
+        "@schematics/angular:directive": {
+          "prefix": "app"
+        }
+      },
+      "root": "",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.json",
             "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/assets",
-                "output": "/assets"
-              },
-              {
-                "glob": "favicon.ico",
-                "input": "src",
-                "output": "/"
-              },
-              {
-                "glob": "webfont.js",
-                "input": "src",
-                "output": "/"
-              },
-              {
-                "glob": "robots.txt",
-                "input": "src",
-                "output": "/"
-              }
+              "src/favicon.ico",
+              "src/assets",
+              "src/robots.txt",
+              "src/webfont.js"
             ],
             "styles": [
-              {
-                "input": "src/styles.css",
-                "inject": true
-              }
+              "src/styles.css"
             ],
             "scripts": [],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
             "sourceMap": true,
-            "optimization": false,
             "namedChunks": true
           },
           "configurations": {
             "production": {
-              "optimization": true,
-              "outputHashing": "all",
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "serviceWorker": false,
-              "fileReplacements": [
-                {
-                  "src": "src/environments/environment.ts",
-                  "replaceWith": "src/environments/environment.prod.ts"
-                }
-              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -74,6 +60,12 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "6kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "src": "src/environments/environment.ts",
+                  "replaceWith": "src/environments/environment.prod.ts"
                 }
               ]
             },
@@ -105,26 +97,17 @@
           "options": {
             "browserTarget": "fluinio:build"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
-  },
-  "schematics": {
-    "@schematics/angular:class": {
-      "skipTests": true
-    },
-    "@schematics/angular:component": {
-      "skipTests": true,
-      "inlineStyle": true,
-      "inlineTemplate": true,
-      "prefix": "app",
-      "style": "css"
-    },
-    "@schematics/angular:directive": {
-      "prefix": "app"
-    }
-  },
-  "cli": {
-    "analytics": "897e81d9-535c-43e4-a026-a9d5301d2a9c"
   }
 }
