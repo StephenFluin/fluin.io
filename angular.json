@@ -67,7 +67,8 @@
                   "src": "src/environments/environment.ts",
                   "replaceWith": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "outputHashing": "all"
             },
             "development": {
               "buildOptimizer": false,
