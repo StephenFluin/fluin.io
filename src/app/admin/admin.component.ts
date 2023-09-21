@@ -4,6 +4,9 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
 import { Post } from '../shared/post.service';
 import { keyify } from './shared/keyify.operator';
+import { MatLegacyCardModule } from '@angular/material/legacy-card';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 export interface Talk {
     title: string;
@@ -47,6 +50,14 @@ export interface Talk {
             <button (click)="auth.login()">Login</button>
         </div>
         `,
+    standalone: true,
+    imports: [
+        NgIf,
+        NgFor,
+        RouterLink,
+        MatLegacyCardModule,
+        AsyncPipe,
+    ],
 })
 export class AdminComponent {
     posts = this.db

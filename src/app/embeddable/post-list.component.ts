@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PostService } from 'app/shared/post.service';
+import { RouterLink } from '@angular/router';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'post-list',
@@ -21,7 +23,9 @@ import { PostService } from 'app/shared/post.service';
     </a>
 
 </div>
-`
+`,
+    standalone: true,
+    imports: [NgFor, RouterLink, NgIf, AsyncPipe]
 })
 export class PostListComponent {
     @Input() limit = 12;

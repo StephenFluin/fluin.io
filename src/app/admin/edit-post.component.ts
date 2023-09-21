@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -12,9 +12,24 @@ import { map, switchMap, debounceTime, tap } from 'rxjs/operators';
 
 import snarkdown from 'snarkdown';
 import { SafeHtml } from '@angular/platform-browser';
+import { UploadComponent } from './upload.component';
+import { FormsModule } from '@angular/forms';
+import { MatLegacyInputModule } from '@angular/material/legacy-input';
+import { MatLegacyFormFieldModule } from '@angular/material/legacy-form-field';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
     templateUrl: './edit-post.component.html',
+    standalone: true,
+    imports: [
+        NgIf,
+        MatLegacyFormFieldModule,
+        MatLegacyInputModule,
+        FormsModule,
+        RouterLink,
+        UploadComponent,
+        AsyncPipe,
+    ],
 })
 export class EditPostComponent {
     renderedBody;

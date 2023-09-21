@@ -17,7 +17,10 @@ import { Pipe, PipeTransform } from '@angular/core';
  * And turn it into
  * [{$key:"a",name:"myName","description":"myDescription"},{$key:"b",name:"myName","description":"myDescription"}]
  */
-@Pipe({ name: 'refirebase' })
+@Pipe({
+    name: 'refirebase',
+    standalone: true
+})
 export class RefirebasePipe implements PipeTransform {
     transform(value: any, args?: any[]): any[] {
         if (value) {
