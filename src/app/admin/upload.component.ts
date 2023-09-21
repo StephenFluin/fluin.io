@@ -7,6 +7,7 @@ import { map, tap } from 'rxjs/operators';
 import firebase from 'firebase/compat/app';
 import { keyify } from './shared/keyify.operator';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 
 export interface Image {
     path: string;
@@ -36,6 +37,12 @@ export interface Image {
         </div>
     </div>
   `,
+    standalone: true,
+    imports: [
+        NgFor,
+        NgIf,
+        AsyncPipe,
+    ],
 })
 export class UploadComponent implements OnChanges {
     /**

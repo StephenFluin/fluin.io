@@ -1,13 +1,30 @@
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { environment } from './environments/environment';
-import { AppModule } from './app/app.module';
+
+import { AppComponent } from './app/app.component';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { withInterceptorsFromDi, provideHttpClient } from '@angular/common/http';
+import { routeConfig } from './app/app.routes';
+import { provideRouter } from '@angular/router';
+import { AdminService } from './app/shared/admin.service';
+import { PostService } from './app/shared/post.service';
+import { Title, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
 
 if (environment.production) {
-  enableProdMode();
+    enableProdMode();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic().bootstrapModule(AppModule);
+    bootstrapApplication(AppComponent, {
+        providers: [
+            importProvidersFrom(BrowserModule.withServerTransition({ appId: 'serverApp' })),
+            Title,
+            PostService,
+            AdminService,
+            provideRouter(routeConfig),
+            provideHttpClient(withInterceptorsFromDi()),
+            provideAnimations(),
+        ],
+    });
 });
-

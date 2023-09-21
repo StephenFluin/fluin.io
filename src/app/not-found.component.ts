@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 
 @Component({
-    template: '<div style="margin:128px 16px;text-align:center;">Path not found.</div>'
+    template: '<div style="margin:128px 16px;text-align:center;">Path not found.</div>',
+    standalone: true
 })
 export class NotFoundComponent {
     constructor(meta: Meta) {

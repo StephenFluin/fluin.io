@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef } from '@angular/core';
 @Component({
     selector: 'app-newsletter',
     templateUrl: './newsletter.html',
+    standalone: true,
 })
 export class NewsletterComponent implements AfterViewInit {
     constructor(private elRef: ElementRef) {}

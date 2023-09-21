@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
-import { Router, NavigationEnd, NavigationStart, ActivatedRoute } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart, ActivatedRoute, RouterOutlet, RouterLink } from '@angular/router';
 import { trigger, transition, group, query, style, animate } from '@angular/animations';
 import { filter } from 'rxjs/operators';
+import { AppHeaderComponent } from './embeddable/app-header.component';
 
 declare let ga: any;
 declare let gtag: any;
@@ -42,6 +43,8 @@ declare let gtag: any;
             ]),
         ]),
     ],
+    standalone: true,
+    imports: [AppHeaderComponent, RouterOutlet, RouterLink],
 })
 export class AppComponent {
     /**

@@ -11,15 +11,21 @@ import { Send404Component } from 'app/send-404.component';
 export const routeConfig: Routes = [
     { path: '', component: HomeComponent, data: { title: 'fluin.io', page: 'home' } },
     {
-        path: 'blog', data: { title: false, page: 'blog' }, component: BlogComponent, children: [
+        path: 'blog',
+        data: { title: false, page: 'blog' },
+        component: BlogComponent,
+        children: [
             { path: '', component: BlogPostComponent },
             { path: ':id', component: BlogPostComponent },
-        ]
+        ],
     },
     { path: 'bio', component: BioComponent, data: { title: 'About Stephen Fluin' } },
     { path: 'projects', component: ProjectsComponent, data: { title: 'Projects' } },
-    { path: 'admin', loadChildren: () => import('app/admin/admin.module').then(m => m.AdminModule) },
-    { path: 'newsletter', loadChildren: () => import('app/newsletter/newsletter.module').then(m => m.NewsletterModule) },
+    { path: 'admin', loadChildren: () => import('app/admin/admin.routes').then((m) => m.AdminRoutes) },
+    {
+        path: 'newsletter',
+        loadChildren: () => import('app/newsletter/newsletter.routes').then((m) => m.routes),
+    },
     { path: '404', component: NotFoundComponent },
     { path: '**', component: Send404Component },
 ];

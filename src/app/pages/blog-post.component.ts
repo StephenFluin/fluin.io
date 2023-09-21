@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title, MetaDefinition } from '@angular/platform-browser';
 
 import { DomSanitizer } from '@angular/platform-browser';
@@ -11,10 +11,16 @@ import { map, tap, switchMap } from 'rxjs/operators';
 
 import snarkdown from 'snarkdown';
 import { Meta } from '@angular/platform-browser';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
     templateUrl: './blog-post.component.html',
+    standalone: true,
+    imports: [
+        NgIf,
+        RouterLink,
+        AsyncPipe,
+    ],
 })
 export class BlogPostComponent {
     post: Observable<Post>;
