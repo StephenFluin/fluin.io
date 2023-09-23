@@ -9,7 +9,7 @@ import { routeConfig } from './app/app.routes';
 import { provideRouter } from '@angular/router';
 import { AdminService } from './app/shared/admin.service';
 import { PostService } from './app/shared/post.service';
-import { Title, BrowserModule, bootstrapApplication } from '@angular/platform-browser';
+import { Title, BrowserModule, bootstrapApplication, provideClientHydration } from '@angular/platform-browser';
 
 if (environment.production) {
     enableProdMode();
@@ -18,6 +18,7 @@ if (environment.production) {
 document.addEventListener('DOMContentLoaded', () => {
     bootstrapApplication(AppComponent, {
         providers: [
+            provideClientHydration(),
             importProvidersFrom(BrowserModule.withServerTransition({ appId: 'serverApp' })),
             Title,
             PostService,
