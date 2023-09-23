@@ -1,8 +1,7 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
     "cli": {
-        "analytics": "897e81d9-535c-43e4-a026-a9d5301d2a9c",
-        "schematicCollections": ["@angular-eslint/schematics"]
+        "analytics": "897e81d9-535c-43e4-a026-a9d5301d2a9c"
     },
     "version": 1,
     "newProjectRoot": "projects",
@@ -90,18 +89,6 @@
                         }
                     },
                     "defaultConfiguration": "development"
-                },
-                "extract-i18n": {
-                    "builder": "@angular-devkit/build-angular:extract-i18n",
-                    "options": {
-                        "browserTarget": "fluinio:build"
-                    }
-                },
-                "lint": {
-                    "builder": "@angular-eslint/builder:lint",
-                    "options": {
-                        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
-                    }
                 }
             }
         }
