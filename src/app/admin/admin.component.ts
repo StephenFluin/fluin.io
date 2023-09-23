@@ -4,7 +4,7 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
 import { map } from 'rxjs/operators';
 import { Post } from '../shared/post.service';
 import { keyify } from './shared/keyify.operator';
-import { MatLegacyCardModule } from '@angular/material/legacy-card';
+import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
@@ -20,9 +20,16 @@ export interface Talk {
             <div style="overflow:hidden;">
                 <a *ngFor="let post of posts | async" [routerLink]="post.key">
                     <mat-card style="margin:0 16px 16px 0;width:300px;height:125px;float:left;">
-                        <img *ngIf="post.image" [src]="post.image" [alt]="post.title" style="height:40px;margin:0px auto;display:block;">
-                        <div><strong>{{post.title}}</strong></div>
-                        <div>{{post.date}}</div>
+                        <img
+                            *ngIf="post.image"
+                            [src]="post.image"
+                            [alt]="post.title"
+                            style="height:40px;margin:0px auto;display:block;"
+                        />
+                        <div>
+                            <strong>{{ post.title }}</strong>
+                        </div>
+                        <div>{{ post.date }}</div>
                     </mat-card>
                 </a>
             </div>
@@ -31,7 +38,6 @@ export interface Talk {
                 <h2>New Post</h2>
                 <button routerLink="new">Create</button>
             </div>
-
 
             <!--<div>
                 <h2>Manage Talks</h2>
@@ -49,15 +55,9 @@ export interface Talk {
             <p>You need more access.</p>
             <button (click)="auth.login()">Login</button>
         </div>
-        `,
+    `,
     standalone: true,
-    imports: [
-        NgIf,
-        NgFor,
-        RouterLink,
-        MatLegacyCardModule,
-        AsyncPipe,
-    ],
+    imports: [NgIf, NgFor, RouterLink, MatCardModule, AsyncPipe],
 })
 export class AdminComponent {
     posts = this.db
@@ -65,14 +65,11 @@ export class AdminComponent {
         .snapshotChanges()
         .pipe(
             keyify,
-            map(list => list.sort((a, b) => (a.date >= b.date ? -1 : 1)))
+            map((list) => list.sort((a, b) => (a.date >= b.date ? -1 : 1)))
         );
 
     talkName: string;
-    talkList = this.db
-        .list<Talk>('/talks/')
-        .snapshotChanges()
-        .pipe(keyify);
+    talkList = this.db.list<Talk>('/talks/').snapshotChanges().pipe(keyify);
 
     selectedTalk;
 

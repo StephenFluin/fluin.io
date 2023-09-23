@@ -7,29 +7,21 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostService, Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 
-import { Observable ,  Subject, of as observableOf } from 'rxjs';
+import { Observable, Subject, of as observableOf } from 'rxjs';
 import { map, switchMap, debounceTime, tap } from 'rxjs/operators';
 
 import snarkdown from 'snarkdown';
 import { SafeHtml } from '@angular/platform-browser';
 import { UploadComponent } from './upload.component';
 import { FormsModule } from '@angular/forms';
-import { MatLegacyInputModule } from '@angular/material/legacy-input';
-import { MatLegacyFormFieldModule } from '@angular/material/legacy-form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
     templateUrl: './edit-post.component.html',
     standalone: true,
-    imports: [
-        NgIf,
-        MatLegacyFormFieldModule,
-        MatLegacyInputModule,
-        FormsModule,
-        RouterLink,
-        UploadComponent,
-        AsyncPipe,
-    ],
+    imports: [NgIf, MatFormFieldModule, MatInputModule, FormsModule, RouterLink, UploadComponent, AsyncPipe],
 })
 export class EditPostComponent {
     renderedBody;
@@ -52,17 +44,15 @@ export class EditPostComponent {
         public router: Router,
         public sanitized: DomSanitizer
     ) {
-
-
         this.postPreview = this.postChanges.pipe(
             debounceTime(300),
-            map(post => {
+            map((post) => {
                 return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
             })
         );
 
         this.postData = activatedRoute.params.pipe(
-            switchMap(params => {
+            switchMap((params) => {
                 if (!params['id']) {
                     console.error('No post specified');
                     return;
@@ -71,7 +61,7 @@ export class EditPostComponent {
                 }
 
                 return posts.postMap.pipe(
-                    map(postListObject => {
+                    map((postListObject) => {
                         console.log('Looking for post from', params, postListObject);
                         console.log(postListObject);
                         const item = postListObject[params['id']];
@@ -82,11 +72,10 @@ export class EditPostComponent {
 
                         return item;
                     }),
-                    tap(post => this.contentChange(post)),
+                    tap((post) => this.contentChange(post))
                 );
             })
         );
-
     }
     contentChange(post) {
         this.postChanges.next(post);
