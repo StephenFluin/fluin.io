@@ -1,48 +1,48 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, Signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
-
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import firebase from 'firebase/compat/app';
-import { keyify } from './shared/keyify.operator';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { remove as deleteDB } from 'firebase/database';
+import { deleteObject as deleteStorage } from 'firebase/storage';
+import { FirebaseService } from './firebase.service';
 
 export interface Image {
+    /** The full fb storage path */
     path: string;
+    /** Just the name of the file */
     filename: string;
-    downloadURL?: Observable<string>;
+    /** A promise with a download or <img> url */
+    downloadURL?: Promise<string>;
+    /** The key where it's stored in the DB */
     key?: string;
 }
 
 @Component({
     selector: 'image-upload',
     template: `
-  <h2>Upload a File</h2>
-  <form ngNoForm>
-    <input id="file" name="file" type="file" >
-    <button (click)="upload()" type="button">Upload</button>
-    </form>
+        <h2>Upload a File</h2>
+        <form ngNoForm>
+            <input id="file" name="file" type="file" />
+            <button (click)="upload()" type="button">Upload</button>
+        </form>
 
-    <h2>File Gallery</h2>
-    <div style="overflow:hidden;">
-        <div *ngFor="let img of imageList | async"
-            style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;">
-            <img *ngIf="img && img.downloadURL && (img.downloadURL | async)"
-                [src]="img.downloadURL | async"
-                alt="uploaded image"
-                style="max-width:100px;max-height:100px;">
-            <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
+        <h2>File Gallery</h2>
+        <div style="overflow:hidden;">
+            <div
+                *ngFor="let img of imageList()"
+                style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;"
+            >
+                <img
+                    *ngIf="img && img.downloadURL && img.downloadURL"
+                    [src]="img.downloadURL | async"
+                    alt="uploaded image"
+                    style="max-width:100px;max-height:100px;"
+                />
+                <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
+            </div>
         </div>
-    </div>
-  `,
+    `,
     standalone: true,
-    imports: [
-        NgFor,
-        NgIf,
-        AsyncPipe,
-    ],
+    imports: [NgFor, NgIf, AsyncPipe],
 })
 export class UploadComponent implements OnChanges {
     /**
@@ -51,37 +51,36 @@ export class UploadComponent implements OnChanges {
      */
     @Input() folder: string;
 
-    fileList: AngularFireList<Image>;
-    imageList: Observable<Image[]>;
+    // List of files from realtime DB
+    fileList: Signal<Image[]>;
+    // List of files with downloadURLs
+    imageList: Signal<Image[]>;
 
-    constructor(public db: AngularFireDatabase, public router: Router, public storage: AngularFireStorage) {}
+    constructor(public firebaseService: FirebaseService, public router: Router) {}
 
     ngOnChanges() {
         console.log('new values for folder');
+        this.fileList = this.firebaseService.list<Image>(`/${this.folder}/images`);
 
-        this.fileList = this.db.list<Image>(`/${this.folder}/images`);
-        this.imageList = this.fileList.snapshotChanges().pipe(
-            keyify,
-            map(itemList =>
-                itemList.map(item => {
-                    const pathReference = this.storage.ref(item.path);
-                    const result = { $key: item.key, path: item.path, downloadURL: null, filename: item.filename };
-                    // This Promise must be wrapped in Promise.resolve because the thennable from
-                    // firebase isn't monkeypatched by zones and therefore doesn't trigger CD
-                    result.downloadURL = pathReference.getDownloadURL();
-                    console.log('set the downloadUrl to',result.downloadURL);
-
-                    return result;
-                })
-            ),
-            tap(console.log),
-        );
+        /** Generate download URLs as promises */
+        this.imageList = computed(() => {
+            if (!this.fileList()) {
+                return [];
+            }
+            return this.fileList().map((item) => {
+                item.downloadURL = this.firebaseService.getUrl(item.path);
+                return item;
+            });
+        });
     }
 
+    /**
+     * User has picked a file. We'll store it in
+     *  FB storage as /posts/post-id/filename.jpg
+     * then remember we have it in
+     * DB storage as /posts/post-id/images/<key>/{path: /posts/post-id/, filename: filename.jpg}
+     */
     upload() {
-        // Create a root reference
-        const storageRef = this.storage.ref('/');
-
         const success = false;
 
         if ((<HTMLInputElement>document.getElementById('file')).files.length <= 0) {
@@ -93,35 +92,34 @@ export class UploadComponent implements OnChanges {
         for (const selectedFile of [(<HTMLInputElement>document.getElementById('file')).files[0]]) {
             console.log(selectedFile);
             // Make local copies of services because "this" will be clobbered
-            const router = this.router;
             const folder = this.folder;
             const path = `/${this.folder}/${selectedFile.name}`;
-            const iRef = storageRef.child(path);
-            const db = this.db;
+            const uploadRef = this.firebaseService.getStorageRef(path);
+
             // cache files for up to a week
-            iRef.put(selectedFile, { cacheControl: 'max-age=604800' }).then(snapshot => {
-                console.log('Uploaded a blob or file! Now storing the reference at', `/${this.folder}/images/`);
-                db.list(`/${folder}/images/`).push({ path: path, filename: selectedFile.name });
-            });
+            this.firebaseService
+                .upload(uploadRef, selectedFile, { cacheControl: 'max-age=604800' })
+                .then((snapshot) => {
+                    console.log('Uploaded a blob or file! Now storing the reference at', `/${this.folder}/images/`);
+                    this.firebaseService.push(`/${folder}/images/`, { path: path, filename: selectedFile.name });
+                });
         }
+
+        // @TODO should we be saving the download URL before we save it to DB?
     }
-    delete(image: Image ) {
+
+    delete(image: Image) {
         const storagePath = image.path;
-        const referencePath = `${this.folder}/images/` + image.key;
+        const dbPath = `${this.folder}/images/` + image.key;
 
         // Do these as two separate steps so you can still try delete ref if file no longer exists
 
-        // Delete from Storage
-        firebase
-            .storage()
-            .ref()
-            .child(storagePath)
-            .delete()
-            .then(() => {
-                //Expected case
-            }, error => console.error('Error deleting stored file', storagePath));
+        deleteDB(this.firebaseService.dbRef(dbPath)).catch((error) =>
+            console.error('Error deleting memory of stored file', dbPath, error)
+        );
 
-        // Delete references
-        this.db.object(referencePath).remove();
+        deleteStorage(this.firebaseService.getStorageRef(storagePath)).catch((error) => {
+            console.error('Error deleting file from storage', storagePath, error);
+        });
     }
 }

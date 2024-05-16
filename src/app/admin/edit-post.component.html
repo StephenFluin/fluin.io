@@ -8,47 +8,55 @@
         margin: 0 0 32px 0;
     }
 </style>
-<div *ngIf="postData | async as post; else loading" class="padded" style="flex-grow:1;"
-(keydown)="onKey($event, post)">
-    <div class="columns" style="display:flex;">
-        <form style="width:50%;padding:16px;" ngNoForm>
+<div *ngIf="postData() as post; else loading" class="padded" style="flex-grow: 1" (keydown)="onKey($event, post)">
+    <div class="columns" style="display: flex">
+        <form style="width: 50%; padding: 16px" ngNoForm>
             <mat-form-field>
-                <input matInput placeholder="title" [(ngModel)]="post.title">
+                <mat-label>Title</mat-label>
+                <input matInput [(ngModel)]="post.title" />
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="image url" [(ngModel)]="post.image">
+                <mat-label>Image URL</mat-label>
+                <input matInput [(ngModel)]="post.image" />
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="id" [(ngModel)]="post.id">
+                <mat-label>Post ID / slug</mat-label>
+                <input matInput [(ngModel)]="post.id" />
             </mat-form-field>
             <mat-form-field>
-                <input matInput placeholder="date" type="date" [(ngModel)]="post.date">
+                <mat-label>Date</mat-label>
+                <input matInput type="date" [(ngModel)]="post.date" />
             </mat-form-field>
-            <textarea placeholder="body" (ngModelChange)="contentChange(post)" [(ngModel)]="post.body" [style.height.px]="post && post.body && post.body.length > 200 && post.body.length / 2 || 400" style="width:100%;"></textarea>
+            <textarea
+                placeholder="body"
+                (ngModelChange)="contentChange(post)"
+                [(ngModel)]="post.body"
+                [style.height.px]="(post && post.body && post.body.length > 200 && post.body.length / 2) || 400"
+                style="width: 100%; padding: 8px"
+            ></textarea>
             <button type="button" (click)="save(post)">Save</button>
         </form>
-        
-        <div style="width:50%;padding:16px;" class="post">
+
+        <div style="width: 50%; padding: 16px" class="post">
             <div class="highlight-image">
-                <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title">
-                <img *ngIf="post.image" [src]="post.image" [alt]="post.title">
+                <img *ngIf="!post.image" src="/assets/images/imgpostholder.png" [alt]="post.title" />
+                <img *ngIf="post.image" [src]="post.image" [alt]="post.title" />
             </div>
 
             <h1>
-                <a [routerLink]="['/blog',post.id]" target="preview">{{post.title}}</a>
+                <a [routerLink]="['/blog', post.id]" target="preview">{{ post.title }}</a>
             </h1>
             <div>
                 <h3>by Stephen Fluin</h3>
             </div>
             <div class="date">
-                <h3>{{post.date}}</h3>
+                <h3>{{ post.date }}</h3>
             </div>
-            <div [innerHTML]="postPreview | async">
-            </div>
+            <div [innerHTML]="postPreview()"></div>
         </div>
     </div>
     <div>
-        <image-upload *ngIf="post.id" [folder]="'posts/'+post.id"></image-upload>
+        <image-upload *ngIf="post.id" [folder]="'posts/' + post.id"></image-upload>
     </div>
     <div>
         <h2>Delete Post</h2>

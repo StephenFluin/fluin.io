@@ -1,34 +1,54 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, Signal, computed, effect } from '@angular/core';
 import { AdminService } from '../../shared/admin.service';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
-import { map } from 'rxjs/operators';
+import { FirebaseService } from '../firebase.service';
+import { signInWithPopup, GoogleAuthProvider, signOut, signInWithRedirect } from 'firebase/auth';
+
+const provider = new GoogleAuthProvider();
 
 @Injectable()
 export class AuthService {
-    isAdmin: Observable<boolean>;
-    name: Observable<string>;
-    uid: Observable<string>;
+    isAdmin: Signal<boolean>;
+    name: Signal<string>;
+    uid: Signal<string>;
 
-    constructor(public auth: AngularFireAuth, public admin: AdminService) {
+    constructor(public firebaseService: FirebaseService, public admin: AdminService) {
+        const provider = new GoogleAuthProvider();
+
         // this.af = {auth:{map:()=>{}}};
-        const state = auth.authState;
-        console.log('State is', state);
+        const state = firebaseService.auth.currentUser;
 
-        this.isAdmin = state.pipe(map(authState => !!authState && authState.uid === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2'));
-        this.name = state.pipe(map(authState => (authState ? authState.displayName : null)));
-        this.uid = state.pipe(map(authState => (authState ? authState.uid : null)));
+        this.uid = computed(() => this.firebaseService.authState()?.uid || '');
+        this.isAdmin = computed(() => this.uid() === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2');
+        this.name = computed(() => this.firebaseService.authState()?.displayName || 'Unknown');
 
-        this.isAdmin.subscribe(isAdmin => {
-            this.admin.isAdmin = isAdmin;
+        effect(() => {
+            this.admin.isAdmin = this.isAdmin();
         });
     }
     login() {
-        this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+        const auth = this.firebaseService.auth;
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // Do we need this?
+            })
+            .catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                if (errorCode == 'auth/popup-blocked') {
+                    console.log('Falling back to redirect.');
+                    signInWithRedirect(auth, provider);
+                }
+
+                console.log('Error with Sign In', errorCode, errorMessage, email, credential);
+            });
     }
 
     logout() {
-        this.auth.signOut();
+        signOut(this.firebaseService.auth);
     }
 }

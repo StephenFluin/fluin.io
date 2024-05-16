@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 
 @Component({
+    selector: 'not-found',
     template: '<div style="margin:128px 16px;text-align:center;">Path not found.</div>',
-    standalone: true
+    standalone: true,
 })
 export class NotFoundComponent {
     constructor(meta: Meta) {
         console.log('adding tag');
-        meta.addTag({name: 'robots', content: 'noindex'});
+        meta.addTag({ name: 'robots', content: 'noindex' });
     }
 }

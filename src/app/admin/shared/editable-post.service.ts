@@ -1,38 +1,29 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireObject, AngularFireList } from '@angular/fire/compat/database';
 import { Post, PostService } from '../../shared/post.service';
-
+import { FirebaseService } from '../firebase.service';
+import { remove as deleteDB } from 'firebase/database';
 
 @Injectable()
 export class EditablePostService {
-    constructor(public db: AngularFireDatabase, public ps: PostService) {
-
-    }
-    getObject(id: string): AngularFireObject<Post> {
-        return this.db.object(`posts/${id}/`);
-    }
-    getPostList(): AngularFireList<Post> {
-        return this.db.list('posts');
-    }
+    constructor(public firebaseService: FirebaseService, public ps: PostService) {}
     save(post: Post) {
-        if (post.key !== undefined || post.key !== null) {
+        const key = post.key;
+        const path = '/posts/' + post.id;
+        if (post.key) {
             delete post.key;
         }
-        if (post.id) {
-            const e = this.getObject(post.id);
-            e.update(post).then(console.log, console.error);
+        if (post.id && post.id.length >= 3) {
+            this.firebaseService.set(path, post).then(console.log, console.error);
         } else {
-            const l = this.getPostList();
-            l.push(post);
+            console.error("Won't save without an id of at least 3 characters");
         }
         this.ps.refreshData();
     }
     delete(post: Post) {
         if (post.id && confirm('Are you sure you want to delete this post?')) {
-            return this.getObject(post.id).remove();
+            return deleteDB(this.firebaseService.dbRef('/posts/' + post.id));
         } else {
-            console.error('Couldn\'t find post to delete');
+            console.error("Couldn't find post to delete or user cancelled.");
         }
     }
-
 }
