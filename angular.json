@@ -82,10 +82,10 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "fluinio:build:production"
+                          "buildTarget": "fluinio:build:production"
                         },
                         "development": {
-                            "browserTarget": "fluinio:build:development"
+                          "buildTarget": "fluinio:build:development"
                         }
                     },
                     "defaultConfiguration": "development"
