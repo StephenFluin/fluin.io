@@ -26,18 +26,20 @@
             "root": "",
             "architect": {
                 "build": {
-                    "builder": "@angular-devkit/build-angular:browser",
+                    "builder": "@angular/build:application",
                     "options": {
-                        "outputPath": "dist/",
+                        "outputPath": {
+                            "base": "dist/"
+                        },
                         "index": "src/index.html",
-                        "main": "src/main.ts",
-                        "polyfills": "src/polyfills.ts",
+                        "polyfills": ["src/polyfills.ts"],
                         "tsConfig": "src/tsconfig.json",
                         "assets": ["src/favicon.ico", "src/assets", "src/robots.txt", "src/webfont.js"],
-                        "styles": ["src/styles.css"],
+                        "styles": ["src/styles.css", "@angular/material/prebuilt-themes/indigo-pink.css"],
                         "scripts": [],
                         "sourceMap": true,
-                        "namedChunks": true
+                        "namedChunks": true,
+                        "browser": "src/main.ts"
                     },
                     "configurations": {
                         "production": {
@@ -68,9 +70,7 @@
                             "outputHashing": "all"
                         },
                         "development": {
-                            "buildOptimizer": false,
                             "optimization": false,
-                            "vendorChunk": true,
                             "extractLicenses": false,
                             "sourceMap": true,
                             "namedChunks": true
@@ -79,13 +79,13 @@
                     "defaultConfiguration": "production"
                 },
                 "serve": {
-                    "builder": "@angular-devkit/build-angular:dev-server",
+                    "builder": "@angular/build:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "fluinio:build:production"
+                            "buildTarget": "fluinio:build:production"
                         },
                         "development": {
-                            "browserTarget": "fluinio:build:development"
+                            "buildTarget": "fluinio:build:development"
                         }
                     },
                     "defaultConfiguration": "development"

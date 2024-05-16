@@ -1,10 +1,7 @@
-import { Injectable } from '@angular/core';
+import { computed, effect, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable ,  Subject } from 'rxjs';
-import { shareReplay, startWith, map, switchMap } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { SafeHtml } from '@angular/platform-browser';
-
-import { shareAndCache } from 'http-operators';
 
 export class Post {
     key: string;
@@ -18,6 +15,9 @@ export class Post {
         this.key = '';
     }
 }
+interface Posts {
+    [key: string]: Post;
+}
 
 @Injectable()
 export class PostService {
@@ -25,50 +25,46 @@ export class PostService {
     /**
      * An object with post keys as keys, and post data as values
      */
-    postMap: Observable<{ [key: string]: Post }>;
+    postMap: WritableSignal<Posts>;
     /**
      * An sorted array of posts with keys directly on the object.
      */
-    postList: Observable<Post[]>;
+    postList: Signal<Post[]>;
 
-    private forceRefresher = new Subject();
+    private forceRefresher = signal(null);
+
+    // @TODO: I temporarily removed the shareAndCache so we need to figure out how to do this with signals
 
     constructor(private http: HttpClient) {
-        this.postMap = this.forceRefresher.pipe(
-            startWith(false),
-            switchMap(() => this.http.get<any>(this.url)),
-            shareAndCache('fluinPostCache'),
-        );
+        this.postMap = signal({});
+
+        effect(() => {
+            this.forceRefresher();
+            console.log('forced refresh triggered!');
+            this.http.get<Posts>(this.url).subscribe((data) => {
+                this.postMap.set(data);
+            });
+        });
 
         // Turn an object into an array, similar to refirebase
-        this.postList = this.postMap.pipe(
-            map(data => {
-                const list = [];
-                for (const key of Object.keys(data)) {
-                    const item = data[key];
-                    item.key = key;
+        this.postList = computed(() => {
+            const list = [];
+            const data = this.postMap();
+            for (const key of Object.keys(data)) {
+                const item = data[key];
+                item.key = key;
 
-                    // Only include past items
-                    if (!this.isFuture(item)) {
-                        list.push(item);
-                    }
+                // Only include past items
+                if (!this.isFuture(item)) {
+                    list.push(item);
                 }
-                list.sort((a, b) => {
-                    if (a.date > b.date) {
-                        return -1;
-                    } else if (b.date > a.date) {
-                        return 1;
-                    } else {
-                        return 0;
-                    }
-                });
-                return list;
-            }),
-            shareReplay(1)
-        );
+            }
+            list.sort((a, b) => (a.date > b.date ? -1 : 1));
+            return list;
+        });
     }
     refreshData() {
-        this.forceRefresher.next();
+        this.forceRefresher.set(null);
     }
 
     isFuture(post: Post) {

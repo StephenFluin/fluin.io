@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Signal, computed, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -7,8 +7,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostService, Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 
-import { Observable, Subject, of as observableOf } from 'rxjs';
-import { map, switchMap, debounceTime, tap } from 'rxjs/operators';
+import { BehaviorSubject, Subject, of as observableOf } from 'rxjs';
+import { map, debounceTime } from 'rxjs/operators';
 
 import snarkdown from 'snarkdown';
 import { SafeHtml } from '@angular/platform-browser';
@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     templateUrl: './edit-post.component.html',
@@ -28,13 +29,12 @@ export class EditPostComponent {
     /**
      * Data coming from the server
      */
-    postData: Observable<Post>;
+    postData: Signal<Post | null>;
     /**
      * Data coming from the user
      */
     postChanges = new Subject<Post>();
-    postPreview: Observable<SafeHtml>;
-    converter;
+    postPreview: Signal<SafeHtml>;
 
     constructor(
         activatedRoute: ActivatedRoute,
@@ -44,38 +44,37 @@ export class EditPostComponent {
         public router: Router,
         public sanitized: DomSanitizer
     ) {
-        this.postPreview = this.postChanges.pipe(
-            debounceTime(300),
-            map((post) => {
-                return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
-            })
+        this.postPreview = toSignal(
+            this.postChanges.pipe(
+                debounceTime(300),
+                map((post) => {
+                    return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
+                })
+            )
         );
 
-        this.postData = activatedRoute.params.pipe(
-            switchMap((params) => {
-                if (!params['id']) {
-                    console.error('No post specified');
-                    return;
-                } else if (params['id'] === 'new') {
-                    return observableOf(new Post());
-                }
+        const routeParams = toSignal(activatedRoute.params);
 
-                return posts.postMap.pipe(
-                    map((postListObject) => {
-                        console.log('Looking for post from', params, postListObject);
-                        console.log(postListObject);
-                        const item = postListObject[params['id']];
-                        if (item) {
-                            title.setTitle('Edit ' + item.title + ' | fluin.io blog');
-                            this.contentChange(item);
-                        }
+        // Get the post based on the route and set the title
+        this.postData = computed(() => {
+            const params = routeParams();
+            if (!params['id']) {
+                console.error('No post specified');
+                return;
+            } else if (params['id'] === 'new') {
+                return new Post();
+            }
 
-                        return item;
-                    }),
-                    tap((post) => this.contentChange(post))
-                );
-            })
-        );
+            const postMap = posts.postMap();
+            console.log('Looking for post from', params, postMap);
+            const item = postMap[params['id']];
+            if (item) {
+                title.setTitle('Edit ' + item.title + ' | fluin.io blog');
+                this.contentChange(item);
+            }
+
+            return item;
+        });
     }
     contentChange(post) {
         this.postChanges.next(post);
