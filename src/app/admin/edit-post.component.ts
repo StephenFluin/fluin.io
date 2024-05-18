@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
     templateUrl: './edit-post.component.html',
@@ -60,7 +61,7 @@ export class EditPostComponent {
                     return observableOf(new Post());
                 }
 
-                return posts.postMap.pipe(
+                return toObservable(posts.postMap).pipe(
                     map((postListObject) => {
                         console.log('Looking for post from', params, postListObject);
                         console.log(postListObject);
