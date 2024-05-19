@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Signal, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
     templateUrl: './edit-post.component.html',
@@ -29,13 +29,12 @@ export class EditPostComponent {
     /**
      * Data coming from the server
      */
-    postData: Observable<Post>;
+    postData: Signal<Post | null>;
     /**
      * Data coming from the user
      */
-    postChanges = new Subject<Post>();
-    postPreview: Observable<SafeHtml>;
-    converter;
+    postChanges: Signal<Post | null> = signal(null);
+    postPreview: Signal<SafeHtml>;
 
     constructor(
         activatedRoute: ActivatedRoute,
@@ -45,11 +44,13 @@ export class EditPostComponent {
         public router: Router,
         public sanitized: DomSanitizer
     ) {
-        this.postPreview = this.postChanges.pipe(
-            debounceTime(300),
-            map((post) => {
-                return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
-            })
+        this.postPreview = toSignal(
+            this.postChanges.pipe(
+                debounceTime(300),
+                map((post) => {
+                    return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
+                })
+            )
         );
 
         this.postData = activatedRoute.params.pipe(

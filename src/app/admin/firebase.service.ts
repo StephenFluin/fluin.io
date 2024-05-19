@@ -16,7 +16,6 @@ export class FirebaseService {
 
     constructor(@Inject(FIREBASE_APP) private fbApp: FirebaseApp) {
         this.auth.onAuthStateChanged((user) => {
-            console.log('auth state changed!', user);
             this.authState.set(user);
         });
     }
@@ -32,8 +31,7 @@ export class FirebaseService {
             const newList = [];
             for (const key of Object.keys(snapshot.val())) {
                 const details = snapshot.val()[key];
-                console.log('looking to expand and add key to ', details);
-                const item = { key, ...details };
+                const item = { ...details, key };
                 newList.push(item);
             }
             result.set(newList);

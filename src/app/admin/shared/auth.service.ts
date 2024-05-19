@@ -16,14 +16,12 @@ export class AuthService {
 
         // this.af = {auth:{map:()=>{}}};
         const state = firebaseService.auth.currentUser;
-        console.log('State is', state);
 
         this.uid = computed(() => this.firebaseService.authState()?.uid || '');
         this.isAdmin = computed(() => this.uid() === 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2');
         this.name = computed(() => this.firebaseService.authState()?.displayName || 'Unknown');
 
         effect(() => {
-            console.log('updating isAdmin in global context');
             this.admin.isAdmin = this.isAdmin();
         });
     }

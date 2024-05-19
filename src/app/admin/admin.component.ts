@@ -23,7 +23,7 @@ export interface Talk {
                             *ngIf="post.image"
                             [src]="post.image"
                             [alt]="post.title"
-                            style="height:40px;margin:0px auto;display:block;"
+                            style="height:40px;margin:0px auto;display:block;max-width:50px;margin-right:16px;"
                         />
                         <div style="flex-grow:1">
                             <strong>{{ post.title }}</strong>
@@ -49,11 +49,11 @@ export interface Talk {
 export class AdminComponent {
     list = this.firebaseService.list<Post>('/posts/');
     posts = computed(() => {
-        console.log('list is', this.list());
+        // signal starts as null
         if (!this.list()) {
-            console.error("coudln't get a sync list", this.list());
             return [];
         }
+        console.log('list is currently', this.list());
         return this.list().sort((a, b) => (a.date >= b.date ? -1 : 1));
     });
 
