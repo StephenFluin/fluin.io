@@ -3,7 +3,7 @@ import { Route } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { EditPostComponent } from './edit-post.component';
 
-import { initializeApp } from 'firebase/app';
+import { FirebaseApp, initializeApp } from 'firebase/app';
 
 import { InjectionToken } from '@angular/core';
 import { AuthService } from './shared/auth.service';
@@ -11,7 +11,7 @@ import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseService } from './firebase.service';
 
 export const BUCKET = new InjectionToken<string>('firebase.storageBucket');
-export const FIREBASE_APP = new InjectionToken<string>('firebase.app');
+export const FIREBASE_APP = new InjectionToken<FirebaseApp>('firebase.app');
 
 export const AdminRoutes: Route[] = [
     {

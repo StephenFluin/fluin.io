@@ -1,4 +1,4 @@
-import { Component, Inject, computed } from '@angular/core';
+import { Component, Inject, computed, inject } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { Post } from '../shared/post.service';
 import { MatCardModule } from '@angular/material/card';
@@ -43,10 +43,10 @@ export interface Talk {
             <button (click)="auth.login()">Login</button>
         </div>
     `,
-    standalone: true,
-    imports: [NgIf, NgFor, RouterLink, MatCardModule, AsyncPipe],
+    imports: [NgIf, NgFor, RouterLink, MatCardModule],
 })
 export class AdminComponent {
+    firebaseService = inject(FirebaseService);
     list = this.firebaseService.list<Post>('/posts/');
     posts = computed(() => {
         // signal starts as null
@@ -57,5 +57,5 @@ export class AdminComponent {
         return this.list().sort((a, b) => (a.date >= b.date ? -1 : 1));
     });
 
-    constructor(public auth: AuthService, private firebaseService: FirebaseService) {}
+    constructor(public auth: AuthService) {}
 }

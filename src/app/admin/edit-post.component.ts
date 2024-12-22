@@ -1,28 +1,25 @@
-import { Component, Signal, computed, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { Title } from '@angular/platform-browser';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, Signal, computed } from '@angular/core';
+import { DomSanitizer, Title } from '@angular/platform-browser';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
-import { PostService, Post } from '../shared/post.service';
+import { Post, PostService } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 
-import { BehaviorSubject, Subject, of as observableOf } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 
-import snarkdown from 'snarkdown';
-import { SafeHtml } from '@angular/platform-browser';
-import { UploadComponent } from './upload.component';
+import { NgIf } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgIf, AsyncPipe } from '@angular/common';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { MatInputModule } from '@angular/material/input';
+import { SafeHtml } from '@angular/platform-browser';
+import snarkdown from 'snarkdown';
+import { UploadComponent } from './upload.component';
 
 @Component({
     templateUrl: './edit-post.component.html',
-    standalone: true,
-    imports: [NgIf, MatFormFieldModule, MatInputModule, FormsModule, RouterLink, UploadComponent, AsyncPipe],
+    imports: [NgIf, MatFormFieldModule, MatInputModule, FormsModule, RouterLink, UploadComponent],
 })
 export class EditPostComponent {
     renderedBody;
@@ -60,7 +57,7 @@ export class EditPostComponent {
             const params = routeParams();
             if (!params['id']) {
                 console.error('No post specified');
-                return;
+                return null;
             } else if (params['id'] === 'new') {
                 return new Post();
             }

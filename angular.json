@@ -1,70 +1,55 @@
 {
     "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-    "cli": {
-        "analytics": "897e81d9-535c-43e4-a026-a9d5301d2a9c"
-    },
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
         "fluinio": {
             "projectType": "application",
             "schematics": {
-                "@schematics/angular:class": {
-                    "skipTests": true
-                },
                 "@schematics/angular:component": {
-                    "skipTests": true,
-                    "inlineStyle": true,
-                    "inlineTemplate": true,
-                    "prefix": "app",
-                    "style": "css"
-                },
-                "@schematics/angular:directive": {
-                    "prefix": "app"
+                    "style": "scss"
                 }
             },
             "root": "",
+            "sourceRoot": "src",
+            "prefix": "app",
             "architect": {
                 "build": {
-                    "builder": "@angular/build:application",
+                    "builder": "@angular-devkit/build-angular:application",
                     "options": {
-                        "outputPath": {
-                            "base": "dist/"
-                        },
+                        "outputPath": "dist",
                         "index": "src/index.html",
-                        "polyfills": ["src/polyfills.ts"],
-                        "tsConfig": "src/tsconfig.json",
-                        "assets": ["src/favicon.ico", "src/assets", "src/robots.txt", "src/webfont.js"],
-                        "styles": ["src/styles.css", "@angular/material/prebuilt-themes/indigo-pink.css"],
+                        "browser": "src/main.ts",
+                        "polyfills": ["zone.js"],
+                        "tsConfig": "tsconfig.app.json",
+                        "inlineStyleLanguage": "scss",
+                        "assets": [
+                            {
+                                "glob": "**/*",
+                                "input": "public"
+                            }
+                        ],
+                        "styles": ["src/styles.scss", "@angular/material/prebuilt-themes/indigo-pink.css"],
                         "scripts": [],
-                        "sourceMap": true,
-                        "namedChunks": true,
-                        "browser": "src/main.ts"
+                        "server": "src/main.server.ts",
+                        "prerender": false,
+                        "ssr": {
+                            "entry": "src/server.ts"
+                        }
                     },
+
                     "configurations": {
                         "production": {
-                            "optimization": {
-                                "fonts": {
-                                    "inline": true
-                                },
-                                "styles": { "inlineCritical": true }
-                            },
                             "budgets": [
                                 {
                                     "type": "initial",
-                                    "maximumWarning": "500kb",
-                                    "maximumError": "1mb"
+                                    "maximumWarning": "500kB",
+                                    "maximumError": "1MB"
                                 },
                                 {
                                     "type": "anyComponentStyle",
-                                    "maximumWarning": "2kb",
-                                    "maximumError": "4kb"
-                                }
-                            ],
-                            "fileReplacements": [
-                                {
-                                    "src": "src/environments/environment.ts",
-                                    "replaceWith": "src/environments/environment.prod.ts"
+                                    "maximumWarning": "4kB",
+                                    "maximumError": "32kB"
                                 }
                             ],
                             "outputHashing": "all"
@@ -72,14 +57,13 @@
                         "development": {
                             "optimization": false,
                             "extractLicenses": false,
-                            "sourceMap": true,
-                            "namedChunks": true
+                            "sourceMap": true
                         }
                     },
                     "defaultConfiguration": "production"
                 },
                 "serve": {
-                    "builder": "@angular/build:dev-server",
+                    "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
                             "buildTarget": "fluinio:build:production"
@@ -89,8 +73,14 @@
                         }
                     },
                     "defaultConfiguration": "development"
+                },
+                "extract-i18n": {
+                    "builder": "@angular-devkit/build-angular:extract-i18n"
                 }
             }
         }
+    },
+    "cli": {
+        "analytics": "873b9e97-c226-41ed-a87b-596312f93bf1"
     }
 }

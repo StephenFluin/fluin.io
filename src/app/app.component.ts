@@ -43,8 +43,7 @@ declare let gtag: any;
             ]),
         ]),
     ],
-    standalone: true,
-    imports: [AppHeaderComponent, RouterOutlet, RouterLink],
+    imports: [AppHeaderComponent, RouterOutlet, RouterLink]
 })
 export class AppComponent {
     /**

@@ -22,8 +22,9 @@ export class EditablePostService {
     delete(post: Post) {
         if (post.id && confirm('Are you sure you want to delete this post?')) {
             return deleteDB(this.firebaseService.dbRef('/posts/' + post.id));
-        } else {
-            console.error("Couldn't find post to delete or user cancelled.");
         }
+
+        console.error("Couldn't find post to delete or user cancelled.");
+        return null;
     }
 }

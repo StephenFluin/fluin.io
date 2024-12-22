@@ -1,20 +1,20 @@
-import { Inject, Injectable, signal } from '@angular/core';
-import { FirebaseApp } from 'firebase/app';
+import { Injectable, inject, signal } from '@angular/core';
 import { User, getAuth } from 'firebase/auth';
 import { ref as dbRef, getDatabase, onValue, push, set } from 'firebase/database';
-import { StorageReference, getDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref as storageRef, uploadBytes } from 'firebase/storage';
 import { FIREBASE_APP } from './admin.routes';
 
 @Injectable({
     providedIn: 'root',
 })
 export class FirebaseService {
+    fbApp = inject(FIREBASE_APP);
     db = getDatabase(this.fbApp);
     storage = getStorage(this.fbApp);
     auth = getAuth(this.fbApp);
     authState = signal<User | null>(null);
 
-    constructor(@Inject(FIREBASE_APP) private fbApp: FirebaseApp) {
+    constructor() {
         this.auth.onAuthStateChanged((user) => {
             this.authState.set(user);
         });
@@ -38,6 +38,7 @@ export class FirebaseService {
                 newList.push(item);
             }
             result.set(newList);
+            return newList;
         });
         return result;
     }

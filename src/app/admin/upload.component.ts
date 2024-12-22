@@ -41,8 +41,7 @@ export interface Image {
             </div>
         </div>
     `,
-    standalone: true,
-    imports: [NgFor, NgIf, AsyncPipe],
+    imports: [NgFor, NgIf, AsyncPipe]
 })
 export class UploadComponent implements OnChanges {
     /**

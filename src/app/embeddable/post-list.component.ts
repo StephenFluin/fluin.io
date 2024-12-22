@@ -1,7 +1,7 @@
 import { Component, Input, Signal, computed } from '@angular/core';
-import { Post, PostService } from 'app/shared/post.service';
 import { RouterLink } from '@angular/router';
-import { NgFor, NgIf, AsyncPipe, JsonPipe } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { Post, PostService } from '../shared/post.service';
 
 @Component({
     selector: 'post-list',
@@ -29,8 +29,7 @@ import { NgFor, NgIf, AsyncPipe, JsonPipe } from '@angular/common';
             </a>
         </div>
     `,
-    standalone: true,
-    imports: [NgFor, RouterLink, NgIf, AsyncPipe],
+    imports: [NgFor, RouterLink, NgIf],
 })
 export class PostListComponent {
     @Input() limit = 12;

@@ -5,8 +5,7 @@ import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
     templateUrl: './blog.component.html',
-    standalone: true,
-    imports: [RouterOutlet, NgFor, RouterLink, NgIf, AsyncPipe],
+    imports: [RouterOutlet, NgFor, RouterLink, NgIf],
 })
 export class BlogComponent {
     posts: Signal<Post[]>;
