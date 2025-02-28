@@ -62,7 +62,7 @@ export class EditPostComponent {
                 return new Post();
             }
 
-            const postMap = posts.postMap();
+            const postMap = posts.postMap.value();
             console.log('Looking for post from', params, postMap);
             const item = postMap[params['id']];
             if (item) {

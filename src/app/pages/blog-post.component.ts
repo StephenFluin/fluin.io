@@ -32,7 +32,7 @@ export class BlogPostComponent {
         const routeParams = toSignal(route.params);
         this.post = computed(() => {
             const id = routeParams()['id'];
-            const item = id ? posts.postMap()[id] : posts.postList()[0];
+            const item = id ? posts.postMap.value()[id] : posts.postList()[0];
             if (!item) {
                 return null;
             }

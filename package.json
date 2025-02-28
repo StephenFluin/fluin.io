@@ -1,62 +1,62 @@
 {
-    "name": "fluin.io",
-    "version": "0.0.2",
-    "description": "website",
-    "main": "index.js",
-    "scripts": {
-        "start": "ng serve",
-        "lint": "tslint \"src/**/*.ts\"",
-        "build": "ng build",
-        "deploy": "ts-node src/prerender.ts && firebase deploy"
-    },
-    "author": "Stephen Fluin",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/stephenfluin/fluin.io"
-    },
-    "license": "MIT",
-    "private": true,
-    "dependencies": {
-        "@angular/animations": "19.0.4",
-        "@angular/cdk": "^19.0.3",
-        "@angular/cli": "19.0.5",
-        "@angular/common": "19.0.4",
-        "@angular/compiler": "19.0.4",
-        "@angular/compiler-cli": "19.0.4",
-        "@angular/core": "19.0.4",
-        "@angular/forms": "19.0.4",
-        "@angular/material": "^19.0.3",
-        "@angular/platform-browser": "19.0.4",
-        "@angular/platform-browser-dynamic": "19.0.4",
-        "@angular/platform-server": "19.0.4",
-        "@angular/router": "19.0.4",
-        "@angular/service-worker": "19.0.4",
-        "@angular/ssr": "^19.0.6",
-        "@types/node": "^22.10.2",
-        "core-js": "^2.4.0",
-        "eslint-plugin-unused-imports": "^2.0.0",
-        "firebase": "^10.12.0",
-        "firebase-http2-push-config": "^0.0.10",
-        "firebase-tools": "^13.9.0",
-        "http-operators": "^0.0.3",
-        "puppeteer": "^19.2.2",
-        "raven-js": "^3.14.2",
-        "rxjs": "7.8.1",
-        "rxjs-compat": "^6.1.0",
-        "snarkdown": "^2.0.0",
-        "start": "*",
-        "tslib": "^2.0.0",
-        "typescript": "5.6.3",
-        "zone.js": "~0.15.0"
-    },
-    "devDependencies": {
-        "@angular-devkit/build-angular": "^19.0.6",
-        "tsx": "^4.19.2"
-    },
-    "prettier": {
-        "trailingComma": "es5",
-        "tabWidth": 4,
-        "singleQuote": true,
-        "printWidth": 120
-    }
+  "name": "fluin.io",
+  "version": "0.0.2",
+  "description": "website",
+  "main": "index.js",
+  "scripts": {
+    "start": "ng serve",
+    "lint": "tslint \"src/**/*.ts\"",
+    "build": "ng build",
+    "deploy": "ts-node src/prerender.ts && firebase deploy"
+  },
+  "author": "Stephen Fluin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stephenfluin/fluin.io"
+  },
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "19.2.0",
+    "@angular/cdk": "^19.0.3",
+    "@angular/cli": "19.2.0",
+    "@angular/common": "19.2.0",
+    "@angular/compiler": "19.2.0",
+    "@angular/compiler-cli": "19.2.0",
+    "@angular/core": "19.2.0",
+    "@angular/forms": "19.2.0",
+    "@angular/material": "^19.0.3",
+    "@angular/platform-browser": "19.2.0",
+    "@angular/platform-browser-dynamic": "19.2.0",
+    "@angular/platform-server": "19.2.0",
+    "@angular/router": "19.2.0",
+    "@angular/service-worker": "19.2.0",
+    "@angular/ssr": "^19.2.0",
+    "@types/node": "^22.10.2",
+    "core-js": "^2.4.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "firebase": "^10.12.0",
+    "firebase-http2-push-config": "^0.0.10",
+    "firebase-tools": "^13.9.0",
+    "http-operators": "^0.0.3",
+    "puppeteer": "^19.2.2",
+    "raven-js": "^3.14.2",
+    "rxjs": "7.8.1",
+    "rxjs-compat": "^6.1.0",
+    "snarkdown": "^2.0.0",
+    "start": "*",
+    "tslib": "^2.0.0",
+    "typescript": "5.6.3",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^19.2.0",
+    "tsx": "^4.19.2"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "singleQuote": true,
+    "printWidth": 120
+  }
 }

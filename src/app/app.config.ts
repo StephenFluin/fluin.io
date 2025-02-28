@@ -3,10 +3,10 @@ import { provideRouter } from '@angular/router';
 
 import { routeConfig } from './app.routes';
 import { provideClientHydration, Title, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { AdminService } from './shared/admin.service';
 import { PostService } from './shared/post.service';
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -16,7 +16,7 @@ export const appConfig: ApplicationConfig = {
         provideZoneChangeDetection({ eventCoalescing: true }),
         provideRouter(routeConfig),
         provideClientHydration(withEventReplay()),
-        provideHttpClient(withInterceptorsFromDi()),
         provideAnimations(),
+        provideHttpClient(withFetch()),
     ],
 };

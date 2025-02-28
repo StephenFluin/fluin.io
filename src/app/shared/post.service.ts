@@ -1,6 +1,5 @@
+import { httpResource } from '@angular/common/http';
 import { computed, effect, Injectable, signal, Signal, WritableSignal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { SafeHtml } from '@angular/platform-browser';
 
 export class Post {
@@ -25,31 +24,22 @@ export class PostService {
     /**
      * An object with post keys as keys, and post data as values
      */
-    postMap: WritableSignal<Posts>;
+    postMap = httpResource<Posts>(this.url);
     /**
      * An sorted array of posts with keys directly on the object.
      */
     postList: Signal<Post[]>;
 
-    private forceRefresher = signal(null);
-
     // @TODO: I temporarily removed the shareAndCache so we need to figure out how to do this with signals
 
-    constructor(private http: HttpClient) {
-        this.postMap = signal({});
-
-        effect(() => {
-            this.forceRefresher();
-            console.log('forced refresh triggered!');
-            this.http.get<Posts>(this.url).subscribe((data) => {
-                this.postMap.set(data);
-            });
-        });
-
+    constructor() {
         // Turn an object into an array, similar to refirebase
         this.postList = computed(() => {
             const list = [];
-            const data = this.postMap();
+            if (!this.postMap.hasValue()) {
+                return list;
+            }
+            const data = this.postMap.value();
             for (const key of Object.keys(data)) {
                 const item = data[key];
                 item.key = key;
@@ -64,7 +54,7 @@ export class PostService {
         });
     }
     refreshData() {
-        this.forceRefresher.set(null);
+        this.postMap.reload();
     }
 
     isFuture(post: Post) {

@@ -43,7 +43,7 @@ declare let gtag: any;
             ]),
         ]),
     ],
-    imports: [AppHeaderComponent, RouterOutlet, RouterLink]
+    imports: [AppHeaderComponent, RouterOutlet, RouterLink],
 })
 export class AppComponent {
     /**
@@ -67,9 +67,13 @@ export class AppComponent {
             } else if (pageTitle !== false) {
                 title.setTitle('fluin.io');
             }
-            window.scrollTo(0, 0);
-            ga('send', 'pageview', n.urlAfterRedirects);
-            gtag('config', 'G-2CB60WKV1M', { page_path: n.urlAfterRedirects });
+            try {
+                window.scrollTo(0, 0);
+                ga('send', 'pageview', n.urlAfterRedirects);
+                gtag('config', 'G-2CB60WKV1M', { page_path: n.urlAfterRedirects });
+            } catch (err) {
+                // Maybe not in a browser?
+            }
         });
         router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe((next) => {
             meta.removeTag('name=robots');
