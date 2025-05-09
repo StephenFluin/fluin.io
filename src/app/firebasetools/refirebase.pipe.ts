@@ -19,21 +19,21 @@ import { Pipe, PipeTransform } from '@angular/core';
  */
 @Pipe({
     name: 'refirebase',
-    standalone: true
+    standalone: true,
 })
 export class RefirebasePipe implements PipeTransform {
     transform(value: any, args?: any[]): any[] {
         if (value) {
             const keys = Object.keys(value);
             const output = [];
-            keys.forEach(key => {
+            keys.forEach((key) => {
                 const arrayItem = value[key];
 
                 // Support firebase "true" key arrays
                 if (arrayItem) {
                     output.push(key);
                 } else if (key !== '$key') {
-                    const newItem = {$key: ''};
+                    const newItem = { $key: '' };
                     (<any>Object).assign(newItem, arrayItem);
                     newItem.$key = key;
                     output.push(newItem);
@@ -41,5 +41,6 @@ export class RefirebasePipe implements PipeTransform {
             });
             return output;
         }
+        return [];
     }
 }

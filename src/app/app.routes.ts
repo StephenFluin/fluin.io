@@ -9,7 +9,7 @@ import { HomeComponent } from './pages/home.component';
 import { ProjectsComponent } from './pages/projects.component';
 import { Send404Component } from './send-404.component';
 
-export const routeConfig: Routes = [
+export const routes: Routes = [
     { path: '', component: HomeComponent, data: { title: 'fluin.io', page: 'home' } },
     {
         path: 'blog',

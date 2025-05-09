@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, Signal, computed } from '@angular/core';
 import { Router } from '@angular/router';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { remove as deleteDB } from 'firebase/database';
 import { deleteObject as deleteStorage } from 'firebase/storage';
 import { FirebaseService } from './firebase.service';
@@ -21,27 +21,29 @@ export interface Image {
     template: `
         <h2>Upload a File</h2>
         <form ngNoForm>
-            <input id="file" name="file" type="file" />
-            <button (click)="upload()" type="button">Upload</button>
+          <input id="file" name="file" type="file" />
+          <button (click)="upload()" type="button">Upload</button>
         </form>
-
+        
         <h2>File Gallery</h2>
         <div style="overflow:hidden;">
+          @for (img of imageList(); track img) {
             <div
-                *ngFor="let img of imageList()"
-                style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;"
-            >
+              style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;"
+              >
+              @if (img && img.downloadURL && img.downloadURL) {
                 <img
-                    *ngIf="img && img.downloadURL && img.downloadURL"
-                    [src]="img.downloadURL | async"
-                    alt="uploaded image"
-                    style="max-width:100px;max-height:100px;"
-                />
-                <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
+                  [src]="img.downloadURL | async"
+                  alt="uploaded image"
+                  style="max-width:100px;max-height:100px;"
+                  />
+              }
+              <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
             </div>
+          }
         </div>
-    `,
-    imports: [NgFor, NgIf, AsyncPipe]
+        `,
+    imports: [AsyncPipe]
 })
 export class UploadComponent implements OnChanges {
     /**

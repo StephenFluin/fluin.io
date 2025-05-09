@@ -1,4 +1,4 @@
-import { Component, Inject, Signal, computed } from '@angular/core';
+import { Component, Inject, Signal, computed, DOCUMENT } from '@angular/core';
 import { MetaDefinition, Title } from '@angular/platform-browser';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
@@ -7,14 +7,14 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
 
-import { DOCUMENT, NgIf } from '@angular/common';
+
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
 import snarkdown from 'snarkdown';
 
 @Component({
     templateUrl: './blog-post.component.html',
-    imports: [NgIf, RouterLink],
+    imports: [RouterLink],
 })
 export class BlogPostComponent {
     post: Signal<Post>;

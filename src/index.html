@@ -1,51 +1,57 @@
 <!DOCTYPE html>
 <html lang="en-us">
+    <head>
+        <title>fluin.io</title>
+        <meta charset="utf-8" />
+        <base href="/" />
+        <!--<link rel="stylesheet" href="css/main.css" type="text/css" />-->
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="The fluin.io site about Stephen Fluin and his Angular adventures." />
+        <link rel="manifest" href="/assets/manifest.json" />
+        <meta name="theme-color" content="#545d65" />
+        <meta property="og:type" content="website" />
+        <meta property="fb:app_id" content="2977757095599026" />
+        <meta name="twitter:creator" content="@stephenfluin" />
+        <meta name="twitter:site" content="@stephenfluin" />
+        <link rel="icon" sizes="192x192" href="/assets/icons/icon-192x192.png" />
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                (i[r] =
+                    i[r] ||
+                    function () {
+                        (i[r].q = i[r].q || []).push(arguments);
+                    }),
+                    (i[r].l = 1 * new Date());
+                (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m);
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
 
-<head>
-    <title>fluin.io</title>
-    <meta charset="utf-8">
-    <base href="/">
-    <!--<link rel="stylesheet" href="css/main.css" type="text/css" />-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="The fluin.io site about Stephen Fluin and his Angular adventures.">
-    <link rel="manifest" href="/assets/manifest.json">
-    <meta name="theme-color" content="#545d65">
-    <meta property="og:type" content="website" />
-    <meta property="fb:app_id" content="2977757095599026">
-    <meta name="twitter:creator" content="@stephenfluin">
-    <meta name="twitter:site" content="@stephenfluin">
-    <link rel="icon" sizes="192x192" href="/assets/icons/icon-192x192.png">
-    <script>
-        (function (i, s, o, g, r, a, m) {
-            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)
-            }, i[r].l = 1 * new Date(); a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-66278430-2', 'auto');
+        </script>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-2CB60WKV1M"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+        </script>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Roboto%20Mono:wght@400;700&display=swap"
+        />
+    </head>
 
-        ga('create', 'UA-66278430-2', 'auto');
-        
-    </script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2CB60WKV1M"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    </script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto%20Mono:wght@400;700&display=swap">
-    
-</head>
-
-<body>
-    <app-root>
-        <div id="header" class="padded">
-            <a href="/" class="logo">fluin.io</a>
-        </div>
-    </app-root>
-
-</body>
-
+    <body>
+        <app-root>
+            <div id="header" class="padded">
+                <a href="/" class="logo">fluin.io</a>
+            </div>
+        </app-root>
+    </body>
 </html>

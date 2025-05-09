@@ -10,6 +10,9 @@ export class NewsletterComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         // <script src="https://f.convertkit.com/ckjs/ck.5.js"></script>
+        if (!document) {
+            return;
+        }
         const s = document.createElement('script');
         s.src = 'https://f.convertkit.com/ckjs/ck.5.js';
         this.elRef.nativeElement.appendChild(s);

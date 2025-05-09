@@ -18,13 +18,14 @@ interface Posts {
     [key: string]: Post;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PostService {
     url = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
     /**
      * An object with post keys as keys, and post data as values
      */
-    postMap = httpResource<Posts>(this.url);
+    postMap = httpResource<Posts>(() => this.url);
+
     /**
      * An sorted array of posts with keys directly on the object.
      */

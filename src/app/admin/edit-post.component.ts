@@ -8,7 +8,7 @@ import { EditablePostService } from './shared/editable-post.service';
 import { Subject } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
-import { NgIf } from '@angular/common';
+
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +19,7 @@ import { UploadComponent } from './upload.component';
 
 @Component({
     templateUrl: './edit-post.component.html',
-    imports: [NgIf, MatFormFieldModule, MatInputModule, FormsModule, RouterLink, UploadComponent],
+    imports: [MatFormFieldModule, MatInputModule, FormsModule, RouterLink, UploadComponent],
 })
 export class EditPostComponent {
     renderedBody;
