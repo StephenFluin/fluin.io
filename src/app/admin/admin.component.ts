@@ -3,7 +3,7 @@ import { AuthService } from './shared/auth.service';
 import { Post } from '../shared/post.service';
 import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 
 import { FirebaseService } from './firebase.service';
 
@@ -13,37 +13,42 @@ export interface Talk {
 
 @Component({
     template: `
-        <div class="padded" style="margin-top: -75px" *ngIf="auth.isAdmin()">
+        @if (auth.isAdmin()) {
+          <div class="padded" style="margin-top: -75px">
             <h2>Administer Content (<a (click)="auth.logout()">logout</a>)</h2>
-
             <div style="overflow:hidden;">
-                <a *ngFor="let post of posts()" [routerLink]="post.key">
-                    <div style="display:flex;margin:0 16px 16px 0;">
-                        <img
-                            *ngIf="post.image"
-                            [src]="post.image"
-                            [alt]="post.title"
-                            style="height:40px;margin:0px auto;display:block;max-width:50px;margin-right:16px;"
+              @for (post of posts(); track post) {
+                <a [routerLink]="post.key">
+                  <div style="display:flex;margin:0 16px 16px 0;">
+                    @if (post.image) {
+                      <img
+                        [src]="post.image"
+                        [alt]="post.title"
+                        style="height:40px;margin:0px auto;display:block;max-width:50px;margin-right:16px;"
                         />
-                        <div style="flex-grow:1">
-                            <strong>{{ post.title }}</strong>
-                        </div>
-                        <div>{{ post.date }}</div>
+                    }
+                    <div style="flex-grow:1">
+                      <strong>{{ post.title }}</strong>
                     </div>
+                    <div>{{ post.date }}</div>
+                  </div>
                 </a>
+              }
             </div>
-
             <div>
-                <h2>New Post</h2>
-                <button routerLink="new">Create</button>
+              <h2>New Post</h2>
+              <button routerLink="new">Create</button>
             </div>
-        </div>
-        <div class="padded" *ngIf="!auth.isAdmin()">
+          </div>
+        }
+        @if (!auth.isAdmin()) {
+          <div class="padded">
             <p>You need more access.</p>
             <button (click)="auth.login()">Login</button>
-        </div>
-    `,
-    imports: [NgIf, NgFor, RouterLink, MatCardModule],
+          </div>
+        }
+        `,
+    imports: [RouterLink, MatCardModule],
 })
 export class AdminComponent {
     firebaseService = inject(FirebaseService);

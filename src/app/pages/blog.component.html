@@ -1,62 +1,65 @@
 <!-- blogposts-->
 <div id="blogpost">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 
-    <!-- sidebar-->
-    <div id="sidebar" class="padded">
-        <section style="margin-top: 0px; text-align: center">
-            <img style="width: 50%; border-radius: 100%" src="/assets/images/mainpic.jpg" alt="Stephen Fluin" />
-            <div>
-                <p>Thank you for stopping by!</p>
-            </div>
-        </section>
+  <!-- sidebar-->
+  <div id="sidebar" class="padded">
+    <section style="margin-top: 0px; text-align: center">
+      <img style="width: 50%; border-radius: 100%" src="/assets/images/mainpic.jpg" alt="Stephen Fluin" />
+      <div>
+        <p>Thank you for stopping by!</p>
+      </div>
+    </section>
 
-        <hr />
-        <!--
-            <section>
-                <input type="search" placeholder="search">
-            </section>
-            <hr>-->
+    <hr />
+    <!--
+    <section>
+      <input type="search" placeholder="search">
+    </section>
+    <hr>-->
 
-        <section id="social">
-            <a href="https://twitter.com/stephenfluin" target="_blank"
-                ><img src="/assets/images/sm-twitter.svg" alt="Twitter"
-            /></a>
-            <a href="https://github.com/StephenFluin" target="_blank"
-                ><img src="/assets/images/sm-github.svg" alt="Github"
-            /></a>
-            <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"
-                ><img src="/assets/images/sm-linkedin.svg" alt="Linkedin"
-            /></a>
-            <a href="https://plus.google.com/+StephenFluin" target="_blank"
-                ><img src="/assets/images/sm-gplus.svg" alt="Google+"
-            /></a>
-        </section>
+    <section id="social">
+      <a href="https://twitter.com/stephenfluin" target="_blank"
+        ><img src="/assets/images/sm-twitter.svg" alt="Twitter"
+      /></a>
+      <a href="https://github.com/StephenFluin" target="_blank"
+        ><img src="/assets/images/sm-github.svg" alt="Github"
+      /></a>
+      <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"
+        ><img src="/assets/images/sm-linkedin.svg" alt="Linkedin"
+      /></a>
+      <a href="https://plus.google.com/+StephenFluin" target="_blank"
+        ><img src="/assets/images/sm-gplus.svg" alt="Google+"
+      /></a>
+    </section>
 
-        <hr />
+    <hr />
 
-        <section id="category-list">
-            <div>Angular</div>
-            <div>Wearables</div>
-            <div>Mobile</div>
-        </section>
+    <section id="category-list">
+      <div>Angular</div>
+      <div>Wearables</div>
+      <div>Mobile</div>
+    </section>
 
-        <hr />
+    <hr />
 
-        <section id="featured-blogs">
-            <a *ngFor="let post of posts()" [routerLink]="['/blog', post.id]" class="featured-blog card">
-                <div
-                    *ngIf="post.image"
-                    [style.background-image]="'url(\'' + post.image + '\')'"
-                    [title]="post.image"
-                    class="featured-blog-image"
-                ></div>
-                <div class="featured-blog-details">
-                    <h4>{{ post.title }}</h4>
-                    <p>Read More -></p>
-                </div>
-            </a>
-        </section>
-        <!-- end featured-blogs-->
-    </div>
+    <section id="featured-blogs">
+      @for (post of posts(); track post) {
+        <a [routerLink]="['/blog', post.id]" class="featured-blog card">
+          @if (post.image) {
+            <div
+              [style.background-image]="'url(\'' + post.image + '\')'"
+              [title]="post.image"
+              class="featured-blog-image"
+            ></div>
+          }
+          <div class="featured-blog-details">
+            <h4>{{ post.title }}</h4>
+            <p>Read More -></p>
+          </div>
+        </a>
+      }
+    </section>
+    <!-- end featured-blogs-->
+  </div>
 </div>
