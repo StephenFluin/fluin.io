@@ -3,8 +3,8 @@ scripts:
   runCommand: node dist/server/main.server.mjs
 
 env:
-  variable: PORT
-  value: 4000
-  availability:
-  -   BUILD
-  -   RUNTIME
+-  variable: PORT
+   value: 4000
+   availability:
+   -   BUILD
+   -   RUNTIME
