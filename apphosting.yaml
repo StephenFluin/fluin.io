@@ -1,10 +1,3 @@
 scripts:
   buildCommand: ng build
   runCommand: node dist/server/main.server.mjs
-
-env:
--  variable: PORT
-   value: 4000
-   availability:
-   -   BUILD
-   -   RUNTIME
