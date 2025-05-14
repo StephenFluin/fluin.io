@@ -31,7 +31,6 @@ export class BlogPostComponent {
         // Based on the requested ID, return a Post
         const routeParams = toSignal(route.params);
         this.post = computed(() => {
-            console.log('calculating, routeParams', routeParams());
             const id = routeParams()['id'];
             const item = id ? posts.postMap.value()?.[id] : posts.postList()?.[0];
             if (!item) {
