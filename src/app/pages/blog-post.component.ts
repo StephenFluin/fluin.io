@@ -7,7 +7,6 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
 
-
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
 import snarkdown from 'snarkdown';
@@ -32,7 +31,7 @@ export class BlogPostComponent {
         const routeParams = toSignal(route.params);
         this.post = computed(() => {
             const id = routeParams()['id'];
-            const item = id ? posts.postMap.value()[id] : posts.postList()[0];
+            const item = id ? posts.postMap.value()?.[id] : posts.postList()?.[0];
             if (!item) {
                 return null;
             }
