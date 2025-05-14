@@ -48,6 +48,9 @@ app.get('/sitemap.txt', (req, res) => {
             for (const key of Object.keys(posts)) {
                 sitemap += `https://fluin.io/blog/${posts[key].id}\n`;
             }
+            sitemap += `https://fluin.io/blog\n`;
+            sitemap += `https://fluin.io\n`;
+
             res.send(sitemap);
         })
         .catch((err) => {
