@@ -6,10 +6,12 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import compression from 'compression';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
+app.use(compression());
 const angularApp = new AngularNodeAppEngine();
 
 /**
