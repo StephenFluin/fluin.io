@@ -1,6 +1,6 @@
-import { Component, Inject, Signal, computed, DOCUMENT } from '@angular/core';
+import { Component, Inject, Signal, computed, DOCUMENT, effect, inject } from '@angular/core';
 import { MetaDefinition, Title } from '@angular/platform-browser';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -17,6 +17,7 @@ import snarkdown from 'snarkdown';
 })
 export class BlogPostComponent {
     post: Signal<Post>;
+    router = inject(Router);
 
     constructor(
         route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class BlogPostComponent {
         // Based on the requested ID, return a Post
         const routeParams = toSignal(route.params);
         this.post = computed(() => {
+            console.log('calculating, routeParams', routeParams());
             const id = routeParams()['id'];
             const item = id ? posts.postMap.value()?.[id] : posts.postList()?.[0];
             if (!item) {
@@ -66,6 +68,11 @@ export class BlogPostComponent {
 
             item.renderedBody = sanitized.bypassSecurityTrustHtml(snarkdown(item.body || ''));
             return item;
+        });
+        effect(() => {
+            if (!this.post() && posts.postMap.value()) {
+                this.router.navigate(['/404']);
+            }
         });
     }
     updateCanonicalUrl(url: string) {
