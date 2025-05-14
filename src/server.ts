@@ -14,6 +14,18 @@ const app = express();
 app.use(compression());
 const angularApp = new AngularNodeAppEngine();
 
+interface PostData {
+    [key: string]: {
+        body: string;
+        date: string;
+        id: string;
+        image: string;
+        title: string;
+        images: any;
+        renderedBody: any;
+    };
+}
+
 /**
  * Example Express Rest API endpoints can be defined here.
  * Uncomment and define endpoints as necessary.
@@ -25,6 +37,27 @@ const angularApp = new AngularNodeAppEngine();
  * });
  * ```
  */
+app.get('/sitemap.txt', (req, res) => {
+    res.set('Content-Type', 'text/plain');
+    const data = fetch('https://fluindotio-website-93127.firebaseio.com/posts.json');
+    let sitemap = '';
+
+    data.then((result) => result.json())
+        .then((result) => {
+            const posts: PostData = result as PostData;
+            for (const key of Object.keys(posts)) {
+                sitemap += `https://fluin.io/blog/${posts[key].id}\n`;
+            }
+            res.send(sitemap);
+        })
+        .catch((err) => {
+            res.send({ msg: 'Error generating sitemap.', error: err });
+        });
+});
+app.get('/404', (req, res) => {
+    res.status(404);
+    req.next();
+});
 
 /**
  * Serve static files from /browser
