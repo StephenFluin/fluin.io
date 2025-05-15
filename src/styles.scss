@@ -429,7 +429,7 @@ router-outlet {
 
     #intro-block img {
         width: 100%;
-        height: calc((100vw - 16px));
+        height: auto;
         padding: 0;
     }
 
