@@ -14,40 +14,41 @@ export interface Talk {
 @Component({
     template: `
         @if (auth.isAdmin()) {
-          <div class="padded" style="margin-top: -75px">
+        <p>Welcome {{ auth.name() }}, your ID is: {{ auth.uid() }}</p>
+        <div class="padded" style="margin-top: -75px">
             <h2>Administer Content (<a (click)="auth.logout()">logout</a>)</h2>
             <div style="overflow:hidden;">
-              @for (post of posts(); track post) {
+                @for (post of posts(); track post) {
                 <a [routerLink]="post.key">
-                  <div style="display:flex;margin:0 16px 16px 0;">
-                    @if (post.image) {
-                      <img
-                        [src]="post.image"
-                        [alt]="post.title"
-                        style="height:40px;margin:0px auto;display:block;max-width:50px;margin-right:16px;"
+                    <div style="display:flex;margin:0 16px 16px 0;">
+                        @if (post.image) {
+                        <img
+                            [src]="post.image"
+                            [alt]="post.title"
+                            style="height:40px;margin:0px auto;display:block;max-width:50px;margin-right:16px;"
                         />
-                    }
-                    <div style="flex-grow:1">
-                      <strong>{{ post.title }}</strong>
+                        }
+                        <div style="flex-grow:1">
+                            <strong>{{ post.title }}</strong>
+                        </div>
+                        <div>{{ post.date }}</div>
                     </div>
-                    <div>{{ post.date }}</div>
-                  </div>
                 </a>
-              }
+                }
             </div>
             <div>
-              <h2>New Post</h2>
-              <button routerLink="new">Create</button>
+                <h2>New Post</h2>
+                <button routerLink="new">Create</button>
             </div>
-          </div>
-        }
-        @if (!auth.isAdmin()) {
-          <div class="padded">
+        </div>
+        } @if (!auth.isAdmin()) {
+        <div class="padded">
+            <p>Welcome {{ auth.name() }}, your ID is: {{ auth.uid() }}. You are not an administrator</p>
             <p>You need more access.</p>
             <button (click)="auth.login()">Login</button>
-          </div>
+        </div>
         }
-        `,
+    `,
     imports: [RouterLink, MatCardModule],
 })
 export class AdminComponent {

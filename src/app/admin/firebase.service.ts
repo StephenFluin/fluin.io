@@ -47,6 +47,11 @@ export class FirebaseService {
      * Set the value of realtime db at `path`
      */
     set<T>(path: string, value: T) {
+        for (let key of Object.keys(value)) {
+            if (value[key] === undefined) {
+                delete value[key];
+            }
+        }
         return set(this.dbRef(path), value);
     }
 
