@@ -9,7 +9,7 @@ import { Post, PostService } from '../shared/post.service';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
-import snarkdown from 'snarkdown';
+import markdownit from 'markdown-it';
 
 @Component({
     templateUrl: './blog-post.component.html',
@@ -65,7 +65,10 @@ export class BlogPostComponent {
 
             meta.addTags([...tags, ...tags2]);
 
-            item.renderedBody = sanitized.bypassSecurityTrustHtml(snarkdown(item.body || ''));
+            const md = markdownit();
+            const result = md.render(item.body || '');
+
+            item.renderedBody = sanitized.bypassSecurityTrustHtml(result);
             return item;
         });
         effect(() => {

@@ -8,13 +8,13 @@ import { EditablePostService } from './shared/editable-post.service';
 import { Subject } from 'rxjs';
 import { debounceTime, map } from 'rxjs/operators';
 
-
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SafeHtml } from '@angular/platform-browser';
-import snarkdown from 'snarkdown';
+import markdownit from 'markdown-it';
+
 import { UploadComponent } from './upload.component';
 
 @Component({
@@ -45,7 +45,9 @@ export class EditPostComponent {
             this.postChanges.pipe(
                 debounceTime(300),
                 map((post) => {
-                    return this.sanitized.bypassSecurityTrustHtml(snarkdown((post && post.body) || ''));
+                    const md = markdownit();
+                    const result = md.render((post && post.body) || '');
+                    return this.sanitized.bypassSecurityTrustHtml(result);
                 })
             )
         );
