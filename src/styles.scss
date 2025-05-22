@@ -162,7 +162,7 @@ nav > * {
 }
 
 .social-icon {
-    height: 25px;
+    height: auto;
     width: 25px;
 }
 
@@ -436,6 +436,7 @@ router-outlet {
     #posts-block {
         flex-direction: column;
         flex-wrap: nowrap;
+        align-items: center;
     }
 
     .post-image {
@@ -461,6 +462,10 @@ router-outlet {
     }
     .bio .content {
         position: inherit;
+    }
+    #header {
+        flex-direction: column;
+        height: 150px;
     }
 }
 
