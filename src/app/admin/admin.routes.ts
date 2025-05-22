@@ -37,6 +37,11 @@ export const AdminRoutes: Route[] = [
         ],
         children: [
             { path: '', component: AdminComponent, data: { title: 'Admin' } },
+            {
+                path: 'image-generator',
+                loadComponent: () => import('./image-generator/image-generator.component').then(m => m.ImageGeneratorComponent),
+                data: { title: 'AI Image Generator' }
+            },
             { path: ':id', component: EditPostComponent, data: { title: false } },
         ],
     },

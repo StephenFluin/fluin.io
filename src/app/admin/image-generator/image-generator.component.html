@@ -1,0 +1,23 @@
+<mat-form-field appearance="fill">
+  <mat-label>Select a Post</mat-label>
+  <mat-select [(ngModel)]="selectedPostKey">
+    @for (post of posts(); track post.key) {
+      <mat-option [value]="post.key">{{ post.title }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<button mat-raised-button color="primary" (click)="onGenerateImage()" [disabled]="!selectedPostKey || isLoading">
+  Generate Image
+</button>
+
+@if (isLoading) {
+  <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+}
+
+@if (generatedImageUrl) {
+  <div>
+    <h3>Generated Image:</h3>
+    <img [src]="generatedImageUrl" alt="Generated Image" style="max-width: 500px; max-height: 500px;">
+  </div>
+}

@@ -7,11 +7,46 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import compression from 'compression';
+import { configureGenkit } from 'genkit';
+import { vertexAI } from '@genkit-ai/vertexai';
+import { defineFlow, startFlow } from 'genkit/flow';
+import { geminiProVision } from '@genkit-ai/vertexai';
+import * as z from 'zod';
+
+// Configure Genkit
+configureGenkit({
+    plugins: [
+        vertexAI({
+            projectId: 'YOUR_PROJECT_ID', // Replace with your actual project ID
+        }),
+    ],
+    logLevel: 'debug',
+    enableTracingAndMetrics: true,
+});
+
+// Define a simple text-to-image flow
+export const textToImageFlow = defineFlow(
+    {
+        name: 'textToImageFlow',
+        inputSchema: z.string(),
+        outputSchema: z.string(), // Placeholder for actual image output type
+    },
+    async (prompt) => {
+        // For now, this is a placeholder.
+        // In a real scenario, you would call an image generation model.
+        // Example (conceptual):
+        // const image = await generateImage({ model: geminiProVision, prompt });
+        // return image.url;
+        console.log(`Generating image for prompt: ${prompt}`);
+        return `Placeholder image for prompt: ${prompt}`;
+    }
+);
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 app.use(compression());
+app.use(express.json()); // Enable JSON body parsing
 const angularApp = new AngularNodeAppEngine();
 
 interface PostData {
@@ -37,6 +72,22 @@ interface PostData {
  * });
  * ```
  */
+// Endpoint to generate an image using Genkit flow
+app.post('/api/generate-image', async (req, res) => {
+    try {
+        const { text } = req.body;
+        if (!text) {
+            return res.status(400).json({ error: 'Missing text prompt in request body' });
+        }
+
+        const result = await startFlow(textToImageFlow, text);
+        res.json({ imageUrl: result });
+    } catch (error) {
+        console.error('Error generating image:', error);
+        res.status(500).json({ error: 'Failed to generate image' });
+    }
+});
+
 app.get('/sitemap.txt', (req, res) => {
     res.set('Content-Type', 'text/plain');
     const data = fetch('https://fluindotio-website-93127.firebaseio.com/posts.json');

@@ -40,6 +40,10 @@ export interface Talk {
                 <h2>New Post</h2>
                 <button routerLink="new">Create</button>
             </div>
+            <div>
+                <h2>AI Tools</h2>
+                <button routerLink="image-generator">Image Generator</button>
+            </div>
         </div>
         } @if (!auth.isAdmin()) {
         <div class="padded">
