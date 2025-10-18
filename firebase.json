@@ -50,8 +50,5 @@
                 ]
             }
         ]
-    },
-    "functions": {
-        "predeploy": "npm --prefix functions run build"
     }
 }
