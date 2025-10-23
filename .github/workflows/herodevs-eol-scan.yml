@@ -1,0 +1,28 @@
+name: HeroDevs EOL Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    environment: demo
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run EOL Scan
+        run: |
+          docker run --rm \
+            -v $GITHUB_WORKSPACE:/app \
+            -w /app \
+            ghcr.io/herodevs/eol-scan --save
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-eol-report
+          path: ./herodevs.report.json
