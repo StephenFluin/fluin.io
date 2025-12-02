@@ -9,20 +9,20 @@ on:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    environment: demo
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - run: echo # Prepare environment, install tooling, perform setup, etc.
 
       - name: Run EOL Scan
-        run: |
-          docker run --rm \
-            -v $GITHUB_WORKSPACE:/app \
-            -w /app \
-            ghcr.io/herodevs/eol-scan --save
+        run: npx @herodevs/cli@beta scan eol
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: my-eol-report
-          path: ./herodevs.report.json
+          path: herodevs.report.json
