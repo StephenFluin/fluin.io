@@ -50,6 +50,7 @@ app.get('/sitemap.txt', (req, res) => {
             }
             sitemap += `https://fluin.io/blog\n`;
             sitemap += `https://fluin.io\n`;
+            sitemap += `https://fluin.io/bio\n`;
 
             res.send(sitemap);
         })

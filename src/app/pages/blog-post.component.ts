@@ -40,11 +40,14 @@ export class BlogPostComponent {
             }
             title.setTitle(item.title + ' | fluin.io blog');
             this.updateCanonicalUrl(`https://fluin.io/blog/${item.id}`);
-            const description = item.body.split('\n')[0];
+                const rawDescription = item.body.split('\n').find(line => line.trim() && !line.trim().startsWith('#')) || item.body.split('\n')[0];
+                const description = rawDescription.trim();
 
             const twitterMetadata = {
                 'twitter:card': 'summary',
                 'twitter:image': item.image,
+                   'twitter:title': item.title,
+                   'twitter:description': description,
             };
             const openGraphMeta = {
                 'og:url': `https://fluin.io/blog/${item.id}`,
@@ -63,7 +66,8 @@ export class BlogPostComponent {
                 content: openGraphMeta[key],
             }));
 
-            meta.addTags([...tags, ...tags2]);
+                [...tags].forEach(tag => meta.updateTag(tag));
+                [...tags2].forEach(tag => meta.updateTag(tag, `property='${tag.property}'`));
 
             // Json LD
           this.jsonLd.setSchema({
