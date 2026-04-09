@@ -10,6 +10,7 @@ import { Post, PostService } from '../shared/post.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
 import markdownit from 'markdown-it';
+import { JsonLdService } from '../shared/jsonld.service';
 
 @Component({
     templateUrl: './blog-post.component.html',
@@ -18,6 +19,7 @@ import markdownit from 'markdown-it';
 export class BlogPostComponent {
     post: Signal<Post>;
     router = inject(Router);
+    jsonLd = inject(JsonLdService);
 
     constructor(
         route: ActivatedRoute,
@@ -42,9 +44,6 @@ export class BlogPostComponent {
 
             const twitterMetadata = {
                 'twitter:card': 'summary',
-                // Moved to global markup
-                // 'twitter:site': '@stephenfluin',
-                // 'twitter:creator': '@stephenfluin',
                 'twitter:image': item.image,
             };
             const openGraphMeta = {
@@ -53,6 +52,7 @@ export class BlogPostComponent {
                 'og:description': description,
                 'og:image': `${item.image}`,
             };
+       
 
             const tags: MetaDefinition[] = Object.keys(twitterMetadata).map((key) => ({
                 name: key,
@@ -64,6 +64,40 @@ export class BlogPostComponent {
             }));
 
             meta.addTags([...tags, ...tags2]);
+
+            // Json LD
+          this.jsonLd.setSchema({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: item.title,
+            url: `https://fluin.io/blog/${item.id}`,
+            datePublished: item.date, // ISO format: 'YYYY-MM-DD'
+            image: item.image,
+            description: description,
+            author: {
+                '@type': 'Person',
+                name: 'Stephen Fluin',
+                url: 'https://fluin.io/bio',
+                image: 'https://fluin.io/assets/images/mainpic.jpg',
+                jobTitle: 'VP of Product',
+                worksFor: {
+                '@type': 'Organization',
+                name: 'HeroDevs',
+                url: 'https://herodevs.com',
+                },
+                sameAs: [
+                'https://twitter.com/stephenfluin',
+                'https://bsky.app/profile/stephenfluin.bsky.social',
+                'https://github.com/stephenfluin',
+                'https://www.linkedin.com/in/stephenfluin',
+                ],
+            },
+            publisher: {
+                '@type': 'Person',
+                name: 'Stephen Fluin',
+                url: 'https://fluin.io',
+            },
+            });
 
             const md = markdownit();
             const result = md.render(item.body || '');

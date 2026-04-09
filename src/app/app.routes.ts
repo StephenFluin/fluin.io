@@ -10,7 +10,7 @@ import { ProjectsComponent } from './pages/projects.component';
 import { Send404Component } from './send-404.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, data: { title: 'fluin.io', page: 'home' } },
+    { path: '', component: HomeComponent, data: { title: 'fluin.io - Stephen Fluin. CPO, Product, DevRel, Speaker, and more', page: 'home' } },
     {
         path: 'blog',
         data: { title: false, page: 'blog' },
