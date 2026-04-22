@@ -145,6 +145,24 @@ nav > * {
     text-transform: uppercase;
 }
 
+#header .menu-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    padding: 10px 8px;
+    gap: 4px;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+#header .menu-toggle span {
+    width: 18px;
+    height: 2px;
+    background: #ffffff;
+    display: block;
+}
+
 .route-container {
     position: relative;
 }
@@ -424,6 +442,51 @@ router-outlet {
     margin-bottom: 16px;
 }
 
+/* ------------------- PROJECTS PAGE CSS ------------------- */
+
+.projects-page > p {
+    max-width: 60ch;
+}
+
+.projects-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.project-card {
+    overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: #fff;
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.project-content {
+    padding: 18px;
+}
+
+.project-content h3 {
+    margin-top: 0;
+}
+
+.project-content p {
+    margin-top: 10px;
+}
+
+.project-links {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
     #intro-block {
@@ -467,9 +530,43 @@ router-outlet {
     .bio .content {
         position: inherit;
     }
+
     #header {
+        height: 75px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+
+    #header .menu-toggle {
+        display: inline-flex;
+        margin-left: auto;
+    }
+
+    #header nav {
+        position: absolute;
+        top: 75px;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.94);
         flex-direction: column;
-        height: 150px;
+        align-items: stretch;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.25s ease;
+    }
+
+    #header nav.nav-open {
+        max-height: 500px;
+    }
+
+    #header nav > * {
+        padding: 14px 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
     }
 }
 

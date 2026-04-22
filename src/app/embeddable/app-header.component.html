@@ -1,22 +1,35 @@
 <!-- header-->
 <div class="padded" id="header">
-    <div>
-        <a routerLink="/" class="logo"> fluin.io </a>
+    <div class="header-brand">
+        <a routerLink="/" class="logo" (click)="closeMenu()"> fluin.io </a>
     </div>
     <div class="spacer"></div>
-    <nav>
-        <a routerLink="/bio" routerLinkActive="active-link">Bio</a>
-        <a href="https://www.youtube.com/playlist?list=PLkZLBHjxfgssv4X0Bcw6I9O4s5XBUvX5x">Talks</a>
-        <a href="https://bsky.app/profile/stephenfluin.bsky.social" target="_blank" rel="noopener me">
+    <button
+        class="menu-toggle"
+        type="button"
+        [attr.aria-expanded]="menuOpen"
+        aria-controls="header-nav"
+        aria-label="Toggle navigation menu"
+        (click)="toggleMenu()"
+    >
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav id="header-nav" [class.nav-open]="menuOpen">
+        <a routerLink="/bio" routerLinkActive="active-link" (click)="closeMenu()">Bio</a>
+        <a routerLink="/projects" routerLinkActive="active-link" (click)="closeMenu()">Projects</a>
+        <a href="https://www.youtube.com/playlist?list=PLkZLBHjxfgssv4X0Bcw6I9O4s5XBUvX5x" (click)="closeMenu()">Talks</a>
+        <a href="https://bsky.app/profile/stephenfluin.bsky.social" target="_blank" rel="noopener me" (click)="closeMenu()">
             <img class="social-icon" alt="@stephenfluin on Bluesky" src="/assets/images/bluesky.svg" />
         </a>
-        <a href="https://twitter.com/stephenfluin" target="_blank" rel="noopener me" style="display: none">
+        <a href="https://twitter.com/stephenfluin" target="_blank" rel="noopener me" style="display: none" (click)="closeMenu()">
             <img class="social-icon" alt="@stephenfluin on twitter" src="/assets/images/twitter.svg" />
         </a>
-        <a href="https://developers.live/@StephenFluin" target="_blank" rel="noopener me">
+        <a href="https://developers.live/@StephenFluin" target="_blank" rel="noopener me" (click)="closeMenu()">
             <img class="social-icon" alt="Stephen Fluin on Mastodon" src="/assets/images/mastodon.svg" />
         </a>
-        <a href="https://github.com/stephenfluin/" target="_blank" rel="noopener me">
+        <a href="https://github.com/stephenfluin/" target="_blank" rel="noopener me" (click)="closeMenu()">
             <img class="social-icon" alt="Stephen Fluin on GitHub" src="/assets/images/github.svg" />
         </a>
     </nav>

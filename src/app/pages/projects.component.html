@@ -1,0 +1,23 @@
+<section class="projects-page container">
+	<h1>Projects</h1>
+	<p>
+		A handful of side projects and experiments. Each one below links to the live app and the corresponding GitHub
+		repository path.
+	</p>
+
+	<div class="projects-grid">
+		@for (project of projects; track project.name) {
+			<article class="project-card card">
+				<img [src]="project.imageSrc" [alt]="project.imageAlt" loading="lazy" />
+				<div class="project-content">
+					<h3>{{ project.name }}</h3>
+					<p>{{ project.description }}</p>
+					<p class="project-links">
+						<a [href]="project.url" target="_blank" rel="noopener">Visit site</a>
+						<a [href]="project.github" target="_blank" rel="noopener">GitHub</a>
+					</p>
+				</div>
+			</article>
+		}
+	</div>
+</section>
