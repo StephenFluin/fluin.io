@@ -54,6 +54,9 @@
                         "styles": ["src/styles.scss"],
                         "server": "src/main.server.ts",
                         "outputMode": "server",
+                        "security": {
+                            "allowedHosts": ["localhost", "fluin.io"]
+                        },
                         "externalDependencies": ["firebase-admin"],
                         "ssr": {
                             "entry": "src/server.ts"
