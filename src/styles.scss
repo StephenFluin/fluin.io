@@ -182,18 +182,19 @@ nav > * {
 /* CSS View Transitions — directional slide reflecting navigation hierarchy.
    Forward (deeper): new page slides in from right.
    Back (shallower): new page slides in from left.
-   No-op on browsers that don't support the View Transitions API. */
-::view-transition-old(root) {
+   No-op on browsers that don't support the View Transitions API.
+   Uses modern data-view-transition-type attribute per Angular routing guide. */
+:root[data-view-transition-type='forward']::view-transition-old(root) {
     animation: 300ms cubic-bezier(.35, 0, .25, 1) both slide-out-left;
 }
-::view-transition-new(root) {
+:root[data-view-transition-type='forward']::view-transition-new(root) {
     animation: 300ms cubic-bezier(.35, 0, .25, 1) both slide-in-right;
 }
 
-.route-back::view-transition-old(root) {
+:root[data-view-transition-type='back']::view-transition-old(root) {
     animation: 300ms cubic-bezier(.35, 0, .25, 1) both slide-out-right;
 }
-.route-back::view-transition-new(root) {
+:root[data-view-transition-type='back']::view-transition-new(root) {
     animation: 300ms cubic-bezier(.35, 0, .25, 1) both slide-in-left;
 }
 
