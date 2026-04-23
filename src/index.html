@@ -44,24 +44,7 @@
         }
         </script>
         <link rel="icon" sizes="192x192" href="/assets/icons/icon-192x192.png" />
-        <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                (i[r] =
-                    i[r] ||
-                    function () {
-                        (i[r].q = i[r].q || []).push(arguments);
-                    }),
-                    (i[r].l = 1 * new Date());
-                (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m);
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-
-            ga('create', 'UA-66278430-2', 'auto');
-        </script>
-        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <!-- Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-2CB60WKV1M"></script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -70,11 +53,12 @@
             }
             gtag('js', new Date());
         </script>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" />
-        <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Roboto%20Mono:wght@400;700&display=swap"
-        />
+        <!-- Google Fonts: preconnect then non-blocking load -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" /></noscript>
     </head>
 
     <body>
