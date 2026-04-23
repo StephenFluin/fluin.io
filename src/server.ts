@@ -6,8 +6,44 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { createHash } from 'node:crypto';
 import compression from 'compression';
 import sharp from 'sharp';
+import { initializeApp, getApps } from 'firebase-admin/app';
+import { getStorage } from 'firebase-admin/storage';
+
+// Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
+let cacheBucket: ReturnType<ReturnType<typeof getStorage>['bucket']> | null = null;
+try {
+    if (!getApps().length) initializeApp();
+    cacheBucket = getStorage().bucket('fluindotio-website-93127.appspot.com');
+} catch (e) {
+    console.warn('firebase-admin init failed — image cache disabled', e);
+}
+
+/**
+ * Two-tier image cache.
+ *
+ * L1 — in-process Map<key, Buffer>: instant for repeat requests within the
+ *       same instance lifetime.  Evicts oldest entry when over MEM_CACHE_MAX.
+ *
+ * L2 — Firebase Storage at `_image-cache/…`: persistent across restarts and
+ *       shared across instances.  knownInStorage tracks keys already verified
+ *       present so we only pay a Storage round-trip once per key per cold start.
+ */
+const memCache = new Map<string, { buf: Buffer; type: string }>();
+const MEM_CACHE_MAX = 100;
+const knownInStorage = new Set<string>();
+
+function imageCacheKey(url: string, w: number, h: number | undefined, q: number, fit: string, fmt: string) {
+    return `${w}|${h ?? ''}|${q}|${fit}|${fmt}|${url}`;
+}
+
+function imageCachePath(url: string, w: number, h: number | undefined, q: number, fit: string, fmt: string) {
+    const hash = createHash('sha1').update(url).digest('hex').slice(0, 16);
+    const basename = url.split('/').pop()?.replace(/\?.*/, '') ?? 'img';
+    return `_image-cache/${fmt}/${w}x${h ?? '0'}_q${q}_${fit}/${hash}_${basename}.${fmt}`;
+}
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
@@ -152,12 +188,67 @@ app.get('/api/image', async (req, res) => {
     const quality = parsePositiveInteger(req.query['q'], 72, 90);
     const fit = parseFit(req.query['fit']);
     const format = pickOutputFormat(req.headers.accept);
+    const contentType = `image/${format}` as const;
 
+    const cacheKey = imageCacheKey(source, width, height, quality, fit, format);
+
+    // ── L1: in-memory cache ──────────────────────────────────────────────────
+    const cached = memCache.get(cacheKey);
+    if (cached) {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=604800');
+        res.setHeader('Content-Type', cached.type);
+        res.setHeader('Vary', 'Accept');
+        res.setHeader('X-Cache', 'HIT-MEMORY');
+        res.send(cached.buf);
+        return;
+    }
+
+    const storagePath = imageCachePath(source, width, height, quality, fit, format);
+
+    function serveBuffer(buf: Buffer) {
+        // Populate L1
+        if (memCache.size >= MEM_CACHE_MAX) {
+            memCache.delete(memCache.keys().next().value!);
+        }
+        memCache.set(cacheKey, { buf, type: contentType });
+
+        res.setHeader('Cache-Control', 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=604800');
+        res.setHeader('Content-Type', contentType);
+        res.setHeader('Vary', 'Accept');
+        res.send(buf);
+    }
+
+    // ── L2: Firebase Storage cache ──────────────────────────────────────────
+    if (cacheBucket && knownInStorage.has(cacheKey)) {
+        // We know it's in Storage from an earlier request this instance.
+        try {
+            const [buf] = await cacheBucket.file(storagePath).download();
+            res.setHeader('X-Cache', 'HIT-STORAGE');
+            serveBuffer(buf);
+            return;
+        } catch {
+            // Storage miss despite being in the set — fall through to re-process.
+            knownInStorage.delete(cacheKey);
+        }
+    }
+
+    // ── L2 cold-start check ─────────────────────────────────────────────────
+    if (cacheBucket && !knownInStorage.has(cacheKey)) {
+        try {
+            const [buf] = await cacheBucket.file(storagePath).download();
+            knownInStorage.add(cacheKey);
+            res.setHeader('X-Cache', 'HIT-STORAGE-COLD');
+            serveBuffer(buf);
+            return;
+        } catch {
+            // Not in Storage yet — fall through to process.
+        }
+    }
+
+    // ── Process from source ─────────────────────────────────────────────────
     try {
         const response = await fetch(remoteUrl, {
-            headers: {
-                Accept: 'image/avif,image/webp,image/*,*/*;q=0.8',
-            },
+            headers: { Accept: 'image/avif,image/webp,image/*,*/*;q=0.8' },
         });
 
         if (!response.ok) {
@@ -168,12 +259,7 @@ app.get('/api/image', async (req, res) => {
         const arrayBuffer = await response.arrayBuffer();
         const pipeline = sharp(Buffer.from(arrayBuffer), { failOn: 'none' })
             .rotate()
-            .resize({
-                width,
-                height,
-                fit,
-                withoutEnlargement: true,
-            });
+            .resize({ width, height, fit, withoutEnlargement: true });
 
         const output =
             format === 'avif'
@@ -182,10 +268,17 @@ app.get('/api/image', async (req, res) => {
                   ? await pipeline.webp({ quality }).toBuffer()
                   : await pipeline.jpeg({ quality, mozjpeg: true }).toBuffer();
 
-        res.setHeader('Cache-Control', 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=604800');
-        res.setHeader('Content-Type', `image/${format}`);
-        res.setHeader('Vary', 'Accept');
-        res.send(output);
+        // Write to Storage in the background — don't block the response.
+        if (cacheBucket) {
+            cacheBucket
+                .file(storagePath)
+                .save(output, { metadata: { contentType } })
+                .then(() => knownInStorage.add(cacheKey))
+                .catch((err) => console.error('Image cache write failed', err));
+        }
+
+        res.setHeader('X-Cache', 'MISS');
+        serveBuffer(output);
     } catch (error) {
         console.error('Image proxy error', error);
         res.status(500).send('Unable to optimize image.');

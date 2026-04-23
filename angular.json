@@ -54,6 +54,7 @@
                         "styles": ["src/styles.scss"],
                         "server": "src/main.server.ts",
                         "outputMode": "server",
+                        "externalDependencies": ["firebase-admin"],
                         "ssr": {
                             "entry": "src/server.ts"
                         }

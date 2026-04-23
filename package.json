@@ -23,6 +23,7 @@
     "compression": "^1.8.0",
     "express": "^5.1.0",
     "firebase": "^11.6.1",
+    "firebase-admin": "^13.8.0",
     "markdown-it": "^14.1.0",
     "rxjs": "~7.8.0",
     "sharp": "^0.34.5",
