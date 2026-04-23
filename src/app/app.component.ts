@@ -25,7 +25,8 @@ export class AppComponent {
             try {
                 window.scrollTo(0, 0);
                 ga('send', 'pageview', n.urlAfterRedirects);
-                gtag('config', 'G-QMN47NKMMS', { page_path: n.urlAfterRedirects });
+                gtag('config', 'G-2CB60WKV1M', { page_path: n.urlAfterRedirects });
+
             } catch (err) {
                 // Maybe not in a browser?
             }
