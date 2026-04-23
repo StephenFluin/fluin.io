@@ -9,6 +9,7 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import compression from 'compression';
 import sharp from 'sharp';
+import markdownit from 'markdown-it';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getStorage } from 'firebase-admin/storage';
 
@@ -50,6 +51,7 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 app.use(compression());
 const angularApp = new AngularNodeAppEngine();
+const markdown = markdownit();
 const ALLOWED_FIREBASE_BUCKET = 'fluindotio-website-93127.appspot.com';
 const ALLOWED_IMAGE_HOST = 'firebasestorage.googleapis.com';
 const ALLOWED_IMAGE_PATH_PREFIX = `/v0/b/${ALLOWED_FIREBASE_BUCKET}/`;
@@ -167,8 +169,16 @@ app.get('/api/posts/:id', async (req, res) => {
             return;
         }
 
+        // Render markdown server-side so blog pages don't need to download
+        // markdown-it in the browser during hydration.
+        const renderedBody = typeof post.body === 'string' ? markdown.render(post.body) : '';
+        const responsePost = {
+            ...post,
+            renderedBody,
+        };
+
         res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
-        res.json(post);
+        res.json(responsePost);
     } catch (error) {
         console.error('Post proxy error', error);
         res.status(500).send('Unable to load post.');

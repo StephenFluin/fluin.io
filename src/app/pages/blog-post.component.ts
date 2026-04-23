@@ -1,15 +1,12 @@
 import { Component, Inject, Signal, computed, DOCUMENT, effect, inject } from '@angular/core';
-import { MetaDefinition, Title, SafeHtml } from '@angular/platform-browser';
+import { MetaDefinition, Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-
-import { DomSanitizer } from '@angular/platform-browser';
 
 import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
-import markdownit from 'markdown-it';
 import { JsonLdService } from '../shared/jsonld.service';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
 import { httpResource } from '@angular/common/http';
@@ -29,7 +26,6 @@ export class BlogPostComponent {
         title: Title,
         meta: Meta,
         public adminService: AdminService,
-        private sanitized: DomSanitizer,
         @Inject(DOCUMENT) private dom: Document
     ) {
         // Based on the requested ID, return a Post
@@ -60,6 +56,11 @@ export class BlogPostComponent {
                     quality: IMAGE_QUALITY.hero,
                 })
             );
+            this.updateLcpPreload(
+                this.postImageUrl(item),
+                this.postImageSet(item),
+                '(max-width: 900px) calc(100vw - 64px), 800px'
+            );
 
             const twitterMetadata = {
                 'twitter:card': 'summary_large_image',
@@ -88,8 +89,11 @@ export class BlogPostComponent {
             [...tags].forEach((tag) => meta.updateTag(tag));
             [...tags2].forEach((tag) => meta.updateTag(tag, `property='${tag.property}'`));
 
-            // Render markdown separately to memoize expensive parsing.
-            item.renderedBody = this.renderMarkdown(item.body || '');
+            // renderedBody is precomputed server-side by /api/posts/:id.
+            // Fallback to raw body for resilience if older cached payloads are returned.
+            if (!item.renderedBody) {
+                item.renderedBody = item.body || '';
+            }
 
             // Json LD
             this.jsonLd.setSchema({
@@ -144,6 +148,22 @@ export class BlogPostComponent {
         element.setAttribute('href', url);
     }
 
+    updateLcpPreload(href: string, srcset: string, sizes: string) {
+        const head = this.dom.getElementsByTagName('head')[0];
+        let element: HTMLLinkElement = this.dom.querySelector("link[data-lcp-preload='route']") || null;
+        if (element == null) {
+            element = this.dom.createElement('link') as HTMLLinkElement;
+            head.appendChild(element);
+        }
+        element.setAttribute('data-lcp-preload', 'route');
+        element.setAttribute('rel', 'preload');
+        element.setAttribute('as', 'image');
+        element.setAttribute('href', href);
+        element.setAttribute('imagesrcset', srcset);
+        element.setAttribute('imagesizes', sizes);
+        element.setAttribute('fetchpriority', 'high');
+    }
+
     postImageUrl(post: Post) {
         return buildOptimizedImageUrl(post.image, {
             width: 1200,
@@ -160,23 +180,5 @@ export class BlogPostComponent {
             fit: 'cover',
             quality: IMAGE_QUALITY.hero,
         });
-    }
-
-    /**
-     * Memoized markdown renderer. Caches by body hash to avoid expensive
-     * re-parsing if the post body hasn't changed.
-     */
-    private markdownCache = new Map<string, SafeHtml>();
-
-    private renderMarkdown(body: string): SafeHtml {
-        if (this.markdownCache.has(body)) {
-            return this.markdownCache.get(body)!;
-        }
-
-        const md = markdownit();
-        const result = md.render(body);
-        const safe = this.sanitized.bypassSecurityTrustHtml(result);
-        this.markdownCache.set(body, safe);
-        return safe;
     }
 }

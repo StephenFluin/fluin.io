@@ -1,6 +1,5 @@
 import { httpResource } from '@angular/common/http';
 import { computed, effect, Injectable, signal, Signal, WritableSignal } from '@angular/core';
-import { SafeHtml } from '@angular/platform-browser';
 
 export class Post {
     key: string;
@@ -9,7 +8,7 @@ export class Post {
     id?: string;
     image?: string;
     title?: string;
-    renderedBody?: SafeHtml;
+    renderedBody?: string;
     constructor() {
         this.key = '';
     }
