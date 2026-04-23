@@ -24,6 +24,11 @@ export const appConfig: ApplicationConfig = {
             withPreloading(SelectivePreloadStrategy),
             withViewTransitions({
                 onViewTransitionCreated: ({ transition, from, to }) => {
+                    // Skip animation if navigating to the same route (reload, same-page link).
+                    if (from?.component === to?.component) {
+                        return;
+                    }
+
                     // Count total URL segments to determine navigation hierarchy depth.
                     const depth = (snap: ActivatedRouteSnapshot): number => {
                         let d = 0;
