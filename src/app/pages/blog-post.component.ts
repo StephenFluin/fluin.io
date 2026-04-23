@@ -11,6 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta } from '@angular/platform-browser';
 import markdownit from 'markdown-it';
 import { JsonLdService } from '../shared/jsonld.service';
+import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
 
 @Component({
     templateUrl: './blog-post.component.html',
@@ -40,22 +41,32 @@ export class BlogPostComponent {
             }
             title.setTitle(item.title + ' | fluin.io blog');
             this.updateCanonicalUrl(`https://fluin.io/blog/${item.id}`);
-                const rawDescription = item.body.split('\n').find(line => line.trim() && !line.trim().startsWith('#')) || item.body.split('\n')[0];
-                const description = rawDescription.trim();
+            const rawDescription =
+                item.body.split('\n').find((line) => line.trim() && !line.trim().startsWith('#')) || item.body.split('\n')[0];
+            const description = rawDescription.trim();
+            const socialImage = toAbsoluteImageUrl(
+                buildOptimizedImageUrl(item.image, {
+                    width: 1200,
+                    height: 630,
+                    fit: 'cover',
+                    quality: IMAGE_QUALITY.hero,
+                })
+            );
 
             const twitterMetadata = {
-                'twitter:card': 'summary',
-                'twitter:image': item.image,
-                   'twitter:title': item.title,
-                   'twitter:description': description,
+                'twitter:card': 'summary_large_image',
+                'twitter:image': socialImage,
+                'twitter:title': item.title,
+                'twitter:description': description,
             };
             const openGraphMeta = {
                 'og:url': `https://fluin.io/blog/${item.id}`,
                 'og:title': `${item.title}`,
                 'og:description': description,
-                'og:image': `${item.image}`,
+                'og:image': socialImage,
+                'og:image:width': '1200',
+                'og:image:height': '630',
             };
-       
 
             const tags: MetaDefinition[] = Object.keys(twitterMetadata).map((key) => ({
                 name: key,
@@ -66,41 +77,41 @@ export class BlogPostComponent {
                 content: openGraphMeta[key],
             }));
 
-                [...tags].forEach(tag => meta.updateTag(tag));
-                [...tags2].forEach(tag => meta.updateTag(tag, `property='${tag.property}'`));
+            [...tags].forEach((tag) => meta.updateTag(tag));
+            [...tags2].forEach((tag) => meta.updateTag(tag, `property='${tag.property}'`));
 
             // Json LD
-          this.jsonLd.setSchema({
-            '@context': 'https://schema.org',
-            '@type': 'BlogPosting',
-            headline: item.title,
-            url: `https://fluin.io/blog/${item.id}`,
-            datePublished: item.date, // ISO format: 'YYYY-MM-DD'
-            image: item.image,
-            description: description,
-            author: {
-                '@type': 'Person',
-                name: 'Stephen Fluin',
-                url: 'https://fluin.io/bio',
-                image: 'https://fluin.io/assets/images/mainpic.jpg',
-                jobTitle: 'VP of Product',
-                worksFor: {
-                '@type': 'Organization',
-                name: 'HeroDevs',
-                url: 'https://herodevs.com',
+            this.jsonLd.setSchema({
+                '@context': 'https://schema.org',
+                '@type': 'BlogPosting',
+                headline: item.title,
+                url: `https://fluin.io/blog/${item.id}`,
+                datePublished: item.date,
+                image: socialImage,
+                description: description,
+                author: {
+                    '@type': 'Person',
+                    name: 'Stephen Fluin',
+                    url: 'https://fluin.io/bio',
+                    image: 'https://fluin.io/assets/images/mainpic.jpg',
+                    jobTitle: 'VP of Product',
+                    worksFor: {
+                        '@type': 'Organization',
+                        name: 'HeroDevs',
+                        url: 'https://herodevs.com',
+                    },
+                    sameAs: [
+                        'https://twitter.com/stephenfluin',
+                        'https://bsky.app/profile/stephenfluin.bsky.social',
+                        'https://github.com/stephenfluin',
+                        'https://www.linkedin.com/in/stephenfluin',
+                    ],
                 },
-                sameAs: [
-                'https://twitter.com/stephenfluin',
-                'https://bsky.app/profile/stephenfluin.bsky.social',
-                'https://github.com/stephenfluin',
-                'https://www.linkedin.com/in/stephenfluin',
-                ],
-            },
-            publisher: {
-                '@type': 'Person',
-                name: 'Stephen Fluin',
-                url: 'https://fluin.io',
-            },
+                publisher: {
+                    '@type': 'Person',
+                    name: 'Stephen Fluin',
+                    url: 'https://fluin.io',
+                },
             });
 
             const md = markdownit();
@@ -124,5 +135,23 @@ export class BlogPostComponent {
         }
         element.setAttribute('rel', 'canonical');
         element.setAttribute('href', url);
+    }
+
+    postImageUrl(post: Post) {
+        return buildOptimizedImageUrl(post.image, {
+            width: 1200,
+            height: 675,
+            fit: 'cover',
+            quality: IMAGE_QUALITY.hero,
+        });
+    }
+
+    postImageSet(post: Post) {
+        return buildResponsiveImageSet(post.image, [800, 1200], {
+            width: 1200,
+            height: 675,
+            fit: 'cover',
+            quality: IMAGE_QUALITY.hero,
+        });
     }
 }

@@ -8,7 +8,7 @@
 	<div class="projects-grid">
 		@for (project of projects; track project.name) {
 			<article class="project-card card">
-				<img [src]="project.imageSrc" [alt]="project.imageAlt" loading="lazy" />
+				<img [src]="project.imageSrc" [alt]="project.imageAlt" loading="lazy" width="1600" height="900" />
 				<div class="project-content">
 					<h3>{{ project.name }}</h3>
 					<p>{{ project.description }}</p>

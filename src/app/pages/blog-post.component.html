@@ -11,11 +11,17 @@
     </div>
     }
     <div class="highlight-image">
-        @if (!post().image) {
-        <img src="/assets/images/imgpostholder.png" [alt]="post().title" />
-        } @if (post().image) {
-        <img [src]="post().image" [alt]="post().title" />
-        }
+        <img
+            [src]="postImageUrl(post())"
+            [attr.srcset]="postImageSet(post())"
+            sizes="(max-width: 900px) calc(100vw - 64px), 800px"
+            [alt]="post().title"
+            width="1200"
+            height="675"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+        />
     </div>
     <div [innerHTML]="post().renderedBody" class="post-content"></div>
 </article>

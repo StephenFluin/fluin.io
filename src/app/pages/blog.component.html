@@ -5,7 +5,15 @@
     <!-- sidebar-->
     <div id="sidebar" class="padded">
         <section style="margin-top: 0px; text-align: center">
-            <img style="width: 50%; border-radius: 100%" src="/assets/images/mainpic.jpg" alt="Stephen Fluin" />
+            <img
+                style="width: 50%; height: auto; border-radius: 100%"
+                src="/assets/images/mainpic.jpg"
+                alt="Stephen Fluin"
+                width="960"
+                height="960"
+                loading="lazy"
+                decoding="async"
+            />
             <div>
                 <p>Thank you for stopping by!</p>
             </div>
@@ -20,13 +28,13 @@
 
         <section id="social">
             <a href="https://bsky.app/profile/stephenfluin.bsky.social" target="_blank" rel="noopener me"
-                ><img src="/assets/images/bluesky.svg" alt="Bluesky"
+                ><img src="/assets/images/bluesky.svg" alt="Bluesky" width="50" height="44"
             /></a>
             <a href="https://github.com/StephenFluin" target="_blank" rel="noopener me"
-                ><img src="/assets/images/sm-github.svg" alt="Github"
+                ><img src="/assets/images/sm-github.svg" alt="Github" width="50" height="50"
             /></a>
             <a href="https://www.linkedin.com/in/stephenfluin" target="_blank"
-                ><img src="/assets/images/sm-linkedin.svg" alt="Linkedin"
+                ><img src="/assets/images/sm-linkedin.svg" alt="Linkedin" width="50" height="50"
             /></a>
         </section>
 
@@ -40,18 +48,23 @@
 
         <hr />
 
-        <section id="featured-blogs">
+        <section id="featured-blogs" aria-labelledby="featured-posts-heading">
+            <h2 id="featured-posts-heading" class="sidebar-heading">Featured posts</h2>
             @for (post of posts(); track post) {
             <a [routerLink]="['/blog', post.id]" class="featured-blog card">
-                @if (post.image) {
-                <div
-                    [style.background-image]="'url(\'' + post.image + '\')'"
-                    [title]="post.image"
+                <img
                     class="featured-blog-image"
-                ></div>
-                }
+                    [src]="featuredPostImage(post)"
+                    [attr.srcset]="featuredPostImageSet(post)"
+                    [sizes]="featuredImageSizes"
+                    alt=""
+                    width="240"
+                    height="150"
+                    loading="lazy"
+                    decoding="async"
+                />
                 <div class="featured-blog-details">
-                    <h4>{{ post.title }}</h4>
+                    <h3>{{ post.title }}</h3>
                     <p>Read More -></p>
                 </div>
             </a>

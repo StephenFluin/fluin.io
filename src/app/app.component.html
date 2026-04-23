@@ -1,8 +1,8 @@
 <app-header></app-header>
 
-<div id="page" #container [@routeAnimation]="{value:prepRouteState(routerOutlet), params: { height: maxHeight }}" class="route-container">
+<main id="page" #container [@routeAnimation]="{value:prepRouteState(routerOutlet), params: { height: maxHeight }}" class="route-container">
     <router-outlet #routerOutlet="outlet"></router-outlet>
-</div>
+</main>
 
 <div class="footer">
     <a routerLink="/admin">Admin</a>

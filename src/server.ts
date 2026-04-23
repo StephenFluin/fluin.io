@@ -7,12 +7,16 @@ import {
 import express from 'express';
 import { join } from 'node:path';
 import compression from 'compression';
+import sharp from 'sharp';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 app.use(compression());
 const angularApp = new AngularNodeAppEngine();
+const ALLOWED_FIREBASE_BUCKET = 'fluindotio-website-93127.appspot.com';
+const ALLOWED_IMAGE_HOST = 'firebasestorage.googleapis.com';
+const ALLOWED_IMAGE_PATH_PREFIX = `/v0/b/${ALLOWED_FIREBASE_BUCKET}/`;
 
 interface PostData {
     [key: string]: {
@@ -26,6 +30,34 @@ interface PostData {
     };
 }
 
+function parsePositiveInteger(value: unknown, fallback: number, max: number) {
+    const parsed = Number.parseInt(String(value || ''), 10);
+
+    if (!Number.isFinite(parsed) || parsed <= 0) {
+        return fallback;
+    }
+
+    return Math.min(parsed, max);
+}
+
+function parseFit(value: unknown) {
+    return value === 'inside' ? 'inside' : 'cover';
+}
+
+function pickOutputFormat(acceptHeader: string | undefined) {
+    const accept = acceptHeader || '';
+
+    if (accept.includes('image/avif')) {
+        return 'avif' as const;
+    }
+
+    if (accept.includes('image/webp')) {
+        return 'webp' as const;
+    }
+
+    return 'jpeg' as const;
+}
+
 /**
  * Example Express Rest API endpoints can be defined here.
  * Uncomment and define endpoints as necessary.
@@ -37,6 +69,73 @@ interface PostData {
  * });
  * ```
  */
+app.get('/api/image', async (req, res) => {
+    const source = Array.isArray(req.query['url']) ? req.query['url'][0] : req.query['url'];
+
+    if (typeof source !== 'string' || !source) {
+        res.status(400).send('Missing image URL.');
+        return;
+    }
+
+    let remoteUrl: URL;
+
+    try {
+        remoteUrl = new URL(source);
+    } catch {
+        res.status(400).send('Invalid image URL.');
+        return;
+    }
+
+    if (remoteUrl.hostname !== ALLOWED_IMAGE_HOST || !remoteUrl.pathname.startsWith(ALLOWED_IMAGE_PATH_PREFIX)) {
+        res.status(400).send('Unsupported image host.');
+        return;
+    }
+
+    const width = parsePositiveInteger(req.query['w'], 1200, 2400);
+    const height = req.query['h'] ? parsePositiveInteger(req.query['h'], 675, 2400) : undefined;
+    const quality = parsePositiveInteger(req.query['q'], 72, 90);
+    const fit = parseFit(req.query['fit']);
+    const format = pickOutputFormat(req.headers.accept);
+
+    try {
+        const response = await fetch(remoteUrl, {
+            headers: {
+                Accept: 'image/avif,image/webp,image/*,*/*;q=0.8',
+            },
+        });
+
+        if (!response.ok) {
+            res.status(502).send('Unable to fetch image.');
+            return;
+        }
+
+        const arrayBuffer = await response.arrayBuffer();
+        const pipeline = sharp(Buffer.from(arrayBuffer), { failOn: 'none' })
+            .rotate()
+            .resize({
+                width,
+                height,
+                fit,
+                withoutEnlargement: true,
+            });
+
+        const output =
+            format === 'avif'
+                ? await pipeline.avif({ quality }).toBuffer()
+                : format === 'webp'
+                  ? await pipeline.webp({ quality }).toBuffer()
+                  : await pipeline.jpeg({ quality, mozjpeg: true }).toBuffer();
+
+        res.setHeader('Cache-Control', 'public, max-age=31536000, s-maxage=31536000, stale-while-revalidate=604800');
+        res.setHeader('Content-Type', `image/${format}`);
+        res.setHeader('Vary', 'Accept');
+        res.send(output);
+    } catch (error) {
+        console.error('Image proxy error', error);
+        res.status(500).send('Unable to optimize image.');
+    }
+});
+
 app.get('/sitemap.txt', (req, res) => {
     res.set('Content-Type', 'text/plain');
     const data = fetch('https://fluindotio-website-93127.firebaseio.com/posts.json');
