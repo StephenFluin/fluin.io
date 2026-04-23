@@ -20,7 +20,7 @@ interface Posts {
 
 @Injectable({ providedIn: 'root' })
 export class PostService {
-    url = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
+    url = '/api/posts';
     /**
      * An object with post keys as keys, and post data as values
      */

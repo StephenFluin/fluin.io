@@ -69,6 +69,26 @@ function pickOutputFormat(acceptHeader: string | undefined) {
  * });
  * ```
  */
+const POSTS_URL = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
+
+app.get('/api/posts', async (_req, res) => {
+    try {
+        const response = await fetch(POSTS_URL);
+
+        if (!response.ok) {
+            res.status(502).send('Unable to fetch posts.');
+            return;
+        }
+
+        const data = await response.json();
+        res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
+        res.json(data);
+    } catch (error) {
+        console.error('Posts proxy error', error);
+        res.status(500).send('Unable to load posts.');
+    }
+});
+
 app.get('/api/image', async (req, res) => {
     const source = Array.isArray(req.query['url']) ? req.query['url'][0] : req.query['url'];
 
