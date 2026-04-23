@@ -12,6 +12,7 @@ import { Meta } from '@angular/platform-browser';
 import markdownit from 'markdown-it';
 import { JsonLdService } from '../shared/jsonld.service';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
+import { httpResource } from '@angular/common/http';
 
 @Component({
     templateUrl: './blog-post.component.html',
@@ -33,9 +34,16 @@ export class BlogPostComponent {
     ) {
         // Based on the requested ID, return a Post
         const routeParams = toSignal(route.params);
+
+        // Fetch the full post (including body) individually so the list view
+        // can load a lightweight summaries-only payload.
+        const postResource = httpResource<Post>(() => {
+            const id = routeParams()?.['id'];
+            return id ? `/api/posts/${id}` : undefined;
+        });
+
         this.post = computed(() => {
-            const id = routeParams()['id'];
-            const item = id ? posts.postMap.value()?.[id] : posts.postList()?.[0];
+            const item = postResource.value();
             if (!item) {
                 return null;
             }
@@ -121,7 +129,7 @@ export class BlogPostComponent {
             return item;
         });
         effect(() => {
-            if (!this.post() && posts.postMap.value()) {
+            if (!this.post() && postResource.hasValue()) {
                 this.router.navigate(['/404']);
             }
         });

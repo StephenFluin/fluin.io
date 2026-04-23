@@ -81,11 +81,47 @@ app.get('/api/posts', async (_req, res) => {
         }
 
         const data = await response.json();
+
+        // Strip post body — list views only need title/date/id/image.
+        // Full content is served by /api/posts/:id.
+        const summaries: Record<string, unknown> = {};
+        for (const key of Object.keys(data)) {
+            const { body: _body, ...summary } = data[key];
+            summaries[key] = summary;
+        }
+
         res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
-        res.json(data);
+        res.json(summaries);
     } catch (error) {
         console.error('Posts proxy error', error);
         res.status(500).send('Unable to load posts.');
+    }
+});
+
+app.get('/api/posts/:id', async (req, res) => {
+    const id = req.params['id'];
+
+    try {
+        const response = await fetch(POSTS_URL);
+
+        if (!response.ok) {
+            res.status(502).send('Unable to fetch posts.');
+            return;
+        }
+
+        const data = await response.json();
+        const post = data[id];
+
+        if (!post) {
+            res.status(404).send('Post not found.');
+            return;
+        }
+
+        res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
+        res.json(post);
+    } catch (error) {
+        console.error('Post proxy error', error);
+        res.status(500).send('Unable to load post.');
     }
 });
 
