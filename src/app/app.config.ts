@@ -3,14 +3,14 @@ import {
     provideBrowserGlobalErrorListeners,
     provideZonelessChangeDetection,
 } from '@angular/core';
-import { ActivatedRouteSnapshot, provideRouter, withPreloading, withViewTransitions } from '@angular/router';
+import { provideRouter, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
+import { ActivatedRouteSnapshot } from '@angular/router';
 import { provideClientHydration, Title, withEventReplay } from '@angular/platform-browser';
 import { AdminService } from './shared/admin.service';
 import { PostService } from './shared/post.service';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { SelectivePreloadStrategy } from './shared/selective-preload.strategy';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -21,7 +21,6 @@ export const appConfig: ApplicationConfig = {
         provideZonelessChangeDetection(),
         provideRouter(
             routes,
-            withPreloading(SelectivePreloadStrategy),
             withViewTransitions({
                 onViewTransitionCreated: ({ transition, from, to }) => {
                     // Skip animation on initial load or page refresh (no previous route).
