@@ -24,8 +24,13 @@ export const appConfig: ApplicationConfig = {
             withPreloading(SelectivePreloadStrategy),
             withViewTransitions({
                 onViewTransitionCreated: ({ transition, from, to }) => {
-                    // Skip animation if navigating to the same route (reload, same-page link).
-                    if (from?.component === to?.component) {
+                    // Skip animation on initial load or page refresh (no previous route).
+                    if (!from) {
+                        return;
+                    }
+
+                    // Skip animation if navigating to the same route (same-page link click).
+                    if (from.component === to.component) {
                         return;
                     }
 

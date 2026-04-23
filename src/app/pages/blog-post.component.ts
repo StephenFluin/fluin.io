@@ -1,5 +1,5 @@
 import { Component, Inject, Signal, computed, DOCUMENT, effect, inject } from '@angular/core';
-import { MetaDefinition, Title } from '@angular/platform-browser';
+import { MetaDefinition, Title, SafeHtml } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { DomSanitizer } from '@angular/platform-browser';
@@ -88,6 +88,9 @@ export class BlogPostComponent {
             [...tags].forEach((tag) => meta.updateTag(tag));
             [...tags2].forEach((tag) => meta.updateTag(tag, `property='${tag.property}'`));
 
+            // Render markdown separately to memoize expensive parsing.
+            item.renderedBody = this.renderMarkdown(item.body || '');
+
             // Json LD
             this.jsonLd.setSchema({
                 '@context': 'https://schema.org',
@@ -122,10 +125,6 @@ export class BlogPostComponent {
                 },
             });
 
-            const md = markdownit();
-            const result = md.render(item.body || '');
-
-            item.renderedBody = sanitized.bypassSecurityTrustHtml(result);
             return item;
         });
         effect(() => {
@@ -161,5 +160,23 @@ export class BlogPostComponent {
             fit: 'cover',
             quality: IMAGE_QUALITY.hero,
         });
+    }
+
+    /**
+     * Memoized markdown renderer. Caches by body hash to avoid expensive
+     * re-parsing if the post body hasn't changed.
+     */
+    private markdownCache = new Map<string, SafeHtml>();
+
+    private renderMarkdown(body: string): SafeHtml {
+        if (this.markdownCache.has(body)) {
+            return this.markdownCache.get(body)!;
+        }
+
+        const md = markdownit();
+        const result = md.render(body);
+        const safe = this.sanitized.bypassSecurityTrustHtml(result);
+        this.markdownCache.set(body, safe);
+        return safe;
     }
 }

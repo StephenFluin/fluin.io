@@ -107,16 +107,37 @@ function pickOutputFormat(acceptHeader: string | undefined) {
  */
 const POSTS_URL = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
 
+/**
+ * Server-side cache for Firebase posts.json.
+ * Reduces redundant fetches from /api/posts, /api/posts/:id, /sitemap.txt.
+ * TTL: 60 seconds, matches HTTP cache max-age.
+ */
+interface PostsCache {
+    data: Record<string, any>;
+    timestamp: number;
+}
+let postsCache: PostsCache | null = null;
+const CACHE_TTL_MS = 60 * 1000;
+
+async function getPostsFromFirebase(): Promise<Record<string, any>> {
+    const now = Date.now();
+    if (postsCache && now - postsCache.timestamp < CACHE_TTL_MS) {
+        return postsCache.data;
+    }
+
+    const response = await fetch(POSTS_URL);
+    if (!response.ok) {
+        throw new Error(`Firebase returned ${response.status}`);
+    }
+
+    const data = await response.json();
+    postsCache = { data, timestamp: now };
+    return data;
+}
+
 app.get('/api/posts', async (_req, res) => {
     try {
-        const response = await fetch(POSTS_URL);
-
-        if (!response.ok) {
-            res.status(502).send('Unable to fetch posts.');
-            return;
-        }
-
-        const data = await response.json();
+        const data = await getPostsFromFirebase();
 
         // Strip post body — list views only need title/date/id/image.
         // Full content is served by /api/posts/:id.
@@ -138,14 +159,7 @@ app.get('/api/posts/:id', async (req, res) => {
     const id = req.params['id'];
 
     try {
-        const response = await fetch(POSTS_URL);
-
-        if (!response.ok) {
-            res.status(502).send('Unable to fetch posts.');
-            return;
-        }
-
-        const data = await response.json();
+        const data = await getPostsFromFirebase();
         const post = data[id];
 
         if (!post) {
@@ -285,26 +299,24 @@ app.get('/api/image', async (req, res) => {
     }
 });
 
-app.get('/sitemap.txt', (req, res) => {
-    res.set('Content-Type', 'text/plain');
-    const data = fetch('https://fluindotio-website-93127.firebaseio.com/posts.json');
-    let sitemap = '';
+app.get('/sitemap.txt', async (req, res) => {
+    try {
+        const posts = await getPostsFromFirebase();
+        let sitemap = '';
 
-    data.then((result) => result.json())
-        .then((result) => {
-            const posts: PostData = result as PostData;
-            for (const key of Object.keys(posts)) {
-                sitemap += `https://fluin.io/blog/${posts[key].id}\n`;
-            }
-            sitemap += `https://fluin.io/blog\n`;
-            sitemap += `https://fluin.io\n`;
-            sitemap += `https://fluin.io/bio\n`;
+        for (const key of Object.keys(posts)) {
+            sitemap += `https://fluin.io/blog/${posts[key].id}\n`;
+        }
+        sitemap += `https://fluin.io/blog\n`;
+        sitemap += `https://fluin.io\n`;
+        sitemap += `https://fluin.io/bio\n`;
 
-            res.send(sitemap);
-        })
-        .catch((err) => {
-            res.send({ msg: 'Error generating sitemap.', error: err });
-        });
+        res.set('Content-Type', 'text/plain');
+        res.send(sitemap);
+    } catch (err) {
+        console.error('Sitemap error', err);
+        res.status(500).send('Unable to generate sitemap.');
+    }
 });
 app.get('/404', (req, res) => {
     res.status(404);

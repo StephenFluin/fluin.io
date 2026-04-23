@@ -1,33 +1,44 @@
 <style>
-    mat-form-field {
+    .form-field {
         display: block;
+        margin-bottom: 32px;
     }
 
-    mat-input {
+    .form-field label {
         display: block;
-        margin: 0 0 32px 0;
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-field input {
+        display: block;
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
     }
 </style>
 @if (postData(); as post) {
 <div class="padded" style="flex-grow: 1" (keydown)="onKey($event, post)">
     <div class="columns" style="display: flex">
         <form style="width: 50%; padding: 16px" ngNoForm>
-            <mat-form-field>
-                <mat-label>Title</mat-label>
-                <input matInput [(ngModel)]="post.title" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Image URL</mat-label>
-                <input matInput [(ngModel)]="post.image" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Post ID / slug</mat-label>
-                <input matInput [(ngModel)]="post.id" />
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Date</mat-label>
-                <input matInput type="date" [(ngModel)]="post.date" />
-            </mat-form-field>
+            <div class="form-field">
+                <label>Title</label>
+                <input [(ngModel)]="post.title" />
+            </div>
+            <div class="form-field">
+                <label>Image URL</label>
+                <input [(ngModel)]="post.image" />
+            </div>
+            <div class="form-field">
+                <label>Post ID / slug</label>
+                <input [(ngModel)]="post.id" />
+            </div>
+            <div class="form-field">
+                <label>Date</label>
+                <input type="date" [(ngModel)]="post.date" />
+            </div>
             <textarea
                 placeholder="body"
                 (ngModelChange)="contentChange(post)"

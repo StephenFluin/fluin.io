@@ -1,7 +1,6 @@
 import { Component, Inject, computed, inject } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { Post } from '../shared/post.service';
-import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe } from '@angular/common';
 
@@ -49,7 +48,7 @@ export interface Talk {
         </div>
         }
     `,
-    imports: [RouterLink, MatCardModule],
+    imports: [RouterLink],
 })
 export class AdminComponent {
     firebaseService = inject(FirebaseService);

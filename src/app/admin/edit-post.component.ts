@@ -10,8 +10,6 @@ import { debounceTime, map } from 'rxjs/operators';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { SafeHtml } from '@angular/platform-browser';
 import markdownit from 'markdown-it';
 
@@ -19,7 +17,7 @@ import { UploadComponent } from './upload.component';
 
 @Component({
     templateUrl: './edit-post.component.html',
-    imports: [MatFormFieldModule, MatInputModule, FormsModule, RouterLink, UploadComponent],
+    imports: [FormsModule, RouterLink, UploadComponent],
 })
 export class EditPostComponent {
     renderedBody;
