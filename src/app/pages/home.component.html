@@ -1,7 +1,12 @@
 <!-- intro-block-->
 <div id="intro-block">
     <img
-        src="/assets/images/mainpic.jpg"
+        src="/assets/images/mainpic-300.jpg"
+        srcset="
+            /assets/images/mainpic-300.jpg 300w,
+            /assets/images/mainpic-600.jpg 600w,
+            /assets/images/mainpic.jpg     960w"
+        sizes="(max-width: 600px) min(calc(100vw - 32px), 430px), 300px"
         alt="Stephen Fluin"
         class="padded"
         width="960"
