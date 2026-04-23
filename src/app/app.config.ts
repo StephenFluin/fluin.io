@@ -3,7 +3,7 @@ import {
     provideBrowserGlobalErrorListeners,
     provideZonelessChangeDetection,
 } from '@angular/core';
-import { provideRouter, withPreloading } from '@angular/router';
+import { ActivatedRouteSnapshot, provideRouter, withPreloading, withViewTransitions } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, Title, withEventReplay } from '@angular/platform-browser';
@@ -19,7 +19,26 @@ export const appConfig: ApplicationConfig = {
         AdminService,
         provideBrowserGlobalErrorListeners(),
         provideZonelessChangeDetection(),
-        provideRouter(routes, withPreloading(SelectivePreloadStrategy)),
+        provideRouter(
+            routes,
+            withPreloading(SelectivePreloadStrategy),
+            withViewTransitions({
+                onViewTransitionCreated: ({ transition, from, to }) => {
+                    // Count total URL segments to determine navigation hierarchy depth.
+                    const depth = (snap: ActivatedRouteSnapshot): number => {
+                        let d = 0;
+                        let s: ActivatedRouteSnapshot | null = snap;
+                        while (s) { d += s.url.length; s = s.firstChild; }
+                        return d;
+                    };
+                    const dir = depth(to) >= depth(from) ? 'forward' : 'back';
+                    document.documentElement.classList.add(`route-${dir}`);
+                    transition.finished.finally(() =>
+                        document.documentElement.classList.remove('route-forward', 'route-back')
+                    );
+                },
+            })
+        ),
         provideClientHydration(withEventReplay()),
         provideHttpClient(withFetch()),
     ],
