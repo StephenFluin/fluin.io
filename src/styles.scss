@@ -8,12 +8,36 @@
     font-weight: 400;
 }
 
-:root {
+/* Colors. The site follows the visitor's light/dark preference; admin pages always use the light values. */
+:root,
+app-admin {
+    color-scheme: light;
+    --page-background: #ffffff;
+    --surface-background: #ffffff;
+    --sidebar-background: rgba(53, 63, 73, 0.1);
     --text-color: #383f49;
+    --muted-text-color: #59626d;
     --link-color: #005a8c;
     --link-hover-color: #003b5c;
-    --muted-text-color: #59626d;
+    --border-color: rgba(0, 0, 0, 0.1);
+    --inline-code-background: #f1f1f1;
     --footer-background: #626a70;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+        --page-background: #15181b;
+        --surface-background: #1f2428;
+        --sidebar-background: rgba(255, 255, 255, 0.04);
+        --text-color: #dde1e6;
+        --muted-text-color: #a3acb6;
+        --link-color: #7cc4ff;
+        --link-hover-color: #b3dbff;
+        --border-color: rgba(255, 255, 255, 0.14);
+        --inline-code-background: rgba(255, 255, 255, 0.1);
+        --footer-background: #2b3035;
+    }
 }
 
 h1,
@@ -40,7 +64,7 @@ h2 {
 
 h2:after {
     content: '';
-    border-top: 1px solid lightgray;
+    border-top: 1px solid var(--border-color);
     margin: 0 0 0 20px;
     flex: 1 0 20px;
 }
@@ -57,6 +81,7 @@ img {
 body {
     font-size: 16px;
     color: var(--text-color);
+    background-color: var(--page-background);
 }
 
 br {
@@ -65,8 +90,7 @@ br {
     margin-bottom: 0.75rem;
 }
 
-code,
-pre.code {
+code {
     font-family: 'Roboto Mono', monospace;
 }
 
@@ -79,10 +103,6 @@ a {
     font-weight: bold;
     text-decoration: none;
     opacity: 0.9;
-}
-
-a.active-link {
-    font-weight: bold;
 }
 
 a:visited {
@@ -106,8 +126,7 @@ p {
 hr {
     border: 0;
     height: 0;
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    border-top: 1px solid var(--border-color);
 }
 
 * strong {
@@ -255,7 +274,7 @@ nav > * {
 }
 
 #posts-block > a {
-    background: white;
+    background: var(--surface-background);
     margin: 16px;
     text-align: center;
     height: 300px;
@@ -276,7 +295,7 @@ nav > * {
     height: 180px;
     display: block;
     object-fit: cover;
-    border-bottom: solid 0.25px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .post-details > * {
@@ -316,11 +335,13 @@ article.post h1 {
     margin-bottom: 1.75rem;
 }
 
-/* Code blocks, plain or highlighted by Shiki (colors are in src/code-theme.css) */
+/* Code blocks, plain or highlighted by Shiki (colors are in src/code-theme.css). They use the light
+   code theme in dark mode too, so they set their own background and text color. */
 .post pre {
     white-space: pre-wrap;
     margin: 16px 0;
     padding: 16px;
+    color: #0e1116;
     background-color: #f6f8fa;
     border-radius: 6px;
     font-size: 14px;
@@ -340,19 +361,9 @@ article.post h1 {
 }
 
 .post code {
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
+    background-color: var(--inline-code-background);
     display: inline-block;
     padding: 2px 6px;
-    border: none;
-}
-
-pre.code {
-    background-color: #f1f1f1;
-    display: block;
-    padding: 16px;
-    margin-bottom: 16px;
-    border-radius: 4px;
 }
 
 .post ul,
@@ -373,6 +384,7 @@ pre.code {
     margin-top: 3rem;
 }
 
+.footer,
 .footer a {
     color: rgba(255, 255, 255, 0.96);
     margin: 16px;
@@ -396,7 +408,7 @@ router-outlet {
 
 #sidebar {
     width: 300px;
-    background-color: rgba(53, 63, 73, 0.1);
+    background-color: var(--sidebar-background);
     flex-grow: 0;
 }
 
@@ -438,17 +450,12 @@ router-outlet {
     width: 100%;
     height: 150px;
     object-fit: cover;
-
-    /* max-height: 150px;
-    display: block;
-    margin: 0px auto;
-    margin-bottom: 8px; */
 }
 
 #featured-blogs > * {
     margin-bottom: 32px;
     display: block;
-    background-color: white;
+    background-color: var(--surface-background);
 }
 
 .featured-blog-details {
@@ -466,7 +473,7 @@ router-outlet {
 .featured-blog-details p {
     text-align: right;
     font-size: 14px;
-    color: #4c5560;
+    color: var(--muted-text-color);
     font-weight: 700;
 }
 
@@ -517,15 +524,15 @@ router-outlet {
 
 .project-card {
     overflow: hidden;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    background: #fff;
+    border: 1px solid var(--border-color);
+    background: var(--surface-background);
 }
 
 .project-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .project-content {
@@ -585,7 +592,7 @@ router-outlet {
     .bio {
         background-size: contain;
         padding: 300px 16px;
-        color: black;
+        color: var(--text-color);
     }
     .bio .content {
         position: inherit;

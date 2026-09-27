@@ -8,7 +8,7 @@ import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
  */
 
 /** Changing the theme? Also run `npm run generate:code-theme` to regenerate src/code-theme.css */
-export const CODE_THEME = 'github-light';
+export const CODE_THEME = 'github-light-high-contrast';
 
 /** Code fence labels we highlight, mapped to Shiki grammars. Other labels (or none) render as plain text. */
 const GRAMMARS: Record<string, string> = {
@@ -60,7 +60,7 @@ const styleToClasses: ShikiTransformer = {
 
 export async function createMarkdownRenderer(): Promise<MarkdownIt> {
     const highlighter = await createHighlighterCore({
-        themes: [import('shiki/themes/github-light.mjs')],
+        themes: [import('shiki/themes/github-light-high-contrast.mjs')],
         langs: [
             import('shiki/langs/angular-ts.mjs'),
             import('shiki/langs/angular-html.mjs'),

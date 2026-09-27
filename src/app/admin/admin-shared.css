@@ -2,8 +2,13 @@
 
 app-admin {
     display: block;
+    /* Admin pages always use the light colors (see the tokens in src/styles.scss) */
+    color: var(--text-color);
+    background-color: var(--page-background);
     /* Cancel #page's 75px top margin, like the home, blog, and bio pages do */
     margin-top: -75px;
+    /* Fill the screen below the header, so short admin pages don't show the dark page background */
+    min-height: calc(100vh - 75px);
 }
 
 app-admin .admin-page {

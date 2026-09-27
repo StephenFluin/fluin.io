@@ -4,7 +4,7 @@
 import { writeFileSync } from 'node:fs';
 import type { ThemeRegistrationRaw } from 'shiki/core';
 
-const themeName = 'github-light';
+const themeName = 'github-light-high-contrast';
 const theme: ThemeRegistrationRaw = (await import(`shiki/themes/${themeName}.mjs`)).default;
 
 const foreground = (theme.fg ?? theme.colors?.['editor.foreground'] ?? '#000').toLowerCase();
