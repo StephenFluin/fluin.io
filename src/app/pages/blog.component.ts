@@ -1,10 +1,11 @@
-import { Component, Signal, computed } from '@angular/core';
+import { Component, Signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { Post, PostService } from '../shared/post.service';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '../shared/image-url';
 
 @Component({
     templateUrl: './blog.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterOutlet, RouterLink],
 })
 export class BlogComponent {

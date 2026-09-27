@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
     selector: 'app-newsletter',
     templateUrl: './newsletter.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
 })
 export class NewsletterComponent implements AfterViewInit {

@@ -1,4 +1,4 @@
-import { Component, Input, Signal, computed } from '@angular/core';
+import { Component, Input, Signal, computed, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { Post, PostService } from '../shared/post.service';
@@ -33,6 +33,7 @@ import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '
           }
         </div>
         `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink],
 })
 export class PostListComponent {

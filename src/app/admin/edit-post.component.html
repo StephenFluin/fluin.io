@@ -46,7 +46,8 @@
                 [style.height.px]="(post && post.body && post.body.length > 200 && post.body.length / 2) || 400"
                 style="width: 100%; padding: 8px"
             ></textarea>
-            <button type="button" (click)="save(post)">Save</button>
+            <button type="button" (click)="save(post, true)">Save</button>
+            <span role="status">{{ status() }}</span>
         </form>
         <div style="width: 50%; padding: 16px" class="post">
             <div class="highlight-image">
@@ -68,14 +69,20 @@
             <div [innerHTML]="postPreview()"></div>
         </div>
     </div>
-    <div>
-        @if (post.id && post.id !== 'new') {
-        <image-upload [folder]="'posts/' + post.id"></image-upload>
-        }
-    </div>
+    @if (savedId() === 'new') {
+    <p>Save the post to upload images.</p>
+    } @else {
+    <image-upload [folder]="'posts/' + savedId()"></image-upload>
     <div>
         <h2>Delete Post</h2>
-        <button (click)="delete(post)">Delete This Post</button>
+        <button type="button" (click)="delete()">Delete This Post</button>
     </div>
+    }
 </div>
-} @else { Loading posts... }
+} @else if (postResource.isLoading()) {
+<p class="padded">Loading post...</p>
+} @else if (postResource.error()) {
+<p class="padded">Couldn't load this post: {{ postResource.error()?.message }}</p>
+} @else {
+<p class="padded">No post found at "{{ savedId() }}". <a routerLink="/admin">Back to admin</a></p>
+}

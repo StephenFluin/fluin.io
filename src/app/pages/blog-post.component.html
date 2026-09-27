@@ -25,4 +25,6 @@
     </div>
     <div [innerHTML]="post().renderedBody" class="post-content"></div>
 </article>
+} @else if (postFailed()) {
+<not-found />
 }

@@ -1,5 +1,4 @@
-import { Component, Input, OnChanges, Signal, computed } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, computed, effect, input, signal, ChangeDetectionStrategy } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { remove as deleteDB } from 'firebase/database';
 import { deleteObject as deleteStorage } from 'firebase/storage';
@@ -27,7 +26,7 @@ export interface Image {
         
         <h2>File Gallery</h2>
         <div style="overflow:hidden;">
-          @for (img of imageList(); track img) {
+          @for (img of imageList(); track img.key) {
             <div
               style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;"
               >
@@ -43,35 +42,27 @@ export interface Image {
           }
         </div>
         `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [AsyncPipe]
 })
-export class UploadComponent implements OnChanges {
+export class UploadComponent {
     /**
      * The name of the folder for images
      * eg. posts/angular-is-awesome
      */
-    @Input() folder: string;
+    folder = input.required<string>();
 
     // List of files from realtime DB
-    fileList: Signal<Image[]>;
-    // List of files with downloadURLs
-    imageList: Signal<Image[]>;
+    fileList = signal<Image[]>([]);
+    // List of files with downloadURLs, generated as promises
+    imageList = computed(() =>
+        this.fileList().map((item) => ({ ...item, downloadURL: this.firebaseService.getUrl(item.path) }))
+    );
 
-    constructor(public firebaseService: FirebaseService, public router: Router) {}
-
-    ngOnChanges() {
-        console.log('new values for folder');
-        this.fileList = this.firebaseService.list<Image>(`/${this.folder}/images`);
-
-        /** Generate download URLs as promises */
-        this.imageList = computed(() => {
-            if (!this.fileList()) {
-                return [];
-            }
-            return this.fileList().map((item) => {
-                item.downloadURL = this.firebaseService.getUrl(item.path);
-                return item;
-            });
+    constructor(public firebaseService: FirebaseService) {
+        // Re-listen whenever the folder changes, and stop listening to the old one
+        effect((onCleanup) => {
+            onCleanup(this.firebaseService.watchList<Image>(`/${this.folder()}/images`, (list) => this.fileList.set(list)));
         });
     }
 
@@ -93,15 +84,15 @@ export class UploadComponent implements OnChanges {
         for (const selectedFile of [(<HTMLInputElement>document.getElementById('file')).files[0]]) {
             console.log(selectedFile);
             // Make local copies of services because "this" will be clobbered
-            const folder = this.folder;
-            const path = `/${this.folder}/${selectedFile.name}`;
+            const folder = this.folder();
+            const path = `/${folder}/${selectedFile.name}`;
             const uploadRef = this.firebaseService.getStorageRef(path);
 
             // cache files for up to a week
             this.firebaseService
                 .upload(uploadRef, selectedFile, { cacheControl: 'max-age=604800' })
                 .then((snapshot) => {
-                    console.log('Uploaded a blob or file! Now storing the reference at', `/${this.folder}/images/`);
+                    console.log('Uploaded a blob or file! Now storing the reference at', `/${folder}/images/`);
                     this.firebaseService.push(`/${folder}/images/`, { path: path, filename: selectedFile.name });
                 });
         }
@@ -111,7 +102,7 @@ export class UploadComponent implements OnChanges {
 
     delete(image: Image) {
         const storagePath = image.path;
-        const dbPath = `${this.folder}/images/` + image.key;
+        const dbPath = `${this.folder()}/images/` + image.key;
 
         // Do these as two separate steps so you can still try delete ref if file no longer exists
 

@@ -1,7 +1,7 @@
-import { Component, inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, PLATFORM_ID, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Title, Meta } from '@angular/platform-browser';
-import { Router, NavigationEnd, RouterOutlet, RouterLink } from '@angular/router';
+import { Router, NavigationEnd, NavigationStart, RouterOutlet, RouterLink } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AppHeaderComponent } from './embeddable/app-header.component';
 
@@ -14,6 +14,7 @@ declare global {
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [AppHeaderComponent, RouterOutlet, RouterLink],
 })
 export class AppComponent {
@@ -30,11 +31,12 @@ export class AppComponent {
             } else if (pageTitle !== false) {
                 title.setTitle('fluin.io');
             }
-            meta.removeTag('name=robots');
             if (isBrowser) {
                 window.scrollTo(0, 0);
             }
             gtag('config', 'G-QMN47NKMMS', { page_path: n.urlAfterRedirects });
         });
+        // Clear the previous page's noindex before the next page is created, so NotFoundComponent can set it again
+        router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(() => meta.removeTag('name=robots'));
     }
 }

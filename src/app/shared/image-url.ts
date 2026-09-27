@@ -5,14 +5,28 @@ export interface OptimizedImageOptions {
     fit?: 'cover' | 'inside';
 }
 
-const DEFAULT_QUALITY = 72;
+/**
+ * Only images in our own Firebase Storage bucket go through /api/image.
+ * Anything else (older posts link to external images) is loaded directly.
+ */
+export function isOptimizableImage(src: string): boolean {
+    try {
+        const url = new URL(src);
+        return (
+            url.hostname === 'firebasestorage.googleapis.com' &&
+            url.pathname.startsWith('/v0/b/fluindotio-website-93127.appspot.com/')
+        );
+    } catch {
+        return false;
+    }
+}
 
 export function buildOptimizedImageUrl(src: string | undefined | null, options: OptimizedImageOptions = {}): string {
     if (!src) {
         return '/assets/images/imgpostholder.png';
     }
 
-    if (!/^https?:\/\//i.test(src)) {
+    if (!isOptimizableImage(src)) {
         return src;
     }
 
@@ -40,7 +54,7 @@ export function buildResponsiveImageSet(
     widths: number[],
     options: OptimizedImageOptions & { width: number; height?: number }
 ): string | null {
-    if (!src || !/^https?:\/\//i.test(src)) {
+    if (!src || !isOptimizableImage(src)) {
         return null;
     }
 
@@ -73,3 +87,23 @@ export const IMAGE_QUALITY = {
     feature: 70,
     hero: 74,
 } as const;
+
+/**
+ * Every `widthxheight` the app requests from /api/image. The server rejects anything else so the
+ * image cache can't be filled with arbitrary sizes. Add new sizes here when a component needs them.
+ */
+export const ALLOWED_IMAGE_SIZES: ReadonlySet<string> = new Set([
+    // post-list cards
+    '300x180',
+    '600x360',
+    // blog sidebar featured posts
+    '240x150',
+    '480x300',
+    // blog post hero
+    '800x450',
+    '1200x675',
+    // social share (og:image / twitter:image)
+    '1200x630',
+]);
+
+export const ALLOWED_IMAGE_QUALITIES: ReadonlySet<number> = new Set(Object.values(IMAGE_QUALITY));

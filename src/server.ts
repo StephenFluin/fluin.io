@@ -12,6 +12,7 @@ import sharp from 'sharp';
 import markdownit from 'markdown-it';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getStorage } from 'firebase-admin/storage';
+import { ALLOWED_IMAGE_QUALITIES, ALLOWED_IMAGE_SIZES, isOptimizableImage } from './app/shared/image-url';
 
 // Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
 let cacheBucket: ReturnType<ReturnType<typeof getStorage>['bucket']> | null = null;
@@ -52,30 +53,14 @@ const app = express();
 app.use(compression());
 const angularApp = new AngularNodeAppEngine();
 const markdown = markdownit();
-const ALLOWED_FIREBASE_BUCKET = 'fluindotio-website-93127.appspot.com';
-const ALLOWED_IMAGE_HOST = 'firebasestorage.googleapis.com';
-const ALLOWED_IMAGE_PATH_PREFIX = `/v0/b/${ALLOWED_FIREBASE_BUCKET}/`;
 
-interface PostData {
-    [key: string]: {
-        body: string;
-        date: string;
-        id: string;
-        image: string;
-        title: string;
-        images: any;
-        renderedBody: any;
-    };
-}
-
-function parsePositiveInteger(value: unknown, fallback: number, max: number) {
-    const parsed = Number.parseInt(String(value || ''), 10);
-
-    if (!Number.isFinite(parsed) || parsed <= 0) {
-        return fallback;
-    }
-
-    return Math.min(parsed, max);
+/** A post as stored in the realtime db */
+interface StoredPost {
+    id: string;
+    title?: string;
+    date?: string;
+    image?: string;
+    body?: string;
 }
 
 function parseFit(value: unknown) {
@@ -108,6 +93,8 @@ function pickOutputFormat(acceptHeader: string | undefined) {
  * ```
  */
 const POSTS_URL = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
+const POST_URL = (id: string) => `https://fluindotio-website-93127.firebaseio.com/posts/${id}.json`;
+const VALID_POST_ID = /^[A-Za-z0-9_-]+$/;
 
 /**
  * Server-side cache for Firebase posts.json.
@@ -115,13 +102,13 @@ const POSTS_URL = 'https://fluindotio-website-93127.firebaseio.com/posts.json';
  * TTL: 60 seconds, matches HTTP cache max-age.
  */
 interface PostsCache {
-    data: Record<string, any>;
+    data: Record<string, StoredPost>;
     timestamp: number;
 }
 let postsCache: PostsCache | null = null;
 const CACHE_TTL_MS = 60 * 1000;
 
-async function getPostsFromFirebase(): Promise<Record<string, any>> {
+async function getPostsFromFirebase(): Promise<Record<string, StoredPost>> {
     const now = Date.now();
     if (postsCache && now - postsCache.timestamp < CACHE_TTL_MS) {
         return postsCache.data;
@@ -137,16 +124,36 @@ async function getPostsFromFirebase(): Promise<Record<string, any>> {
     return data;
 }
 
+/**
+ * Get a single post, or null if it doesn't exist.
+ * Posts missing from the cached list are checked directly, so a just-published post is visible immediately.
+ */
+async function getPostFromFirebase(id: string): Promise<StoredPost | null> {
+    if (!VALID_POST_ID.test(id)) {
+        return null;
+    }
+
+    const posts = await getPostsFromFirebase();
+    if (Object.hasOwn(posts, id)) {
+        return posts[id];
+    }
+
+    const response = await fetch(POST_URL(id));
+    if (!response.ok) {
+        throw new Error(`Firebase returned ${response.status}`);
+    }
+    return response.json();
+}
+
 app.get('/api/posts', async (_req, res) => {
     try {
         const data = await getPostsFromFirebase();
 
-        // Strip post body — list views only need title/date/id/image.
-        // Full content is served by /api/posts/:id.
+        // List views only need title/date/id/image. Full content is served by /api/posts/:id.
         const summaries: Record<string, unknown> = {};
         for (const key of Object.keys(data)) {
-            const { body: _body, ...summary } = data[key];
-            summaries[key] = summary;
+            const { id, title, date, image } = data[key];
+            summaries[key] = { id, title, date, image };
         }
 
         res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
@@ -161,8 +168,7 @@ app.get('/api/posts/:id', async (req, res) => {
     const id = req.params['id'];
 
     try {
-        const data = await getPostsFromFirebase();
-        const post = data[id];
+        const post = await getPostFromFirebase(id);
 
         if (!post) {
             res.status(404).send('Post not found.');
@@ -172,10 +178,8 @@ app.get('/api/posts/:id', async (req, res) => {
         // Render markdown server-side so blog pages don't need to download
         // markdown-it in the browser during hydration.
         const renderedBody = typeof post.body === 'string' ? markdown.render(post.body) : '';
-        const responsePost = {
-            ...post,
-            renderedBody,
-        };
+        const { id: postId, title, date, image, body } = post;
+        const responsePost = { id: postId, title, date, image, body, renderedBody };
 
         res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
         res.json(responsePost);
@@ -193,23 +197,20 @@ app.get('/api/image', async (req, res) => {
         return;
     }
 
-    let remoteUrl: URL;
-
-    try {
-        remoteUrl = new URL(source);
-    } catch {
-        res.status(400).send('Invalid image URL.');
-        return;
-    }
-
-    if (remoteUrl.hostname !== ALLOWED_IMAGE_HOST || !remoteUrl.pathname.startsWith(ALLOWED_IMAGE_PATH_PREFIX)) {
+    if (!isOptimizableImage(source)) {
         res.status(400).send('Unsupported image host.');
         return;
     }
+    const remoteUrl = new URL(source);
 
-    const width = parsePositiveInteger(req.query['w'], 1200, 2400);
-    const height = req.query['h'] ? parsePositiveInteger(req.query['h'], 675, 2400) : undefined;
-    const quality = parsePositiveInteger(req.query['q'], 72, 90);
+    // Only serve the sizes the app uses, so the cache can't be filled with arbitrary variants
+    const width = Number(req.query['w']);
+    const height = Number(req.query['h']);
+    const quality = Number(req.query['q']);
+    if (!ALLOWED_IMAGE_SIZES.has(`${width}x${height}`) || !ALLOWED_IMAGE_QUALITIES.has(quality)) {
+        res.status(400).send('Unsupported image size or quality.');
+        return;
+    }
     const fit = parseFit(req.query['fit']);
     const format = pickOutputFormat(req.headers.accept);
     const contentType = `image/${format}` as const;
@@ -328,19 +329,23 @@ app.get('/sitemap.txt', async (req, res) => {
         res.status(500).send('Unable to generate sitemap.');
     }
 });
-app.get('/404', (req, res) => {
-    res.status(404);
-    req.next();
-});
 
 /**
- * Serve static files from /browser
+ * Serve static files from /browser.
+ * Build output is content-hashed (e.g. chunk-Cx8mLFjm.js) so it can be cached forever. Everything else
+ * (images, icons, robots.txt) keeps its name when it changes, so it gets a short cache.
  */
+const HASHED_BUILD_FILE = /-[A-Za-z0-9_-]{8}\.(?:js|css)$/;
 app.use(
     express.static(browserDistFolder, {
-        maxAge: '1y',
         index: false,
         redirect: false,
+        setHeaders: (res, path) => {
+            res.setHeader(
+                'Cache-Control',
+                HASHED_BUILD_FILE.test(path) ? 'public, max-age=31536000, immutable' : 'public, max-age=3600'
+            );
+        },
     })
 );
 

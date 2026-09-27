@@ -11,5 +11,4 @@ export const serverRoutes: ServerRoute[] = [
         renderMode: RenderMode.Server,
     },
     { path: 'admin/**', renderMode: RenderMode.Client },
-    { path: '404', renderMode: RenderMode.Server, status: 404 },
 ];

@@ -30,6 +30,5 @@ export const routes: Routes = [
         path: 'newsletter',
         loadChildren: () => import('./newsletter/newsletter.routes').then((m) => m.routes),
     },
-    { path: '404', loadComponent: () => import('./not-found.component').then((m) => m.NotFoundComponent) },
-    { path: '**', loadComponent: () => import('./send-404.component').then((m) => m.Send404Component) },
+    { path: '**', loadComponent: () => import('./not-found.component').then((m) => m.NotFoundComponent) },
 ];

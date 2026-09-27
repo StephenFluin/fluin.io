@@ -1,0 +1,12 @@
+service firebase.storage {
+  match /b/fluindotio-website-93127.appspot.com/o {
+    match /posts/{post}/{imageId} {
+      allow read
+      allow write: if request.auth.uid == 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2';
+    }
+    match /talks/{talk}/{imageId} {
+      allow read
+      allow write: if request.auth.uid == 'uFgljRJxq9Th4bkTIaDsQFwJuhJ2';
+    }
+  }
+}

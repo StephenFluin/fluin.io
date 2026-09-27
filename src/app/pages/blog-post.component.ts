@@ -1,6 +1,6 @@
-import { Component, Inject, Signal, computed, DOCUMENT, effect, inject } from '@angular/core';
+import { Component, Inject, Signal, computed, DOCUMENT, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MetaDefinition, Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { AdminService } from '../shared/admin.service';
 import { Post, PostService } from '../shared/post.service';
@@ -10,14 +10,17 @@ import { Meta } from '@angular/platform-browser';
 import { JsonLdService } from '../shared/jsonld.service';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
 import { httpResource } from '@angular/common/http';
+import { NotFoundComponent } from '../not-found.component';
 
 @Component({
     templateUrl: './blog-post.component.html',
-    imports: [RouterLink],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    imports: [RouterLink, NotFoundComponent],
 })
 export class BlogPostComponent {
     post: Signal<Post>;
-    router = inject(Router);
+    /** The post couldn't be loaded (usually a 404 from /api/posts/:id) */
+    postFailed: Signal<boolean>;
     jsonLd = inject(JsonLdService);
 
     constructor(
@@ -38,11 +41,12 @@ export class BlogPostComponent {
             return id ? `/api/posts/${id}` : undefined;
         });
 
+        this.postFailed = computed(() => !!postResource.error());
         this.post = computed(() => {
-            const item = postResource.value();
-            if (!item) {
+            if (!postResource.hasValue()) {
                 return null;
             }
+            const item = postResource.value();
             title.setTitle(item.title + ' | fluin.io blog');
             this.updateCanonicalUrl(`https://fluin.io/blog/${item.id}`);
             const rawDescription =
@@ -130,11 +134,6 @@ export class BlogPostComponent {
             });
 
             return item;
-        });
-        effect(() => {
-            if (!this.post() && postResource.hasValue()) {
-                this.router.navigate(['/404']);
-            }
         });
     }
     updateCanonicalUrl(url: string) {

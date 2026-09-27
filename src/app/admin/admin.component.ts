@@ -1,4 +1,4 @@
-import { Component, Inject, computed, inject } from '@angular/core';
+import { Component, Inject, computed, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { Post } from '../shared/post.service';
 import { RouterLink } from '@angular/router';
@@ -48,6 +48,7 @@ export interface Talk {
         </div>
         }
     `,
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink],
 })
 export class AdminComponent {

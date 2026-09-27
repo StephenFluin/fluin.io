@@ -1,17 +1,16 @@
 import { httpResource } from '@angular/common/http';
 import { computed, effect, Injectable, signal, Signal, WritableSignal } from '@angular/core';
 
-export class Post {
-    key: string;
+export interface Post {
+    /** The post's key in the realtime db. Added client-side, never stored. */
+    key?: string;
     body?: string;
     date?: string;
     id?: string;
     image?: string;
     title?: string;
+    /** HTML rendered from `body` by /api/posts/:id. Never stored. */
     renderedBody?: string;
-    constructor() {
-        this.key = '';
-    }
 }
 interface Posts {
     [key: string]: Post;
@@ -33,7 +32,7 @@ export class PostService {
     // @TODO: I temporarily removed the shareAndCache so we need to figure out how to do this with signals
 
     constructor() {
-        // Turn an object into an array, similar to refirebase
+        // Turn the object of posts into a sorted array, with each key on its post
         this.postList = computed(() => {
             const list = [];
             if (!this.postMap.hasValue()) {
@@ -52,9 +51,6 @@ export class PostService {
             list.sort((a, b) => (a.date > b.date ? -1 : 1));
             return list;
         });
-    }
-    refreshData() {
-        this.postMap.reload();
     }
 
     isFuture(post: Post) {

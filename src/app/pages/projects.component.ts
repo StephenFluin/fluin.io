@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 interface Project {
     name: string;
@@ -11,13 +11,14 @@ interface Project {
 
 @Component({
     templateUrl: './projects.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
 })
 export class ProjectsComponent {
     readonly projects: Project[] = [
         {
             name: 'bingo.fluin.io',
-            imageSrc: '/assets/images/projects/bingo.png',
+            imageSrc: '/assets/images/projects/bingo.webp',
             imageAlt: 'Screenshot of bingo.fluin.io',
             description:
                 'A fast, browser-based bingo game with randomized cards and drawing support, built to be easy to run during live events.',
@@ -26,7 +27,7 @@ export class ProjectsComponent {
         },
         {
             name: 'alerts.fluin.io',
-            imageSrc: '/assets/images/projects/alerts.png',
+            imageSrc: '/assets/images/projects/alerts.webp',
             imageAlt: 'Screenshot of alerts.fluin.io',
             description:
                 'A scoped alerting dashboard for tracking updates by product area, with filtering and RSS support for targeted notifications.',
@@ -35,7 +36,7 @@ export class ProjectsComponent {
         },
         {
             name: 'fidget.fluin.io',
-            imageSrc: '/assets/images/projects/fidget.png',
+            imageSrc: '/assets/images/projects/fidget.webp',
             imageAlt: 'Screenshot of fidget.fluin.io',
             description:
                 'A playful digital fidget spinner experience focused on smooth interaction and simple, tactile visual feedback.',
@@ -44,7 +45,7 @@ export class ProjectsComponent {
         },
         {
             name: 'prices.fluin.io',
-            imageSrc: '/assets/images/projects/prices.png',
+            imageSrc: '/assets/images/projects/prices.webp',
             imageAlt: 'Screenshot of prices.fluin.io',
             description:
                 'PokePrice is a Pokemon TCG price tracker that compares set-level and card-level market prices across multiple releases.',
@@ -53,7 +54,7 @@ export class ProjectsComponent {
         },
         {
             name: 'stoic.fluin.io',
-            imageSrc: '/assets/images/projects/stoic.png',
+            imageSrc: '/assets/images/projects/stoic.webp',
             imageAlt: 'Screenshot of stoic.fluin.io',
             description:
                 'A daily Stoic meditation app with focused reading and reflection prompts aimed at consistency and practical philosophy.',
@@ -62,7 +63,7 @@ export class ProjectsComponent {
         },
         {
             name: 'baby.fluin.io',
-            imageSrc: '/assets/images/projects/baby.png',
+            imageSrc: '/assets/images/projects/baby.webp',
             imageAlt: 'Screenshot of baby.fluin.io',
             description:
                 'A baby logging app for parents to quickly track sleep, feeding, and everyday care events in one simple timeline.',
@@ -71,7 +72,7 @@ export class ProjectsComponent {
         },
         {
             name: 'match.fluin.io',
-            imageSrc: '/assets/images/projects/match.png',
+            imageSrc: '/assets/images/projects/match.webp',
             imageAlt: 'Screenshot of match.fluin.io',
             description:
                 'A memory-match game using emoji cards, designed as a quick challenge that tests recall and pattern recognition.',

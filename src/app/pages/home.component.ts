@@ -1,9 +1,10 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { PostListComponent } from '../embeddable/post-list.component';
 
 @Component({
     templateUrl: './home.component.html',
+    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [PostListComponent],
 })
 export class HomeComponent implements OnInit, OnDestroy {
