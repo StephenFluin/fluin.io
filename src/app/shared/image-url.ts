@@ -104,6 +104,8 @@ export const ALLOWED_IMAGE_SIZES: ReadonlySet<string> = new Set([
     '1200x675',
     // social share (og:image / twitter:image)
     '1200x630',
+    // admin post list thumbnails
+    '96x96',
 ]);
 
 export const ALLOWED_IMAGE_QUALITIES: ReadonlySet<number> = new Set(Object.values(IMAGE_QUALITY));

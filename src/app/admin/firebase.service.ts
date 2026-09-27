@@ -13,10 +13,13 @@ export class FirebaseService {
     storage = getStorage(this.fbApp);
     auth = getAuth(this.fbApp);
     authState = signal<User | null>(null);
+    /** False until Firebase has restored (or ruled out) a signed-in session */
+    authReady = signal(false);
 
     constructor() {
         this.auth.onAuthStateChanged((user) => {
             this.authState.set(user);
+            this.authReady.set(true);
         });
     }
 
