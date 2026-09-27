@@ -24,7 +24,6 @@ export const AdminRoutes: Route[] = [
             {
                 provide: FIREBASE_APP,
                 useFactory: () => {
-                    console.log('firebase app initializing...');
                     return initializeApp({
                         apiKey: 'AIzaSyAJawulOMYRp0eXjMHLqiffzuS9tToCfAI',
                         authDomain: 'fluindotio-website-93127.firebaseapp.com',
@@ -38,11 +37,10 @@ export const AdminRoutes: Route[] = [
             EditablePostService,
         ],
         children: [
-            { path: '', component: AdminComponent, data: { title: 'Admin' } },
+            { path: '', component: AdminComponent, title: 'Admin' },
             {
                 path: ':id',
                 component: EditPostComponent,
-                data: { title: false },
                 canDeactivate: [
                     (editor: EditPostComponent) => !editor.dirty() || confirm('You have unsaved changes. Leave anyway?'),
                 ],

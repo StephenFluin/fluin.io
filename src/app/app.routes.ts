@@ -4,11 +4,10 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./pages/home.component').then((m) => m.HomeComponent),
-        data: { title: 'fluin.io - Stephen Fluin. CPO, Product, DevRel, Speaker, and more', page: 'home' },
+        title: 'fluin.io - Stephen Fluin. CPO, Product, DevRel, Speaker, and more',
     },
     {
         path: 'blog',
-        data: { title: false, page: 'blog' },
         loadComponent: () => import('./pages/blog.component').then((m) => m.BlogComponent),
         children: [
             { path: '', loadComponent: () => import('./no-blog.component').then((m) => m.NoBlogComponent) },
@@ -18,12 +17,12 @@ export const routes: Routes = [
     {
         path: 'bio',
         loadComponent: () => import('./pages/bio.component').then((m) => m.BioComponent),
-        data: { title: 'About Stephen Fluin' },
+        title: 'About Stephen Fluin',
     },
     {
         path: 'projects',
         loadComponent: () => import('./pages/projects.component').then((m) => m.ProjectsComponent),
-        data: { title: 'Projects' },
+        title: 'Projects',
     },
     { path: 'admin', loadChildren: () => import('./admin/admin.routes').then((m) => m.AdminRoutes) },
     {

@@ -54,7 +54,7 @@
 
         <section id="featured-blogs" aria-labelledby="featured-posts-heading">
             <h2 id="featured-posts-heading" class="sidebar-heading">Featured posts</h2>
-            @for (post of posts(); track post) {
+            @for (post of posts(); track post.key) {
             <a [routerLink]="['/blog', post.id]" class="featured-blog card">
                 <img
                     class="featured-blog-image"

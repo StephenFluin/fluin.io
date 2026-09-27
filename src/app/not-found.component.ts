@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, RESPONSE_INIT, inject } from '@angular/core';
+import { Component, RESPONSE_INIT, inject } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 
 /**
@@ -6,7 +6,6 @@ import { Meta } from '@angular/platform-browser';
  */
 @Component({
     selector: 'not-found',
-    changeDetection: ChangeDetectionStrategy.Eager,
     template: '<div style="margin:128px 16px;text-align:center;">Path not found.</div>',
 })
 export class NotFoundComponent {

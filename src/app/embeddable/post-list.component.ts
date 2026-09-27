@@ -1,4 +1,4 @@
-import { Component, Input, Signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { Post, PostService } from '../shared/post.service';
@@ -8,8 +8,8 @@ import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '
     selector: 'post-list',
     template: `
         <div id="posts-block">
-          @for (post of posts(); track post) {
-            <a class="card featured-blog-post" [routerLink]="['blog', post.id]">
+          @for (post of posts(); track post.key) {
+            <a class="card featured-blog-post" [routerLink]="['/blog', post.id]">
               <img
                 class="post-image"
                 [src]="postCardImage(post)"
@@ -33,33 +33,30 @@ import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '
           }
         </div>
         `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink],
 })
 export class PostListComponent {
-    @Input() limit = 12;
-  readonly postCardSizes = '(max-width: 600px) min(100vw - 32px, 300px), 300px';
-    posts: Signal<Post[]>;
+    /** How many of the most recent posts to show */
+    readonly limit = input(12);
+    readonly postCardSizes = '(max-width: 600px) min(100vw - 32px, 300px), 300px';
+    private readonly postService = inject(PostService);
+    readonly posts = computed(() => this.postService.postList().slice(0, this.limit()));
 
-    constructor(posts: PostService) {
-        this.posts = computed(() => posts.postList().slice(0, this.limit));
+    postCardImage(post: Post) {
+        return buildOptimizedImageUrl(post.image, {
+            width: 600,
+            height: 360,
+            fit: 'cover',
+            quality: IMAGE_QUALITY.card,
+        });
     }
 
-  postCardImage(post: Post) {
-    return buildOptimizedImageUrl(post.image, {
-      width: 600,
-      height: 360,
-      fit: 'cover',
-      quality: IMAGE_QUALITY.card,
-    });
-  }
-
-  postCardImageSet(post: Post) {
-    return buildResponsiveImageSet(post.image, [300, 600], {
-      width: 300,
-      height: 180,
-      fit: 'cover',
-      quality: IMAGE_QUALITY.card,
-    });
-  }
+    postCardImageSet(post: Post) {
+        return buildResponsiveImageSet(post.image, [300, 600], {
+            width: 300,
+            height: 180,
+            fit: 'cover',
+            quality: IMAGE_QUALITY.card,
+        });
+    }
 }

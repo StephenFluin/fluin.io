@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { AuthService } from './shared/auth.service';
 import { Post, PostService } from '../shared/post.service';
 import { buildOptimizedImageUrl, IMAGE_QUALITY } from '../shared/image-url';
@@ -29,7 +29,7 @@ import { FirebaseService } from './firebase.service';
                     (input)="query.set(search.value)"
                 />
                 <span class="muted" aria-live="polite">
-                    @if (query()) { {{ filteredPosts().length }} of } {{ sortedPosts().length }} posts
+                    {{ query() ? filteredPosts().length + ' of ' : '' }}{{ sortedPosts().length }} posts
                 </span>
             </div>
 
@@ -157,7 +157,6 @@ import { FirebaseService } from './firebase.service';
             }
         }
     `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterLink],
 })
 export class AdminComponent {

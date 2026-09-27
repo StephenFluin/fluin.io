@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from '@angular/core';
+import { Component, ViewEncapsulation, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './shared/auth.service';
 
@@ -30,7 +30,6 @@ import { AuthService } from './shared/auth.service';
     `,
     styleUrl: './admin-shared.css',
     encapsulation: ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [RouterOutlet],
 })
 export class AdminShellComponent {

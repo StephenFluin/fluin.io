@@ -1,21 +1,17 @@
-import { Component, Signal, computed, ChangeDetectionStrategy } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { Post, PostService } from '../shared/post.service';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '../shared/image-url';
 
 @Component({
     templateUrl: './blog.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [RouterOutlet, RouterLink],
 })
 export class BlogComponent {
-    posts: Signal<Post[]>;
-    postDefaultImage: 'zzzz.png';
+    private readonly postService = inject(PostService);
+    /** The five most recent posts, for the sidebar */
+    readonly posts = computed(() => this.postService.postList().slice(0, 5));
     readonly featuredImageSizes = '240px';
-
-    constructor(posts: PostService) {
-        this.posts = computed(() => posts.postList().slice(0, 5));
-    }
 
     featuredPostImage(post: Post) {
         return buildOptimizedImageUrl(post.image, {

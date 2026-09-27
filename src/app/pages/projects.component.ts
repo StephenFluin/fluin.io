@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 
 interface Project {
     name: string;
@@ -11,8 +11,6 @@ interface Project {
 
 @Component({
     templateUrl: './projects.component.html',
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: true,
 })
 export class ProjectsComponent {
     readonly projects: Project[] = [

@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     Component,
     ElementRef,
     computed,
@@ -28,7 +27,6 @@ import { UploadComponent } from './upload.component';
 @Component({
     templateUrl: './edit-post.component.html',
     styleUrl: './edit-post.component.css',
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [FormsModule, RouterLink, UploadComponent],
     host: {
         '(window:beforeunload)': 'onBeforeUnload($event)',

@@ -8,7 +8,7 @@ const ADMIN_HINT_KEY = 'fluin-admin';
  * The admin module records whether the signed-in user is the admin in localStorage, and public pages
  * read that hint. It only decides what to show: the database and storage rules decide what can change.
  */
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AdminService {
     private readonly admin = signal(false);
     readonly isAdmin = this.admin.asReadonly();

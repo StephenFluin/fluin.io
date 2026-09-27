@@ -1,4 +1,4 @@
-import { Component, ElementRef, computed, effect, input, output, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, computed, effect, inject, input, output, signal, viewChild } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { remove as deleteDB } from 'firebase/database';
 import { deleteObject as deleteStorage } from 'firebase/storage';
@@ -9,11 +9,12 @@ export interface Image {
     path: string;
     /** Just the name of the file */
     filename: string;
-    /** A promise with a download or <img> url */
-    downloadURL?: Promise<string>;
     /** The key where it's stored in the DB */
     key?: string;
 }
+
+/** An uploaded image, with a promise for its download (or <img>) URL */
+type GalleryImage = Image & { downloadURL: Promise<string> };
 
 @Component({
     selector: 'image-upload',
@@ -83,7 +84,6 @@ export interface Image {
             gap: 6px;
         }
     `,
-    changeDetection: ChangeDetectionStrategy.Eager,
     imports: [AsyncPipe],
 })
 export class UploadComponent {
@@ -105,10 +105,12 @@ export class UploadComponent {
     fileList = signal<Image[]>([]);
     // List of files with downloadURLs, generated as promises
     imageList = computed(() =>
-        this.fileList().map((item) => ({ ...item, downloadURL: this.firebaseService.getUrl(item.path) }))
+        this.fileList().map((item): GalleryImage => ({ ...item, downloadURL: this.firebaseService.getUrl(item.path) }))
     );
 
-    constructor(public firebaseService: FirebaseService) {
+    private readonly firebaseService = inject(FirebaseService);
+
+    constructor() {
         // Re-listen whenever the folder changes, and stop listening to the old one
         effect((onCleanup) => {
             onCleanup(this.firebaseService.watchList<Image>(`/${this.folder()}/images`, (list) => this.fileList.set(list)));
@@ -148,12 +150,12 @@ export class UploadComponent {
         }
     }
 
-    async insertImage(image: Image) {
+    async insertImage(image: GalleryImage) {
         const alt = image.filename.replace(/\.[^.]+$/, '');
         this.insert.emit(`![${alt}](${await image.downloadURL})`);
     }
 
-    async useImageAsCover(image: Image) {
+    async useImageAsCover(image: GalleryImage) {
         this.useAsCover.emit(await image.downloadURL);
     }
 

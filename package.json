@@ -36,7 +36,9 @@
     "@angular/build": "^22.2.0",
     "@angular/cli": "^22.2.0",
     "@angular/compiler-cli": "^22.2.0",
+    "@types/compression": "^1.8.1",
     "@types/express": "^5.0.1",
+    "@types/markdown-it": "^14.2.0",
     "@types/node": "^26.6.3",
     "baseline-browser-mapping": "^2.10.20",
     "typescript": "~6.0.3"

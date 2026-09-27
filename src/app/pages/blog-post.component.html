@@ -1,21 +1,21 @@
-@if (post()) {
+@if (post(); as post) {
 <article class="container post" style="flex-grow: 1">
-    <h1>{{ post().title }}</h1>
+    <h1>{{ post.title }}</h1>
     <div class="post-details">
         <span class="post-author">by Stephen Fluin</span>
-        <span class="post-date date">{{ post().date }}</span>
+        <span class="post-date date">{{ post.date }}</span>
     </div>
     @if (adminService.isAdmin()) {
     <div>
-        <a [routerLink]="['/admin/', post().id]">Edit This Post</a>
+        <a [routerLink]="['/admin', post.id]">Edit This Post</a>
     </div>
     }
     <div class="highlight-image">
         <img
-            [src]="postImageUrl(post())"
-            [attr.srcset]="postImageSet(post())"
-            sizes="(max-width: 900px) calc(100vw - 64px), 800px"
-            [alt]="post().title"
+            [src]="postImageUrl(post)"
+            [attr.srcset]="postImageSet(post)"
+            [sizes]="heroImageSizes"
+            [alt]="post.title"
             width="1200"
             height="675"
             loading="eager"
@@ -23,7 +23,7 @@
             fetchpriority="high"
         />
     </div>
-    <div [innerHTML]="post().renderedBody" class="post-content"></div>
+    <div [innerHTML]="post.renderedBody" class="post-content"></div>
 </article>
 } @else if (postFailed()) {
 <not-found />
