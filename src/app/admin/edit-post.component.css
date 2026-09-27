@@ -1,0 +1,198 @@
+.editor {
+    max-width: 1600px;
+    padding-top: 0;
+}
+
+/* Toolbar stays visible while scrolling so Save and the save state are always in reach */
+.toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 12px 16px;
+    margin: 0 -32px;
+    padding: 12px 32px;
+    background: white;
+    border-bottom: 1px solid #eee;
+}
+
+.toolbar h1 {
+    flex-grow: 1;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 22px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.back {
+    flex-shrink: 0;
+}
+
+.save-state {
+    flex-shrink: 0;
+    color: var(--muted-text-color);
+    font-size: 14px;
+}
+
+.save-state.error {
+    color: #b42318;
+    font-weight: bold;
+    white-space: normal;
+}
+
+.fields {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 16px 24px;
+    margin: 24px 0;
+}
+
+.title-field {
+    grid-column: 1 / -1;
+}
+
+.field label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.field input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.title-field input {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.hint {
+    display: block;
+    margin-top: 4px;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* Side-by-side panes of a fixed height, each scrolling on its own */
+.panes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    height: calc(100vh - 90px);
+    min-height: 420px;
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.pane-label {
+    margin-bottom: 6px;
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+textarea {
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    resize: none;
+}
+
+.preview-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 0 24px;
+    border: 1px solid #eee;
+    border-radius: 6px;
+}
+
+/* Match the live blog post's cover image */
+.cover {
+    display: block;
+    width: 100%;
+    max-height: 400px;
+    margin: 24px 0;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.preview-scroll h1 {
+    margin-top: 24px;
+    color: var(--link-color);
+    overflow-wrap: anywhere;
+}
+
+.post-details {
+    margin: 8px 0 16px;
+}
+
+.pane-tabs {
+    display: none;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.section {
+    margin-top: 40px;
+}
+
+@media (max-width: 900px) {
+    .fields {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cover-field {
+        grid-column: 1 / -1;
+    }
+
+    /* One pane at a time, switched with the Write / Preview buttons */
+    .pane-tabs {
+        display: flex;
+    }
+
+    .panes {
+        grid-template-columns: 1fr;
+        height: 75vh;
+    }
+
+    .panes[data-mobile-pane='write'] .preview-pane,
+    .panes[data-mobile-pane='preview'] .write-pane {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .toolbar {
+        flex-wrap: wrap;
+        margin: 0 -16px;
+        padding: 12px 16px;
+    }
+
+    .toolbar h1 {
+        order: -1;
+        flex-basis: 100%;
+    }
+
+    .fields {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,88 +1,108 @@
-<style>
-    .form-field {
-        display: block;
-        margin-bottom: 32px;
-    }
-
-    .form-field label {
-        display: block;
-        margin-bottom: 8px;
-        font-weight: 500;
-    }
-
-    .form-field input {
-        display: block;
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-    }
-</style>
 @if (postData(); as post) {
-<div class="padded" style="flex-grow: 1" (keydown)="onKey($event, post)">
-    <div class="columns" style="display: flex">
-        <form style="width: 50%; padding: 16px" ngNoForm>
-            <div class="form-field">
-                <label>Title</label>
-                <input [(ngModel)]="post.title" />
-            </div>
-            <div class="form-field">
-                <label>Image URL</label>
-                <input [(ngModel)]="post.image" />
-            </div>
-            <div class="form-field">
-                <label>Post ID / slug</label>
-                <input [(ngModel)]="post.id" />
-            </div>
-            <div class="form-field">
-                <label>Date</label>
-                <input type="date" [(ngModel)]="post.date" />
-            </div>
-            <textarea
-                placeholder="body"
-                (ngModelChange)="contentChange(post)"
-                [(ngModel)]="post.body"
-                [style.height.px]="(post && post.body && post.body.length > 200 && post.body.length / 2) || 400"
-                style="width: 100%; padding: 8px"
-            ></textarea>
-            <button type="button" (click)="save(post, true)">Save</button>
-            <span role="status">{{ status() }}</span>
-        </form>
-        <div style="width: 50%; padding: 16px" class="post">
-            <div class="highlight-image">
-                @if (!post.image) {
-                <img src="/assets/images/imgpostholder.png" [alt]="post.title" />
-                } @if (post.image) {
-                <img [src]="post.image" [alt]="post.title" />
-                }
-            </div>
-            <h1>
-                <a [routerLink]="['/blog', post.id]" target="preview">{{ post.title }}</a>
-            </h1>
-            <div>
-                <h3>by Stephen Fluin</h3>
-            </div>
-            <div class="date">
-                <h3>{{ post.date }}</h3>
-            </div>
-            <div [innerHTML]="postPreview()"></div>
+<div class="admin-page editor" (keydown)="onKey($event, post)">
+    <header class="toolbar">
+        <a routerLink="/admin" class="back">← Posts</a>
+        <h1>{{ post.title || (savedId() === 'new' ? 'New post' : 'Untitled post') }}</h1>
+        <span class="save-state" role="status" [class.error]="saveError()">
+            @if (saving()) { Saving... } @else if (saveError()) { {{ saveError() }} } @else if (dirty()) { Unsaved
+            changes } @else if (lastSaved()) { Saved at {{ lastSaved() }} }
+        </span>
+        @if (savedId() !== 'new') {
+        <a class="button" [href]="'/blog/' + savedId()" target="_blank" rel="noopener">View post ↗</a>
+        }
+        <button type="button" class="button primary" (click)="save(post, false)" [disabled]="saving()" title="Ctrl+S">
+            Save
+        </button>
+    </header>
+
+    <div class="fields">
+        <div class="field title-field">
+            <label for="post-title">Title</label>
+            <input id="post-title" [(ngModel)]="post.title" (ngModelChange)="edited(post)" />
+        </div>
+        <div class="field">
+            <label for="post-slug">Slug</label>
+            <input id="post-slug" [(ngModel)]="post.id" (ngModelChange)="edited(post)" spellcheck="false" />
+            <span class="hint muted">fluin.io/blog/{{ post.id || '…' }}</span>
+        </div>
+        <div class="field">
+            <label for="post-date">Date</label>
+            <input id="post-date" type="date" [(ngModel)]="post.date" (ngModelChange)="edited(post)" />
+            <span class="hint muted">Future dates stay unpublished</span>
+        </div>
+        <div class="field cover-field">
+            <label for="post-image">Cover image URL</label>
+            <input id="post-image" [(ngModel)]="post.image" (ngModelChange)="edited(post)" spellcheck="false" />
         </div>
     </div>
-    @if (savedId() === 'new') {
-    <p>Save the post to upload images.</p>
-    } @else {
-    <image-upload [folder]="'posts/' + savedId()"></image-upload>
-    <div>
-        <h2>Delete Post</h2>
-        <button type="button" (click)="delete()">Delete This Post</button>
+
+    <div class="pane-tabs" role="group" aria-label="Show">
+        <button type="button" class="button small" [class.primary]="mobilePane() === 'write'" (click)="mobilePane.set('write')">
+            Write
+        </button>
+        <button
+            type="button"
+            class="button small"
+            [class.primary]="mobilePane() === 'preview'"
+            (click)="mobilePane.set('preview')"
+        >
+            Preview
+        </button>
     </div>
+
+    <div class="panes" [attr.data-mobile-pane]="mobilePane()">
+        <section class="pane write-pane">
+            <label for="post-body" class="pane-label muted">Markdown</label>
+            <textarea
+                #bodyInput
+                id="post-body"
+                [(ngModel)]="post.body"
+                (ngModelChange)="edited(post)"
+                (scroll)="syncPreviewScroll()"
+                placeholder="Write your post in Markdown..."
+            ></textarea>
+        </section>
+
+        <section class="pane preview-pane" aria-label="Preview">
+            <span class="pane-label muted">Preview</span>
+            <div class="preview-scroll" #previewPane>
+                <article class="post">
+                    @if (post.image) {
+                    <img class="cover" [src]="post.image" [alt]="post.title" />
+                    }
+                    <h1>{{ post.title || 'Untitled post' }}</h1>
+                    <div class="post-details muted">by Stephen Fluin · {{ post.date || 'No date' }}</div>
+                    <div class="post-content" [innerHTML]="postPreview()"></div>
+                </article>
+            </div>
+        </section>
+    </div>
+
+    <section class="section">
+        <h2>Images</h2>
+        @if (savedId() === 'new') {
+        <p class="muted">Save the post to upload images.</p>
+        } @else {
+        <image-upload
+            [folder]="'posts/' + savedId()"
+            (insert)="insertIntoBody($event)"
+            (useAsCover)="setCover(post, $event)"
+        ></image-upload>
+        }
+    </section>
+
+    @if (savedId() !== 'new') {
+    <section class="section">
+        <h2>Delete post</h2>
+        <p class="muted">Permanently removes this post from the site.</p>
+        <button type="button" class="button danger" (click)="delete()">Delete this post</button>
+    </section>
     }
 </div>
 } @else if (postResource.isLoading()) {
-<p class="padded">Loading post...</p>
+<p class="admin-page muted">Loading post...</p>
 } @else if (postResource.error()) {
-<p class="padded">Couldn't load this post: {{ postResource.error()?.message }}</p>
+<p class="admin-page">Couldn't load this post: {{ postResource.error()?.message }}</p>
 } @else {
-<p class="padded">No post found at "{{ savedId() }}". <a routerLink="/admin">Back to admin</a></p>
+<p class="admin-page">No post found at "{{ savedId() }}". <a routerLink="/admin">Back to posts</a></p>
 }

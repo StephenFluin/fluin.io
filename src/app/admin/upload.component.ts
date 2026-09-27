@@ -1,4 +1,4 @@
-import { Component, computed, effect, input, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, computed, effect, input, output, signal, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { remove as deleteDB } from 'firebase/database';
 import { deleteObject as deleteStorage } from 'firebase/storage';
@@ -18,32 +18,73 @@ export interface Image {
 @Component({
     selector: 'image-upload',
     template: `
-        <h2>Upload a File</h2>
-        <form ngNoForm>
-          <input id="file" name="file" type="file" />
-          <button (click)="upload()" type="button">Upload</button>
-        </form>
-        
-        <h2>File Gallery</h2>
-        <div style="overflow:hidden;">
-          @for (img of imageList(); track img.key) {
-            <div
-              style="position:relative;width:100px;height:100px;float:left;display:flex;justify-content:center;align-items:center;"
-              >
-              @if (img && img.downloadURL && img.downloadURL) {
-                <img
-                  [src]="img.downloadURL | async"
-                  alt="uploaded image"
-                  style="max-width:100px;max-height:100px;"
-                  />
-              }
-              <button (click)="delete(img)" style="position:absolute;top:2px;right:2px;">[x]</button>
-            </div>
-          }
+        <div class="upload">
+            <label for="image-file" class="visually-hidden">Choose images to upload</label>
+            <input #fileInput id="image-file" type="file" accept="image/*" multiple />
+            <button type="button" class="button" (click)="upload()" [disabled]="uploading()">Upload</button>
+            <span class="muted" role="status">{{ uploadStatus() }}</span>
         </div>
-        `,
+
+        @if (imageList().length) {
+            <ul class="gallery">
+                @for (img of imageList(); track img.key) {
+                    <li>
+                        <img [src]="img.downloadURL | async" [alt]="img.filename" loading="lazy" />
+                        <span class="filename muted" [title]="img.filename">{{ img.filename }}</span>
+                        <span class="actions">
+                            <button type="button" class="button small" (click)="insertImage(img)">Insert</button>
+                            <button type="button" class="button small" (click)="useImageAsCover(img)">
+                                Use as cover
+                            </button>
+                            <button type="button" class="button small danger" (click)="delete(img)">Delete</button>
+                        </span>
+                    </li>
+                }
+            </ul>
+        } @else {
+            <p class="muted">No images uploaded for this post yet.</p>
+        }
+    `,
+    styles: `
+        .upload {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 16px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+        .gallery li {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .gallery img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #eee;
+        }
+        .filename {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+    `,
     changeDetection: ChangeDetectionStrategy.Eager,
-    imports: [AsyncPipe]
+    imports: [AsyncPipe],
 })
 export class UploadComponent {
     /**
@@ -51,6 +92,14 @@ export class UploadComponent {
      * eg. posts/angular-is-awesome
      */
     folder = input.required<string>();
+    /** Markdown for an image, to insert into the post body */
+    insert = output<string>();
+    /** The URL of an image to use as the post's cover image */
+    useAsCover = output<string>();
+
+    fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
+    uploading = signal(false);
+    uploadStatus = signal('');
 
     // List of files from realtime DB
     fileList = signal<Image[]>([]);
@@ -67,40 +116,51 @@ export class UploadComponent {
     }
 
     /**
-     * User has picked a file. We'll store it in
-     *  FB storage as /posts/post-id/filename.jpg
-     * then remember we have it in
-     * DB storage as /posts/post-id/images/<key>/{path: /posts/post-id/, filename: filename.jpg}
+     * Store each picked file in FB storage as /posts/post-id/filename.jpg,
+     * then remember we have it in the DB as /posts/post-id/images/<key>/{path, filename}
      */
-    upload() {
-        const success = false;
-
-        if ((<HTMLInputElement>document.getElementById('file')).files.length <= 0) {
-            console.log('No files found to upload.');
+    async upload() {
+        const input = this.fileInput().nativeElement;
+        const files = [...(input.files ?? [])];
+        if (!files.length) {
+            this.uploadStatus.set('Choose one or more images first.');
             return;
         }
 
-        // This currently only grabs item 0, TODO refactor it to grab them all
-        for (const selectedFile of [(<HTMLInputElement>document.getElementById('file')).files[0]]) {
-            console.log(selectedFile);
-            // Make local copies of services because "this" will be clobbered
-            const folder = this.folder();
-            const path = `/${folder}/${selectedFile.name}`;
-            const uploadRef = this.firebaseService.getStorageRef(path);
-
-            // cache files for up to a week
-            this.firebaseService
-                .upload(uploadRef, selectedFile, { cacheControl: 'max-age=604800' })
-                .then((snapshot) => {
-                    console.log('Uploaded a blob or file! Now storing the reference at', `/${folder}/images/`);
-                    this.firebaseService.push(`/${folder}/images/`, { path: path, filename: selectedFile.name });
+        const folder = this.folder();
+        this.uploading.set(true);
+        this.uploadStatus.set(`Uploading ${files.length} image${files.length > 1 ? 's' : ''}...`);
+        try {
+            for (const file of files) {
+                const path = `/${folder}/${file.name}`;
+                // cache files for up to a week
+                await this.firebaseService.upload(this.firebaseService.getStorageRef(path), file, {
+                    cacheControl: 'max-age=604800',
                 });
+                await this.firebaseService.push(`/${folder}/images/`, { path, filename: file.name });
+            }
+            this.uploadStatus.set('Uploaded.');
+            input.value = '';
+        } catch (error) {
+            this.uploadStatus.set(`Upload failed: ${error instanceof Error ? error.message : error}`);
+        } finally {
+            this.uploading.set(false);
         }
+    }
 
-        // @TODO should we be saving the download URL before we save it to DB?
+    async insertImage(image: Image) {
+        const alt = image.filename.replace(/\.[^.]+$/, '');
+        this.insert.emit(`![${alt}](${await image.downloadURL})`);
+    }
+
+    async useImageAsCover(image: Image) {
+        this.useAsCover.emit(await image.downloadURL);
     }
 
     delete(image: Image) {
+        if (!confirm(`Delete ${image.filename}? Posts that use it will show a broken image.`)) {
+            return;
+        }
         const storagePath = image.path;
         const dbPath = `${this.folder()}/images/` + image.key;
 

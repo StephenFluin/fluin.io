@@ -1,0 +1,67 @@
+/* Styles shared by the admin pages. Unencapsulated (see AdminShellComponent), so keep them under app-admin. */
+
+app-admin {
+    display: block;
+    /* Cancel #page's 75px top margin, like the home, blog, and bio pages do */
+    margin-top: -75px;
+}
+
+app-admin .admin-page {
+    margin: 0 auto;
+    padding: 32px 32px 48px;
+}
+
+app-admin .muted {
+    color: var(--muted-text-color);
+    font-weight: normal;
+    font-size: 14px;
+}
+
+app-admin .button {
+    display: inline-block;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: white;
+    color: var(--text-color);
+    font: inherit;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 1;
+}
+
+app-admin .button:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
+app-admin .button.primary {
+    background: var(--link-color);
+    border-color: var(--link-color);
+    color: white;
+}
+
+app-admin .button.danger {
+    border-color: #b42318;
+    color: #b42318;
+}
+
+app-admin .button.small {
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+app-admin .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    app-admin .admin-page {
+        padding: 16px;
+    }
+}

@@ -1,6 +1,7 @@
 import { Route } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
+import { AdminShellComponent } from './admin-shell.component';
 import { EditPostComponent } from './edit-post.component';
 
 import { FirebaseApp, initializeApp } from 'firebase/app';
@@ -17,6 +18,7 @@ export const AdminRoutes: Route[] = [
     {
         path: '',
         pathMatch: 'prefix',
+        component: AdminShellComponent,
         providers: [
             { provide: BUCKET, useValue: 'fluindotio-website-93127.appspot.com' },
             {
@@ -37,7 +39,14 @@ export const AdminRoutes: Route[] = [
         ],
         children: [
             { path: '', component: AdminComponent, data: { title: 'Admin' } },
-            { path: ':id', component: EditPostComponent, data: { title: false } },
+            {
+                path: ':id',
+                component: EditPostComponent,
+                data: { title: false },
+                canDeactivate: [
+                    (editor: EditPostComponent) => !editor.dirty() || confirm('You have unsaved changes. Leave anyway?'),
+                ],
+            },
         ],
     },
 ];

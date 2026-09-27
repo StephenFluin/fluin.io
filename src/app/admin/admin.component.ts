@@ -8,7 +8,7 @@ import { FirebaseService } from './firebase.service';
 
 @Component({
     template: `
-        <div class="admin">
+        <div class="admin-page admin">
             @if (!firebaseService.authReady()) {
                 <p class="muted">Checking sign-in...</p>
             } @else if (auth.isAdmin()) {
@@ -77,15 +77,7 @@ import { FirebaseService } from './firebase.service';
     `,
     styles: `
         .admin {
-            /* Cancel #page's 75px top margin, like the home, blog, and bio pages do */
-            margin: -75px auto 0;
-            padding: 32px 32px 48px;
             max-width: 1100px;
-        }
-        .muted {
-            color: var(--muted-text-color);
-            font-weight: normal;
-            font-size: 14px;
         }
         .toolbar {
             display: flex;
@@ -95,23 +87,6 @@ import { FirebaseService } from './firebase.service';
         }
         .toolbar h1 {
             font-size: 32px;
-        }
-        .button {
-            display: inline-block;
-            padding: 8px 16px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            background: white;
-            color: var(--text-color);
-            font: inherit;
-            font-weight: bold;
-            cursor: pointer;
-            opacity: 1;
-        }
-        .button.primary {
-            background: var(--link-color);
-            border-color: var(--link-color);
-            color: white;
         }
         .search {
             display: flex;
@@ -189,18 +164,7 @@ import { FirebaseService } from './firebase.service';
             flex-shrink: 0;
             font-variant-numeric: tabular-nums;
         }
-        .visually-hidden {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            overflow: hidden;
-            clip-path: inset(50%);
-            white-space: nowrap;
-        }
         @media (max-width: 600px) {
-            .admin {
-                padding: 16px;
-            }
             .row-date {
                 display: none;
             }
