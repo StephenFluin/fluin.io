@@ -1,5 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { computed, effect, Injectable, signal, Signal, WritableSignal } from '@angular/core';
+import { isPublished } from './post-dates';
 
 export interface Post {
     /** The post's key in the realtime db. Added client-side, never stored. */
@@ -54,10 +55,6 @@ export class PostService {
     }
 
     isFuture(post: Post) {
-        if (new Date(post.date + 'T00:00').getTime() > Date.now() || !post.date) {
-            return true;
-        } else {
-            return false;
-        }
+        return !isPublished(post);
     }
 }

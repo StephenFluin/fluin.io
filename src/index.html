@@ -44,21 +44,32 @@
         }
         </script>
         <link rel="icon" sizes="192x192" href="/assets/icons/icon-192x192.png" />
-        <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QMN47NKMMS"></script>
+        <!-- Google Analytics: gtag() calls queue in dataLayer right away, but the library itself (~180 kB) only
+             loads 3 seconds after the page has loaded, once the browser is idle, so it can't compete with
+             rendering, hydration, or the largest contentful paint (which can land after the load event).
+             Router navigations are tracked by GA4 itself, using the stream's "Page changes based on browser
+             history events" enhanced measurement setting. -->
         <script>
             window.dataLayer = window.dataLayer || [];
             function gtag() {
                 dataLayer.push(arguments);
             }
             gtag('js', new Date());
+            gtag('config', 'G-QMN47NKMMS');
+            addEventListener('load', function () {
+                setTimeout(function () {
+                    (window.requestIdleCallback || setTimeout)(function () {
+                        var script = document.createElement('script');
+                        script.async = true;
+                        script.src = 'https://www.googletagmanager.com/gtag/js?id=G-QMN47NKMMS';
+                        document.head.appendChild(script);
+                    });
+                }, 3000);
+            });
         </script>
-        <!-- Google Fonts: preconnect then non-blocking load -->
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" media="print" onload="this.media='all'" />
-        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" /></noscript>
+        <link rel="alternate" type="application/rss+xml" title="fluin.io blog" href="https://fluin.io/feed.xml" />
+        <!-- Google Fonts: the production build inlines this CSS and adds a preconnect to fonts.gstatic.com -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" />
     </head>
 
     <body>

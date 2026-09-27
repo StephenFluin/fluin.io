@@ -13,6 +13,7 @@ import markdownit from 'markdown-it';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getStorage } from 'firebase-admin/storage';
 import { ALLOWED_IMAGE_QUALITIES, ALLOWED_IMAGE_SIZES, isOptimizableImage } from './app/shared/image-url';
+import { isPublished, publishedAt } from './app/shared/post-dates';
 
 // Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
 let cacheBucket: ReturnType<ReturnType<typeof getStorage>['bucket']> | null = null;
@@ -98,7 +99,7 @@ const VALID_POST_ID = /^[A-Za-z0-9_-]+$/;
 
 /**
  * Server-side cache for Firebase posts.json.
- * Reduces redundant fetches from /api/posts, /api/posts/:id, /sitemap.txt.
+ * Reduces redundant fetches from /api/posts, /api/posts/:id, /sitemap.txt, /feed.xml.
  * TTL: 60 seconds, matches HTTP cache max-age.
  */
 interface PostsCache {
@@ -310,23 +311,94 @@ app.get('/api/image', async (req, res) => {
     }
 });
 
+/** Posts whose date has arrived, newest first */
+function publishedPosts(posts: Record<string, StoredPost>) {
+    return Object.values(posts)
+        .filter(isPublished)
+        .sort((a, b) => b.date!.localeCompare(a.date!));
+}
+
 app.get('/sitemap.txt', async (req, res) => {
     try {
         const posts = await getPostsFromFirebase();
         let sitemap = '';
 
-        for (const key of Object.keys(posts)) {
-            sitemap += `https://fluin.io/blog/${posts[key].id}\n`;
+        // Drafts and future-dated posts stay out of search engines until they're published
+        for (const post of publishedPosts(posts)) {
+            sitemap += `https://fluin.io/blog/${post.id}\n`;
         }
         sitemap += `https://fluin.io/blog\n`;
         sitemap += `https://fluin.io\n`;
         sitemap += `https://fluin.io/bio\n`;
+        sitemap += `https://fluin.io/projects\n`;
 
         res.set('Content-Type', 'text/plain');
         res.send(sitemap);
     } catch (err) {
         console.error('Sitemap error', err);
         res.status(500).send('Unable to generate sitemap.');
+    }
+});
+
+const FEED_SIZE = 20;
+
+function escapeXml(text: string) {
+    return text.replace(/[<>&'"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', "'": '&apos;', '"': '&quot;' })[c]!);
+}
+
+/** Wrap HTML for an XML element, splitting any "]]>" that would end the CDATA section early */
+function cdata(html: string) {
+    return `<![CDATA[${html.replaceAll(']]>', ']]]]><![CDATA[>')}]]>`;
+}
+
+/**
+ * The first paragraph of a post as plain text, like the blog page's meta description.
+ * markdown-it escapes & < > and ", so once tags are stripped the text is already XML-safe.
+ */
+function summary(body = '') {
+    const firstParagraph = body.split('\n').find((line) => line.trim() && !line.trim().startsWith('#')) ?? '';
+    return markdown.renderInline(firstParagraph.trim()).replace(/<[^>]+>/g, '');
+}
+
+/** RSS 2.0 feed of the most recent published posts, with full content */
+app.get('/feed.xml', async (req, res) => {
+    try {
+        const posts = publishedPosts(await getPostsFromFirebase()).slice(0, FEED_SIZE);
+        const rfc822 = (date: string) => publishedAt(date).toUTCString();
+
+        const items = posts.map((post) => {
+            const url = `https://fluin.io/blog/${post.id}`;
+            const cover = post.image ? `<p><img src="${escapeXml(post.image)}" alt="" /></p>` : '';
+            return `
+    <item>
+      <title>${escapeXml(post.title ?? post.id)}</title>
+      <link>${url}</link>
+      <guid isPermaLink="true">${url}</guid>
+      <pubDate>${rfc822(post.date!)}</pubDate>
+      <description>${summary(post.body)}</description>
+      <content:encoded>${cdata(cover + markdown.render(post.body ?? ''))}</content:encoded>
+    </item>`;
+        });
+
+        const feed = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>fluin.io blog</title>
+    <link>https://fluin.io/blog</link>
+    <description>Stephen Fluin writing about Angular, product, developer relations, and developer tools.</description>
+    <language>en-us</language>
+    <atom:link href="https://fluin.io/feed.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>${posts.length ? rfc822(posts[0].date!) : new Date().toUTCString()}</lastBuildDate>${items.join('')}
+  </channel>
+</rss>
+`;
+
+        res.setHeader('Content-Type', 'application/rss+xml; charset=utf-8');
+        res.setHeader('Cache-Control', 'public, max-age=600, s-maxage=600');
+        res.send(feed);
+    } catch (err) {
+        console.error('Feed error', err);
+        res.status(500).send('Unable to generate feed.');
     }
 });
 
