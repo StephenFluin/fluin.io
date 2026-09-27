@@ -9,6 +9,9 @@
     "serve:ssr:fluin-io": "node dist/fluin-io/server/server.mjs"
   },
   "private": true,
+  "engines": {
+    "node": "^24.15.0"
+  },
   "dependencies": {
     "@angular/common": "^22.2.0",
     "@angular/compiler": "^22.2.0",
