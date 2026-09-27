@@ -45,7 +45,8 @@ function imageCacheKey(url: string, w: number, h: number | undefined, q: number,
 function imageCachePath(url: string, w: number, h: number | undefined, q: number, fit: string, fmt: string) {
     const hash = createHash('sha1').update(url).digest('hex').slice(0, 16);
     const basename = url.split('/').pop()?.replace(/\?.*/, '') ?? 'img';
-    return `_image-cache/${fmt}/${w}x${h ?? '0'}_q${q}_${fit}/${hash}_${basename}.${fmt}`;
+    // v2: AVIF quality changed, so images cached with the old setting aren't served
+    return `_image-cache/v2/${fmt}/${w}x${h ?? '0'}_q${q}_${fit}/${hash}_${basename}.${fmt}`;
 }
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
@@ -289,7 +290,8 @@ app.get('/api/image', async (req, res) => {
 
         const output =
             format === 'avif'
-                ? await pipeline.avif({ quality }).toBuffer()
+                ? // AVIF's quality scale is steeper than JPEG's: 20 points lower looks the same at about half the size
+                  await pipeline.avif({ quality: quality - 20 }).toBuffer()
                 : format === 'webp'
                   ? await pipeline.webp({ quality }).toBuffer()
                   : await pipeline.jpeg({ quality, mozjpeg: true }).toBuffer();
