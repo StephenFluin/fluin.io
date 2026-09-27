@@ -316,8 +316,27 @@ article.post h1 {
     margin-bottom: 1.75rem;
 }
 
+/* Code blocks, plain or highlighted by Shiki (colors are in src/code-theme.css) */
 .post pre {
     white-space: pre-wrap;
+    margin: 16px 0;
+    padding: 16px;
+    background-color: #f6f8fa;
+    border-radius: 6px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* The global * rule sets Montserrat on every element, including highlighted tokens */
+.post pre,
+.post pre * {
+    font-family: 'Roboto Mono', monospace;
+}
+
+.post pre code {
+    display: block;
+    padding: 0;
+    background: none;
 }
 
 .post code {

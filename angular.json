@@ -51,7 +51,7 @@
                                 "input": "public"
                             }
                         ],
-                        "styles": ["src/styles.scss"],
+                        "styles": ["src/styles.scss", "src/code-theme.css"],
                         "server": "src/main.server.ts",
                         "outputMode": "server",
                         "security": {

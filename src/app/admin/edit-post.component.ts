@@ -17,11 +17,11 @@ import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseService } from './firebase.service';
 
 import { Subject } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import markdownit from 'markdown-it';
+import { createMarkdownRenderer } from '../shared/markdown';
 
 import { UploadComponent } from './upload.component';
 
@@ -61,14 +61,15 @@ export class EditPostComponent {
     postData = computed(() => this.postResource.value());
 
     /**
-     * Data coming from the user. The preview is rendered the same way as the live blog post:
-     * markdown-it, then Angular's HTML sanitizer.
+     * Data coming from the user. The preview is rendered exactly like the live blog post:
+     * the shared markdown renderer (with Shiki code highlighting), then Angular's HTML sanitizer.
      */
     postChanges = new Subject<Post>();
+    private markdown = createMarkdownRenderer();
     postPreview = toSignal(
         this.postChanges.pipe(
             debounceTime(150),
-            map((post) => markdownit().render(post.body || ''))
+            switchMap(async (post) => (await this.markdown).render(post.body || ''))
         )
     );
 

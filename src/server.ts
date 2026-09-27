@@ -9,11 +9,11 @@ import { join } from 'node:path';
 import { createHash } from 'node:crypto';
 import compression from 'compression';
 import sharp from 'sharp';
-import markdownit from 'markdown-it';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getStorage } from 'firebase-admin/storage';
 import { ALLOWED_IMAGE_QUALITIES, ALLOWED_IMAGE_SIZES, isOptimizableImage } from './app/shared/image-url';
 import { isPublished, publishedAt } from './app/shared/post-dates';
+import { createMarkdownRenderer } from './app/shared/markdown';
 
 // Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
 let cacheBucket: ReturnType<ReturnType<typeof getStorage>['bucket']> | null = null;
@@ -53,7 +53,7 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 const app = express();
 app.use(compression());
 const angularApp = new AngularNodeAppEngine();
-const markdown = markdownit();
+const markdown = await createMarkdownRenderer();
 
 /** A post as stored in the realtime db */
 interface StoredPost {

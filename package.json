@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "serve:ssr:fluin-io": "node dist/fluin-io/server/server.mjs"
+    "serve:ssr:fluin-io": "node dist/fluin-io/server/server.mjs",
+    "generate:code-theme": "node scripts/generate-code-theme.mts"
   },
   "private": true,
   "engines": {
@@ -28,6 +29,7 @@
     "markdown-it": "^14.1.0",
     "rxjs": "~7.8.0",
     "sharp": "^0.35.4",
+    "shiki": "^4.4.3",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
