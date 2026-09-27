@@ -5,7 +5,7 @@
         <span class="post-author">by Stephen Fluin</span>
         <span class="post-date date">{{ post().date }}</span>
     </div>
-    @if (adminService.isAdmin) {
+    @if (adminService.isAdmin()) {
     <div>
         <a [routerLink]="['/admin/', post().id]">Edit This Post</a>
     </div>

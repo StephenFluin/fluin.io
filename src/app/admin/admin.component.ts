@@ -9,69 +9,56 @@ import { FirebaseService } from './firebase.service';
 @Component({
     template: `
         <div class="admin-page admin">
-            @if (!firebaseService.authReady()) {
-                <p class="muted">Checking sign-in...</p>
-            } @else if (auth.isAdmin()) {
-                <header class="toolbar">
-                    <h1>Posts</h1>
-                    <a class="button primary" routerLink="new">New post</a>
-                    <span class="spacer"></span>
-                    <span class="muted">Signed in as {{ auth.name() }}</span>
-                    <button type="button" class="button" (click)="auth.logout()">Log out</button>
-                </header>
+            <header class="toolbar">
+                <h1>Posts</h1>
+                <a class="button primary" routerLink="new">New post</a>
+                <span class="spacer"></span>
+                <span class="muted">Signed in as {{ auth.name() }}</span>
+                <button type="button" class="button" (click)="auth.logout()">Log out</button>
+            </header>
 
-                <div class="search">
-                    <label for="post-search" class="visually-hidden">Search posts</label>
-                    <input
-                        #search
-                        id="post-search"
-                        type="search"
-                        placeholder="Search by title, slug, or date"
-                        autocomplete="off"
-                        [value]="query()"
-                        (input)="query.set(search.value)"
-                    />
-                    <span class="muted" aria-live="polite">
-                        @if (query()) { {{ filteredPosts().length }} of } {{ sortedPosts().length }} posts
-                    </span>
-                </div>
+            <div class="search">
+                <label for="post-search" class="visually-hidden">Search posts</label>
+                <input
+                    #search
+                    id="post-search"
+                    type="search"
+                    placeholder="Search by title, slug, or date"
+                    autocomplete="off"
+                    [value]="query()"
+                    (input)="query.set(search.value)"
+                />
+                <span class="muted" aria-live="polite">
+                    @if (query()) { {{ filteredPosts().length }} of } {{ sortedPosts().length }} posts
+                </span>
+            </div>
 
-                @if (list() === null) {
-                    <p class="muted">Loading posts...</p>
-                } @else {
-                    <ul class="post-list">
-                        @for (post of filteredPosts(); track post.key) {
-                            <li>
-                                <a class="post-row" [routerLink]="post.key">
-                                    @if (post.image) {
-                                        <img [src]="thumbnail(post)" alt="" width="48" height="48" loading="lazy" />
-                                    } @else {
-                                        <span class="no-image" aria-hidden="true"></span>
-                                    }
-                                    <span class="row-text">
-                                        <span class="row-title">{{ post.title || '(untitled)' }}</span>
-                                        <span class="muted">/{{ post.key }}</span>
-                                    </span>
-                                    @if (postService.isFuture(post)) {
-                                        <span class="badge">Unpublished</span>
-                                    }
-                                    <span class="row-date muted">{{ post.date || 'No date' }}</span>
-                                </a>
-                            </li>
-                        } @empty {
-                            <li class="muted">No posts match "{{ query() }}".</li>
-                        }
-                    </ul>
-                }
+            @if (list() === null) {
+                <p class="muted">Loading posts...</p>
             } @else {
-                <h1>Admin</h1>
-                @if (auth.uid()) {
-                    <p>Signed in as {{ auth.name() }} ({{ auth.uid() }}), which isn't an administrator account.</p>
-                    <button type="button" class="button" (click)="auth.logout()">Log out</button>
-                } @else {
-                    <p>Sign in to manage posts.</p>
-                    <button type="button" class="button primary" (click)="auth.login()">Sign in with Google</button>
-                }
+                <ul class="post-list">
+                    @for (post of filteredPosts(); track post.key) {
+                        <li>
+                            <a class="post-row" [routerLink]="post.key">
+                                @if (post.image) {
+                                    <img [src]="thumbnail(post)" alt="" width="48" height="48" loading="lazy" />
+                                } @else {
+                                    <span class="no-image" aria-hidden="true"></span>
+                                }
+                                <span class="row-text">
+                                    <span class="row-title">{{ post.title || '(untitled)' }}</span>
+                                    <span class="muted">/{{ post.key }}</span>
+                                </span>
+                                @if (postService.isFuture(post)) {
+                                    <span class="badge">Unpublished</span>
+                                }
+                                <span class="row-date muted">{{ post.date || 'No date' }}</span>
+                            </a>
+                        </li>
+                    } @empty {
+                        <li class="muted">No posts match "{{ query() }}".</li>
+                    }
+                </ul>
             }
         </div>
     `,
