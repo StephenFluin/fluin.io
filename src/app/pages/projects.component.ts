@@ -93,5 +93,14 @@ export class ProjectsComponent {
             url: 'https://devrel.nexus',
             github: 'https://github.com/StephenFluin/devrel.nexus',
         },
+        {
+            name: 'devfest.mn',
+            imageSrc: '/assets/images/projects/devfest.avif',
+            imageAlt: 'Screenshot of devfest.mn',
+            description:
+                'The website for DevFestMN, a one-day Minneapolis developer conference covering AI, software engineering, and Google platforms.',
+            url: 'https://devfest.mn',
+            github: 'https://github.com/StephenFluin/devfest-mn',
+        },
     ];
 }
