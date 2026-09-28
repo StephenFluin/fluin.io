@@ -6,7 +6,7 @@ interface Project {
     imageAlt: string;
     description: string;
     url: string;
-    github: string;
+    github?: string;
 }
 
 @Component({
@@ -48,7 +48,6 @@ export class ProjectsComponent {
             description:
                 'PokePrice is a Pokemon TCG price tracker that compares set-level and card-level market prices across multiple releases.',
             url: 'https://prices.fluin.io',
-            github: 'https://github.com/StephenFluin/pokemon-price-monitor',
         },
         {
             name: 'stoic.fluin.io',
@@ -76,6 +75,23 @@ export class ProjectsComponent {
                 'A memory-match game using emoji cards, designed as a quick challenge that tests recall and pattern recognition.',
             url: 'https://match.fluin.io',
             github: 'https://github.com/StephenFluin/match',
+        },
+        {
+            name: 'money.fluin.io',
+            imageSrc: '/assets/images/projects/money.avif',
+            imageAlt: 'Screenshot of money.fluin.io',
+            description:
+                'A personal spending tracker that imports bank and card statements, learns your categories, and shows where money goes month by month.',
+            url: 'https://money.fluin.io',
+        },
+        {
+            name: 'devrel.nexus',
+            imageSrc: '/assets/images/projects/devrel.avif',
+            imageAlt: 'Screenshot of devrel.nexus',
+            description:
+                'A guide to Developer Relations covering the people, processes, artifacts, and outcomes that make DevRel teams effective.',
+            url: 'https://devrel.nexus',
+            github: 'https://github.com/StephenFluin/devrel.nexus',
         },
     ];
 }
