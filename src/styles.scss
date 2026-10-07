@@ -57,16 +57,18 @@ h2 {
     font-size: 28px;
     margin-bottom: 16px;
     margin-top: 32px;
-    display: flex;
-    align-items: center;
-    width: 100%;
+    // Not flex: that would make each inline child (text, links, code) its own flex item and drop the spaces between them
+    overflow: hidden;
 }
 
+// Rule fills the rest of the heading's last line; the negative margin lets it overflow and get clipped at the edge
 h2:after {
     content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    margin: 0 -100% 0 20px;
     border-top: 1px solid var(--border-color);
-    margin: 0 0 0 20px;
-    flex: 1 0 20px;
 }
 
 h3 {
