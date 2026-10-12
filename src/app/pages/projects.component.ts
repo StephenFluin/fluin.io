@@ -11,11 +11,12 @@ export class ProjectsComponent {
     /** Last push date (ISO string) of each project's repo, keyed by "owner/name" */
     private readonly updates = httpResource<Record<string, string>>(() => '/api/project-updates');
 
+    /** Most recently updated first. Projects without a date keep their listed order at the end. */
     readonly projects = computed(() => {
         const updates = this.updates.hasValue() ? this.updates.value() : {};
         return PROJECTS.map((project) => ({
             ...project,
             updatedAt: project.repo ? updates[project.repo] : undefined,
-        }));
+        })).sort((a, b) => (b.updatedAt ?? '').localeCompare(a.updatedAt ?? ''));
     });
 }
