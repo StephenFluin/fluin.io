@@ -41,7 +41,6 @@
     "@types/markdown-it": "^14.2.0",
     "@types/node": "^26.6.3",
     "baseline-browser-mapping": "^2.10.20",
-    "firebase-tools": "^15.33.0",
     "typescript": "~6.0.3"
   },
   "prettier": {
