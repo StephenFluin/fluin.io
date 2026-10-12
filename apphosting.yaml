@@ -1,3 +1,10 @@
 scripts:
   buildCommand: ng build
   runCommand: npm run serve:ssr:fluin-io
+
+env:
+  # Fine-grained GitHub token (read-only) for /api/project-updates. Set with: firebase apphosting:secrets:set GITHUB_TOKEN
+  - variable: GITHUB_TOKEN
+    secret: GITHUB_TOKEN
+    availability:
+      - RUNTIME

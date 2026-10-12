@@ -549,6 +549,11 @@ router-outlet {
     margin-top: 10px;
 }
 
+.project-updated {
+    color: var(--muted-text-color);
+    font-size: 0.875em;
+}
+
 .project-links {
     margin-top: 16px;
     display: flex;

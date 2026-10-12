@@ -11,17 +11,24 @@ import compression from 'compression';
 import sharp from 'sharp';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getStorage } from 'firebase-admin/storage';
+import { getDatabaseWithUrl, type Reference } from 'firebase-admin/database';
 import { ALLOWED_IMAGE_QUALITIES, ALLOWED_IMAGE_SIZES, isOptimizableImage } from './app/shared/image-url';
 import { isPublished, publishedAt } from './app/shared/post-dates';
 import { createMarkdownRenderer } from './app/shared/markdown';
+import { PROJECTS } from './app/shared/projects';
 
 // Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
 let cacheBucket: ReturnType<ReturnType<typeof getStorage>['bucket']> | null = null;
+let projectUpdatesRef: Reference | null = null;
 try {
     if (!getApps().length) initializeApp();
     cacheBucket = getStorage().bucket('fluindotio-website-93127.appspot.com');
+    // The admin SDK bypasses database rules; _cache has no public read rule so it stays private
+    projectUpdatesRef = getDatabaseWithUrl('https://fluindotio-website-93127.firebaseio.com').ref(
+        '_cache/projectUpdates'
+    );
 } catch (e) {
-    console.warn('firebase-admin init failed — image cache disabled', e);
+    console.warn('firebase-admin init failed — image and project update caches disabled', e);
 }
 
 /**
@@ -188,6 +195,109 @@ app.get('/api/posts/:id', async (req, res) => {
     } catch (error) {
         console.error('Post proxy error', error);
         res.status(500).send('Unable to load post.');
+    }
+});
+
+/**
+ * When each project's GitHub repo was last pushed to.
+ *
+ * Cached in the realtime db for an hour so it survives cold starts and is shared across instances,
+ * keeping GitHub requests to about ten an hour. On a miss the request waits for a fresh fetch.
+ * Repos come from PROJECTS only, so this can't be used to query arbitrary repos.
+ */
+interface ProjectUpdatesCache {
+    fetchedAt: number;
+    /** An array because db keys can't contain the "/" in "owner/name" */
+    repos: { repo: string; pushedAt: string }[];
+}
+const PROJECT_UPDATES_TTL_MS = 60 * 60 * 1000;
+const PROJECT_REPOS = PROJECTS.flatMap((project) => (project.repo ? [project.repo] : []));
+let projectUpdatesMem: ProjectUpdatesCache | null = null;
+let projectUpdatesInFlight: Promise<ProjectUpdatesCache> | null = null;
+
+async function fetchRepoPushedAt(repo: string): Promise<string> {
+    const headers: Record<string, string> = {
+        Accept: 'application/vnd.github+json',
+        'User-Agent': 'fluin.io',
+        'X-GitHub-Api-Version': '2022-11-28',
+    };
+    const token = process.env['GITHUB_TOKEN'];
+    if (token) {
+        headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`https://api.github.com/repos/${repo}`, { headers });
+    if (!response.ok) {
+        throw new Error(`GitHub returned ${response.status} for ${repo}`);
+    }
+    const { pushed_at } = await response.json();
+    return pushed_at;
+}
+
+/** Fetch every repo from GitHub, keeping the previous date for any repo that fails */
+async function fetchProjectUpdates(previous: ProjectUpdatesCache | null): Promise<ProjectUpdatesCache> {
+    const results = await Promise.allSettled(PROJECT_REPOS.map(fetchRepoPushedAt));
+    const repos: ProjectUpdatesCache['repos'] = [];
+    results.forEach((result, i) => {
+        const repo = PROJECT_REPOS[i];
+        if (result.status === 'fulfilled') {
+            repos.push({ repo, pushedAt: result.value });
+            return;
+        }
+        console.error('Project update fetch failed', result.reason);
+        const stale = previous?.repos?.find((entry) => entry.repo === repo);
+        if (stale) {
+            repos.push(stale);
+        }
+    });
+    return { fetchedAt: Date.now(), repos };
+}
+
+async function readProjectUpdatesFromDb(): Promise<ProjectUpdatesCache | null> {
+    if (!projectUpdatesRef) {
+        return null;
+    }
+    try {
+        return (await projectUpdatesRef.get()).val();
+    } catch (error) {
+        console.error('Project update cache read failed', error);
+        return null;
+    }
+}
+
+function isFresh(cache: ProjectUpdatesCache | null): cache is ProjectUpdatesCache {
+    return !!cache && Date.now() - cache.fetchedAt < PROJECT_UPDATES_TTL_MS;
+}
+
+async function getProjectUpdates(): Promise<ProjectUpdatesCache> {
+    if (isFresh(projectUpdatesMem)) {
+        return projectUpdatesMem;
+    }
+
+    // Concurrent misses share one lookup instead of each calling GitHub
+    projectUpdatesInFlight ??= (async () => {
+        const cached = await readProjectUpdatesFromDb();
+        if (isFresh(cached)) {
+            return cached;
+        }
+
+        const fresh = await fetchProjectUpdates(cached ?? projectUpdatesMem);
+        projectUpdatesRef?.set(fresh).catch((error) => console.error('Project update cache write failed', error));
+        return fresh;
+    })().finally(() => (projectUpdatesInFlight = null));
+
+    projectUpdatesMem = await projectUpdatesInFlight;
+    return projectUpdatesMem;
+}
+
+app.get('/api/project-updates', async (_req, res) => {
+    try {
+        const { repos } = await getProjectUpdates();
+        res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300');
+        res.json(Object.fromEntries((repos ?? []).map(({ repo, pushedAt }) => [repo, pushedAt])));
+    } catch (error) {
+        console.error('Project updates error', error);
+        res.status(500).send('Unable to load project updates.');
     }
 });
 
