@@ -157,7 +157,6 @@ hr {
 }
 
 #page {
-    margin-top: 75px;
     min-height: 750px;
 }
 
@@ -240,7 +239,6 @@ nav > * {
 /* INTRO BLOCK SECTION */
 
 #intro-block {
-    margin-top: -75px;
     padding: 40px 0;
     display: flex;
     justify-content: center;
@@ -399,7 +397,6 @@ router-outlet {
 /* ------------------- BLOG PAGE CSS ------------------- */
 #blogpost {
     display: flex;
-    margin-top: -75px;
 }
 
 #blogpost > * {
@@ -496,7 +493,6 @@ router-outlet {
     background-position: center top;
     background-repeat: no-repeat;
     min-height: 100vh;
-    margin-top: -75px;
     color: white;
 }
 
