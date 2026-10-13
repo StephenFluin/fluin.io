@@ -196,15 +196,33 @@ app.get('/api/posts/:id', async (req, res) => {
     }
 });
 
-const getProjectInfo = createProjectInfoCache(projectInfoRef);
+const projectInfo = createProjectInfoCache(projectInfoRef);
 
 app.get('/api/project-info', async (_req, res) => {
     try {
         res.setHeader('Cache-Control', 'public, max-age=300, s-maxage=300');
-        res.json(await getProjectInfo());
+        res.json(await projectInfo.get());
     } catch (error) {
         console.error('Project info error', error);
         res.status(500).send('Unable to load project info.');
+    }
+});
+
+/**
+ * Rescan projects if the cache has expired. Sent by the projects page after it loads, so the scan
+ * runs while a request is open and the instance has CPU. Returns the new info if a scan ran.
+ */
+app.post('/api/project-info/refresh', async (_req, res) => {
+    try {
+        res.setHeader('Cache-Control', 'no-store');
+        if (await projectInfo.refresh()) {
+            res.json(await projectInfo.get());
+        } else {
+            res.status(204).end();
+        }
+    } catch (error) {
+        console.error('Project info refresh error', error);
+        res.status(500).send('Unable to refresh project info.');
     }
 });
 
