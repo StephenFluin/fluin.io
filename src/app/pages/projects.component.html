@@ -12,6 +12,34 @@
 				<div class="project-content">
 					<h3>{{ project.name }}</h3>
 					<p>{{ project.description }}</p>
+					@if (project.badges.length) {
+						<ul class="project-tech" aria-label="Built with">
+							@for (badge of project.badges; track badge.label) {
+								<li>
+									@switch (badge.icon) {
+										@case ('angular') {
+											<svg viewBox="0 0 250 250" aria-hidden="true">
+												<path fill="#dd0031" d="M125 30 31.9 63.2l14.2 123.1L125 230l78.9-43.7 14.2-123.1z" />
+												<path fill="#c3002f" d="M125 30v200l78.9-43.7 14.2-123.1z" />
+												<path
+													fill="#fff"
+													d="M125 52.1 66.8 182.6h21.7l11.7-29.2h49.4l11.7 29.2H183zm17 83.3h-34l17-40.9z"
+												/>
+											</svg>
+										}
+										@case ('firebase') {
+											<svg viewBox="0 0 24 24" aria-hidden="true">
+												<path fill="#ffa000" d="M4 19 7.2 2.6a.4.4 0 0 1 .75-.1L11 8.3z" />
+												<path fill="#f57c00" d="m4 19 9.6-11.5 2.4 4.5z" />
+												<path fill="#ffca28" d="m4 19 12.6-14.1a.4.4 0 0 1 .68.2L20 19l-7.4 4.1a1.3 1.3 0 0 1-1.2 0z" />
+											</svg>
+										}
+									}
+									{{ badge.label }}
+								</li>
+							}
+						</ul>
+					}
 					@if (project.updatedAt) {
 						<p class="project-updated">
 							Updated <time [attr.datetime]="project.updatedAt">{{ project.updatedAt | date: 'mediumDate' : 'UTC' }}</time>

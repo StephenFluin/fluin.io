@@ -554,6 +554,33 @@ router-outlet {
     font-size: 0.875em;
 }
 
+.project-tech {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.project-tech li {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    color: var(--muted-text-color);
+    font-size: 0.75em;
+    line-height: 1.6;
+}
+
+.project-tech svg {
+    width: 1.1em;
+    height: 1.1em;
+    flex: none;
+}
+
 .project-links {
     margin-top: 16px;
     display: flex;

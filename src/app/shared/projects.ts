@@ -1,3 +1,24 @@
+export type Framework = 'Angular' | 'Eleventy';
+export type Rendering = 'ssr' | 'ssg' | 'client' | 'static';
+export type Host = 'app-hosting' | 'firebase-hosting' | 'github-pages';
+export type DataStore = 'rtdb' | 'firestore' | 'storage' | 'mariadb';
+
+/** What a project is built with. Each field is detected from GitHub, then the live site, then hardcoded. */
+export interface ProjectTech {
+    framework?: Framework;
+    /** Major version, e.g. "22" */
+    version?: string;
+    rendering?: Rendering;
+    host?: Host;
+    dataStores?: DataStore[];
+}
+
+/** Everything /api/project-info knows about a project */
+export interface ProjectInfo extends ProjectTech {
+    /** When the repo was last pushed to (ISO string) */
+    updatedAt?: string;
+}
+
 export interface Project {
     name: string;
     imageSrc: string;
@@ -6,9 +27,33 @@ export interface Project {
     url: string;
     /** GitHub repo as "owner/name". Its last push date is shown as "Updated …". */
     repo?: string;
-    /** Private repos are only used for the updated date, never linked */
+    /** Private repos are only used for detection, never linked */
     privateRepo?: boolean;
+    /** Folder within the repo holding package.json and firebase.json, when it isn't the root */
+    repoDir?: string;
+    /** Fallbacks for anything that can't be detected */
+    tech?: ProjectTech;
 }
+
+export const RENDERING_LABELS: Record<Rendering, string> = {
+    ssr: 'SSR',
+    ssg: 'Prerendered',
+    client: 'Client-rendered',
+    static: 'Static',
+};
+
+export const HOST_LABELS: Record<Host, string> = {
+    'app-hosting': 'App Hosting',
+    'firebase-hosting': 'Firebase Hosting',
+    'github-pages': 'GitHub Pages',
+};
+
+export const DATA_STORE_LABELS: Record<DataStore, string> = {
+    rtdb: 'Realtime Database',
+    firestore: 'Firestore',
+    storage: 'Cloud Storage',
+    mariadb: 'MariaDB',
+};
 
 /** Shared with the server, which only looks up repos listed here */
 export const PROJECTS: Project[] = [
@@ -48,6 +93,7 @@ export const PROJECTS: Project[] = [
         url: 'https://prices.fluin.io',
         repo: 'StephenFluin/pokemon-price-monitor',
         privateRepo: true,
+        tech: { dataStores: ['firestore'] },
     },
     {
         name: 'stoic.fluin.io',
@@ -57,6 +103,7 @@ export const PROJECTS: Project[] = [
             'A daily Stoic meditation app with focused reading and reflection prompts aimed at consistency and practical philosophy.',
         url: 'https://stoic.fluin.io',
         repo: 'StephenFluin/stoic.fluin.io',
+        repoDir: 'web',
     },
     {
         name: 'baby.fluin.io',
@@ -85,6 +132,7 @@ export const PROJECTS: Project[] = [
         url: 'https://money.fluin.io',
         repo: 'StephenFluin/money.fluin.io',
         privateRepo: true,
+        tech: { dataStores: ['mariadb'] },
     },
     {
         name: 'devrel.nexus',
@@ -94,6 +142,7 @@ export const PROJECTS: Project[] = [
             'A guide to Developer Relations covering the people, processes, artifacts, and outcomes that make DevRel teams effective.',
         url: 'https://devrel.nexus',
         repo: 'StephenFluin/devrel.nexus',
+        tech: { rendering: 'static' },
     },
     {
         name: 'devfest.mn',
@@ -103,5 +152,25 @@ export const PROJECTS: Project[] = [
             'The website for DevFestMN, a one-day Minneapolis developer conference covering AI, software engineering, and Google platforms.',
         url: 'https://devfest.mn',
         repo: 'StephenFluin/devfest-mn',
+    },
+    {
+        name: 'starplan.fluin.io',
+        imageSrc: '/assets/images/projects/starplan.avif',
+        imageAlt: 'Screenshot of starplan.fluin.io',
+        description:
+            'Starplan is a fast, open source Stardew Valley farm planner for laying out buildings, crops, paths, and decor on any farm map.',
+        url: 'https://starplan.fluin.io',
+        repo: 'StephenFluin/starplan',
+    },
+    {
+        name: 'friendlai.xyz',
+        imageSrc: '/assets/images/projects/friendlai.avif',
+        imageAlt: 'Screenshot of friendlai.xyz',
+        description:
+            'Friendlai serves open AI models from a network of community-run computers, with a web chat and an OpenAI-compatible API.',
+        url: 'https://friendlai.xyz',
+        repo: 'StephenFluin/friendlai',
+        privateRepo: true,
+        tech: { dataStores: ['mariadb'] },
     },
 ];
