@@ -14,9 +14,10 @@ import {
  *
  * Each field comes from the first source that knows it:
  *  1. GitHub: repo metadata (with GITHUB_TOKEN, so private repos work) and, for public repos,
- *     package.json, firebase.json and apphosting.yaml
- *  2. The live site: response headers, ng-version / ng-server-context in the HTML, or the
- *     ng-version string compiled into its JavaScript for client-rendered apps
+ *     package.json, firebase.json, apphosting.yaml and angular.json
+ *  2. The live site: response headers, ng-version / ng-server-context in the HTML, the
+ *     ng-version string compiled into its JavaScript for client-rendered apps, and whether its
+ *     polyfills bundle includes zone.js
  *  3. The project's hardcoded `tech` in PROJECTS
  *
  * Scans take a few seconds, so reading (`get`) only ever returns the last scan. Scanning (`update`)
@@ -101,6 +102,7 @@ function withFallbacks(cache: ProjectInfoCache | null): Record<string, ProjectIn
             framework: detected?.framework ?? fallback.framework,
             version: detected?.version ?? fallback.version,
             rendering: detected?.rendering ?? fallback.rendering,
+            zoneless: detected?.zoneless ?? fallback.zoneless,
             host: detected?.host ?? fallback.host,
             dataStores: detected?.dataStores ?? fallback.dataStores,
         };
@@ -152,11 +154,17 @@ async function scanProject(project: Project): Promise<ProjectInfo> {
         rendering = 'client';
     }
 
+    let zoneless = github.zoneless;
+    if (zoneless === undefined && framework === 'Angular' && live.scripts) {
+        zoneless = await isZonelessLive(live.scripts).catch(() => undefined);
+    }
+
     return {
         updatedAt: github.updatedAt,
         framework,
         version,
         rendering,
+        zoneless,
         host: github.host ?? live.host,
         dataStores: github.dataStores,
     };
@@ -197,6 +205,9 @@ async function scanGithub(project: Project): Promise<ProjectInfo> {
     if (found) {
         info.framework = found[0];
         info.version = majorVersion(deps[found[1]]);
+    }
+    if (info.framework === 'Angular') {
+        info.zoneless = await isZonelessInRepo(raw).catch(() => undefined);
     }
 
     if (appHostingText !== null) {
@@ -239,6 +250,35 @@ async function fetchGithubRepo(repo: string): Promise<{ pushed_at: string; priva
         throw new Error(`GitHub returned ${response.status} for ${repo}`);
     }
     return response.json();
+}
+
+/**
+ * zone.js is loaded through the build's polyfills, either directly ("zone.js") or from a
+ * polyfills file that imports it. package.json isn't enough: it often still lists zone.js after
+ * an app goes zoneless.
+ */
+async function isZonelessInRepo(raw: (path: string) => Promise<string | null>): Promise<boolean | undefined> {
+    const angularText = await raw('angular.json');
+    if (!angularText) {
+        return undefined;
+    }
+
+    type BuildTargets = { build?: { options?: { polyfills?: string | string[] } } };
+    const workspace: { projects?: Record<string, { architect?: BuildTargets; targets?: BuildTargets }> } =
+        JSON.parse(angularText);
+    const [app] = Object.values(workspace.projects ?? {});
+    const options = (app?.architect ?? app?.targets)?.build?.options;
+    const polyfills = [options?.polyfills ?? []].flat();
+
+    for (const entry of polyfills) {
+        if (entry === 'zone.js' || entry.startsWith('zone.js/')) {
+            return false;
+        }
+        if (entry.endsWith('.ts') && /['"]zone\.js['"/]/.test((await raw(entry)) ?? '')) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /* --------------------------------- Live site -------------------------------- */
@@ -285,6 +325,17 @@ function hostFromHeaders(headers: Headers): Host | undefined {
         return 'firebase-hosting';
     }
     return undefined;
+}
+
+/** Angular apps that use zone.js load it in a separate polyfills bundle, marked by its __zone_symbol__ prefix */
+async function isZonelessLive(scripts: string[]): Promise<boolean> {
+    const polyfills = scripts.filter((src) => /\/polyfills[.-]/.test(src));
+    for (const src of polyfills) {
+        if ((await fetchOptionalText(src))?.includes('__zone_symbol__')) {
+            return false;
+        }
+    }
+    return true;
 }
 
 /**

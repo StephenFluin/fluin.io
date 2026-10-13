@@ -44,6 +44,9 @@ function techBadges(info: ProjectInfo): TechBadge[] {
             icon: info.framework === 'Angular' ? 'angular' : undefined,
         });
     }
+    if (info.zoneless) {
+        badges.push({ label: 'Zoneless' });
+    }
     if (info.rendering) {
         badges.push({ label: RENDERING_LABELS[info.rendering] });
     }

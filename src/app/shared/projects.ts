@@ -9,6 +9,8 @@ export interface ProjectTech {
     /** Major version, e.g. "22" */
     version?: string;
     rendering?: Rendering;
+    /** Angular apps only: true if the app runs without zone.js */
+    zoneless?: boolean;
     host?: Host;
     dataStores?: DataStore[];
 }
