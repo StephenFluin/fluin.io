@@ -3,8 +3,13 @@ scripts:
   runCommand: npm run serve:ssr:fluin-io
 
 env:
-  # Fine-grained GitHub token (read-only) for /api/project-updates. Set with: firebase apphosting:secrets:set GITHUB_TOKEN
+  # Fine-grained GitHub token (read-only) for project info on /projects. Set with: firebase apphosting:secrets:set GITHUB_TOKEN
   - variable: GITHUB_TOKEN
     secret: GITHUB_TOKEN
+    availability:
+      - RUNTIME
+  # Shared with the Cloud Scheduler job that calls /internal/update-project-info hourly
+  - variable: PROJECT_INFO_UPDATE_TOKEN
+    secret: PROJECT_INFO_UPDATE_TOKEN
     availability:
       - RUNTIME

@@ -6,7 +6,7 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
-import { createHash } from 'node:crypto';
+import { createHash, timingSafeEqual } from 'node:crypto';
 import compression from 'compression';
 import sharp from 'sharp';
 import { initializeApp, getApps } from 'firebase-admin/app';
@@ -209,20 +209,30 @@ app.get('/api/project-info', async (_req, res) => {
 });
 
 /**
- * Rescan projects if the cache has expired. Sent by the projects page after it loads, so the scan
- * runs while a request is open and the instance has CPU. Returns the new info if a scan ran.
+ * Rescan every project. Called hourly by Cloud Scheduler with the PROJECT_INFO_UPDATE_TOKEN secret,
+ * and waits for the scan so it runs while the request is open and the instance has CPU.
  */
-app.post('/api/project-info/refresh', async (_req, res) => {
+app.post('/internal/update-project-info', async (req, res) => {
+    const expected = process.env['PROJECT_INFO_UPDATE_TOKEN'];
+    if (!expected) {
+        res.status(503).send('PROJECT_INFO_UPDATE_TOKEN is not configured.');
+        return;
+    }
+
+    const bearer = req.header('authorization')?.match(/^Bearer (.+)$/)?.[1];
+    const provided = Buffer.from(req.header('x-update-token') ?? bearer ?? '');
+    const wanted = Buffer.from(expected);
+    if (provided.length !== wanted.length || !timingSafeEqual(provided, wanted)) {
+        res.status(401).send('Unauthorized.');
+        return;
+    }
+
     try {
-        res.setHeader('Cache-Control', 'no-store');
-        if (await projectInfo.refresh()) {
-            res.json(await projectInfo.get());
-        } else {
-            res.status(204).end();
-        }
+        await projectInfo.update();
+        res.status(204).end();
     } catch (error) {
-        console.error('Project info refresh error', error);
-        res.status(500).send('Unable to refresh project info.');
+        console.error('Project info update error', error);
+        res.status(500).send('Unable to update project info.');
     }
 });
 

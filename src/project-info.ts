@@ -19,11 +19,11 @@ import {
  *     ng-version string compiled into its JavaScript for client-rendered apps
  *  3. The project's hardcoded `tech` in PROJECTS
  *
- * Scans take a few seconds, so reading (`get`) only ever returns the cache. Scanning (`refresh`)
- * happens in its own request, which the projects page sends after it loads. It can't run in the
+ * Scans take a few seconds, so reading (`get`) only ever returns the last scan. Scanning (`update`)
+ * is triggered hourly by Cloud Scheduler and runs while that request is open. It can't run in the
  * background after a response: Cloud Run throttles the CPU between requests, so every fetch would
- * time out. The cache lives in memory and in the realtime db, so it survives cold starts and is
- * shared across instances.
+ * time out. Results are stored in the realtime db, so they survive cold starts and are shared
+ * across instances.
  */
 
 interface DetectedInfo extends ProjectInfo {
@@ -31,19 +31,18 @@ interface DetectedInfo extends ProjectInfo {
 }
 
 interface ProjectInfoCache {
-    expiresAt: number;
+    scannedAt: number;
     projects: DetectedInfo[];
 }
 
-const CACHE_TTL_MS = 60 * 60 * 1000;
-/** Scans where something failed are retried sooner, so a bad scan doesn't stick for an hour */
-const FAILED_SCAN_TTL_MS = 5 * 60 * 1000;
+/** How often each instance re-reads the db, to pick up scans run on other instances */
+const DB_RELOAD_MS = 5 * 60 * 1000;
 const FETCH_TIMEOUT_MS = 5000;
 
 export function createProjectInfoCache(dbRef: Reference | null) {
     let cache: ProjectInfoCache | null = null;
-    let loadedFromDb: Promise<void> | null = null;
-    let scanning: Promise<boolean> | null = null;
+    let loaded: { at: number; done: Promise<void> } | null = null;
+    let scanning: Promise<void> | null = null;
 
     // Without a token private repos can't be read, so a local dev server must not overwrite production's cache
     const canWriteDb = !!process.env['GITHUB_TOKEN'];
@@ -57,50 +56,39 @@ export function createProjectInfoCache(dbRef: Reference | null) {
         }
     }
 
-    async function loadOnce() {
-        loadedFromDb ??= readDb().then((stored) => void (cache ??= stored));
-        await loadedFromDb;
-    }
-
-    /** Scan if the cache has expired. Resolves true if a scan ran. */
-    async function scanIfStale(): Promise<boolean> {
-        // Another instance may have refreshed the shared cache already
-        const stored = await readDb();
-        if (isFresh(stored)) {
-            cache = stored;
-            return false;
-        }
-
-        const fresh = await scanAll(cache ?? stored);
+    async function scan() {
+        const fresh = await scanAll(cache ?? (await readDb()));
         cache = fresh;
+        loaded = { at: Date.now(), done: Promise.resolve() };
         if (dbRef && canWriteDb) {
             // The realtime db rejects undefined values
             await dbRef.set(JSON.parse(JSON.stringify(fresh)));
         }
-        return true;
     }
 
     return {
-        /** Cached project info keyed by project name, with hardcoded fallbacks applied. Never scans. */
+        /** The last scan's info keyed by project name, with hardcoded fallbacks applied. Never scans. */
         async get(): Promise<Record<string, ProjectInfo>> {
-            await loadOnce();
+            if (!loaded || Date.now() - loaded.at > DB_RELOAD_MS) {
+                loaded = {
+                    at: Date.now(),
+                    done: readDb().then((stored) => {
+                        if (stored && (!cache || stored.scannedAt > cache.scannedAt)) {
+                            cache = stored;
+                        }
+                    }),
+                };
+            }
+            await loaded.done;
             return withFallbacks(cache);
         },
 
-        /** Scan if the cache has expired, sharing one scan between concurrent callers. Resolves true if a scan ran. */
-        async refresh(): Promise<boolean> {
-            await loadOnce();
-            if (isFresh(cache)) {
-                return false;
-            }
-            scanning ??= scanIfStale().finally(() => (scanning = null));
+        /** Scan every project and store the results. Concurrent callers share one scan. */
+        update(): Promise<void> {
+            scanning ??= scan().finally(() => (scanning = null));
             return scanning;
         },
     };
-}
-
-function isFresh(cache: ProjectInfoCache | null): cache is ProjectInfoCache {
-    return !!cache?.expiresAt && Date.now() < cache.expiresAt;
 }
 
 function withFallbacks(cache: ProjectInfoCache | null): Record<string, ProjectInfo> {
@@ -121,38 +109,29 @@ function withFallbacks(cache: ProjectInfoCache | null): Record<string, ProjectIn
 }
 
 async function scanAll(previous: ProjectInfoCache | null): Promise<ProjectInfoCache> {
-    let anyFailed = false;
-    const onFailure = (source: string, project: Project, error: unknown) => {
-        anyFailed = true;
-        console.error(`${source} scan failed for ${project.name}`, error);
-    };
-
     const projects = await Promise.all(
         PROJECTS.map(async (project): Promise<DetectedInfo> => {
             const stale = previous?.projects?.find((entry) => entry.name === project.name);
             try {
-                // Keep anything this scan couldn't find, so a failed request doesn't blank a field
-                return { ...stale, ...definedOnly(await scanProject(project, onFailure)), name: project.name };
+                // Keep anything this scan couldn't find, so a failed request doesn't blank a field until the next scan
+                return { ...stale, ...definedOnly(await scanProject(project)), name: project.name };
             } catch (error) {
-                onFailure('Project info', project, error);
+                console.error(`Project info scan failed for ${project.name}`, error);
                 return { ...stale, name: project.name };
             }
         })
     );
-    return { expiresAt: Date.now() + (anyFailed ? FAILED_SCAN_TTL_MS : CACHE_TTL_MS), projects };
+    return { scannedAt: Date.now(), projects };
 }
 
-async function scanProject(
-    project: Project,
-    onFailure: (source: string, project: Project, error: unknown) => void
-): Promise<ProjectInfo> {
+async function scanProject(project: Project): Promise<ProjectInfo> {
     const [github, live] = await Promise.all([
         scanGithub(project).catch((error) => {
-            onFailure('GitHub', project, error);
+            console.error(`GitHub scan failed for ${project.name}`, error);
             return {} as ProjectInfo;
         }),
         scanLiveSite(project.url).catch((error) => {
-            onFailure('Live site', project, error);
+            console.error(`Live site scan failed for ${project.name}`, error);
             return {} as LiveInfo;
         }),
     ]);
