@@ -175,4 +175,13 @@ export const PROJECTS: Project[] = [
         privateRepo: true,
         tech: { dataStores: ['mariadb'] },
     },
+    {
+        name: 'scan.fluin.io',
+        imageSrc: '/assets/images/projects/scan.avif',
+        imageAlt: 'Screenshot of scan.fluin.io',
+        description:
+            'A Pokemon card scanner that recognizes cards through your camera and adds them to a collection as you scan.',
+        url: 'https://scan.fluin.io',
+        repo: 'StephenFluin/card-scanner',
+    },
 ];
