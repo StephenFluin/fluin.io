@@ -7,6 +7,7 @@ import { AdminService } from '../shared/admin.service';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
 import { JsonLdService } from '../shared/jsonld.service';
 import { PageHeadService, SITE_URL } from '../shared/page-head.service';
+import { markdownToPlainText } from '../shared/plain-text';
 import { Post } from '../shared/post.service';
 import { NotFoundComponent } from '../not-found.component';
 
@@ -139,8 +140,8 @@ export class BlogPostComponent {
     }
 }
 
-/** The first paragraph of a post's markdown (skipping headings), used as its description */
+/** The first paragraph of a post (skipping headings) as plain text, used as its description */
 function summarize(body: string) {
     const lines = body.split('\n');
-    return (lines.find((line) => line.trim() && !line.trim().startsWith('#')) ?? lines[0]).trim();
+    return markdownToPlainText(lines.find((line) => line.trim() && !line.trim().startsWith('#')) ?? lines[0]);
 }
