@@ -1,11 +1,12 @@
 import { Component, DOCUMENT, DestroyRef, computed, effect, inject, input } from '@angular/core';
 import { httpResource } from '@angular/common/http';
-import { Meta, Title } from '@angular/platform-browser';
+import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
 
 import { AdminService } from '../shared/admin.service';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
 import { JsonLdService } from '../shared/jsonld.service';
+import { PageHeadService, SITE_URL } from '../shared/page-head.service';
 import { Post } from '../shared/post.service';
 import { NotFoundComponent } from '../not-found.component';
 
@@ -18,7 +19,7 @@ const HERO_IMAGE_SIZES = '(max-width: 900px) calc(100vw - 64px), 800px';
 export class BlogPostComponent {
     protected readonly adminService = inject(AdminService);
     private readonly title = inject(Title);
-    private readonly meta = inject(Meta);
+    private readonly pageHead = inject(PageHeadService);
     private readonly jsonLd = inject(JsonLdService);
     private readonly document = inject(DOCUMENT);
 
@@ -40,9 +41,8 @@ export class BlogPostComponent {
             }
         });
 
-        // Don't leave this post's canonical URL, preload, or structured data on the next page
+        // Don't leave this post's preload or structured data on the next page. The next route sets its own canonical URL.
         inject(DestroyRef).onDestroy(() => {
-            this.document.head.querySelector("link[rel='canonical']")?.remove();
             this.document.head.querySelector("link[data-lcp-preload='route']")?.remove();
             this.jsonLd.removeSchemas();
         });
@@ -63,14 +63,13 @@ export class BlogPostComponent {
 
     /** Title, social/search metadata, canonical URL, hero image preload, and structured data for the post */
     private updateHead(post: Post) {
-        const url = `https://fluin.io/blog/${post.id}`;
+        const url = `${SITE_URL}/blog/${post.id}`;
         const description = summarize(post.body ?? '');
         const socialImage = toAbsoluteImageUrl(
             buildOptimizedImageUrl(post.image, { width: 1200, height: 630, fit: 'cover', quality: IMAGE_QUALITY.hero })
         );
 
         this.title.setTitle(`${post.title} | fluin.io blog`);
-        this.setLink("link[rel='canonical']", { rel: 'canonical', href: url });
         this.setLink("link[data-lcp-preload='route']", {
             'data-lcp-preload': 'route',
             rel: 'preload',
@@ -81,26 +80,13 @@ export class BlogPostComponent {
             fetchpriority: 'high',
         });
 
-        this.meta.updateTag({ name: 'description', content: description });
-        for (const [name, content] of Object.entries({
-            'twitter:card': 'summary_large_image',
-            'twitter:image': socialImage,
-            'twitter:title': post.title ?? '',
-            'twitter:description': description,
-        })) {
-            this.meta.updateTag({ name, content });
-        }
-        for (const [property, content] of Object.entries({
-            'og:type': 'article',
-            'og:url': url,
-            'og:title': post.title ?? '',
-            'og:description': description,
-            'og:image': socialImage,
-            'og:image:width': '1200',
-            'og:image:height': '630',
-        })) {
-            this.meta.updateTag({ property, content }, `property='${property}'`);
-        }
+        this.pageHead.update({
+            path: `/blog/${post.id}`,
+            title: post.title ?? '',
+            description,
+            image: { url: socialImage, width: 1200, height: 630 },
+            type: 'article',
+        });
 
         this.jsonLd.setSchema({
             '@context': 'https://schema.org',
