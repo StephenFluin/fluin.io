@@ -184,4 +184,13 @@ export const PROJECTS: Project[] = [
         url: 'https://scan.fluin.io',
         repo: 'StephenFluin/card-scanner',
     },
+    {
+        name: 'pizza.fluin.io',
+        imageSrc: '/assets/images/projects/pizza.avif',
+        imageAlt: 'Screenshot of pizza.fluin.io',
+        description:
+            'Pizza Online, a browser-based pizza restaurant tycoon game inspired by the 1994 classic Pizza Tycoon, drawn entirely with PixiJS.',
+        url: 'https://pizza.fluin.io',
+        repo: 'StephenFluin/pizza-online',
+    },
 ];
