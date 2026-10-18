@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { httpResource } from '@angular/common/http';
-import { Component, computed } from '@angular/core';
+import { Component, DestroyRef, computed, inject } from '@angular/core';
 import {
     DATA_STORE_LABELS,
     HOST_LABELS,
@@ -8,6 +8,7 @@ import {
     RENDERING_LABELS,
     type ProjectInfo,
 } from '../shared/projects';
+import { JsonLdService } from '../shared/jsonld.service';
 
 interface TechBadge {
     label: string;
@@ -34,6 +35,37 @@ export class ProjectsComponent {
             };
         }).sort((a, b) => (b.updatedAt ?? '').localeCompare(a.updatedAt ?? ''));
     });
+
+    constructor() {
+        const jsonLd = inject(JsonLdService);
+        jsonLd.setSchema({
+            '@context': 'https://schema.org',
+            '@type': 'CollectionPage',
+            name: 'Projects',
+            url: 'https://fluin.io/projects',
+            author: { '@id': 'https://fluin.io/#person' },
+            mainEntity: {
+                '@type': 'ItemList',
+                itemListElement: PROJECTS.map((project, index) => ({
+                    '@type': 'ListItem',
+                    position: index + 1,
+                    item: {
+                        '@type': 'WebApplication',
+                        name: project.name,
+                        url: project.url,
+                        description: project.description,
+                        image: `https://fluin.io${project.imageSrc}`,
+                        applicationCategory: 'WebApplication',
+                        author: { '@id': 'https://fluin.io/#person' },
+                        ...(project.repo && !project.privateRepo
+                            ? { sameAs: `https://github.com/${project.repo}` }
+                            : {}),
+                    },
+                })),
+            },
+        });
+        inject(DestroyRef).onDestroy(() => jsonLd.removeSchemas());
+    }
 }
 
 function techBadges(info: ProjectInfo): TechBadge[] {

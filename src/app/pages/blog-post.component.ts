@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 
 import { AdminService } from '../shared/admin.service';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsoluteImageUrl } from '../shared/image-url';
-import { JsonLdService } from '../shared/jsonld.service';
+import { JsonLdService, PERSON_SCHEMA } from '../shared/jsonld.service';
 import { PageHeadService, SITE_URL } from '../shared/page-head.service';
 import { markdownToPlainText } from '../shared/plain-text';
 import { Post } from '../shared/post.service';
@@ -97,24 +97,7 @@ export class BlogPostComponent {
             datePublished: post.date,
             image: socialImage,
             description,
-            author: {
-                '@type': 'Person',
-                name: 'Stephen Fluin',
-                url: 'https://fluin.io/bio',
-                image: 'https://fluin.io/assets/images/mainpic.jpg',
-                jobTitle: 'VP of Product',
-                worksFor: {
-                    '@type': 'Organization',
-                    name: 'HeroDevs',
-                    url: 'https://herodevs.com',
-                },
-                sameAs: [
-                    'https://twitter.com/stephenfluin',
-                    'https://bsky.app/profile/stephenfluin.bsky.social',
-                    'https://github.com/stephenfluin',
-                    'https://www.linkedin.com/in/stephenfluin',
-                ],
-            },
+            author: PERSON_SCHEMA,
             publisher: {
                 '@type': 'Person',
                 name: 'Stephen Fluin',
