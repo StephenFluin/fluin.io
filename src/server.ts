@@ -58,6 +58,18 @@ const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 app.use(compression());
+
+/** /projects/ and /projects are the same page, so send search engines and visitors to the one without the slash */
+app.use((req, res, next) => {
+    if (req.path.length > 1 && req.path.endsWith('/')) {
+        const query = req.url.slice(req.path.length);
+        // Collapse leading slashes too, so "//example.com/" can't become a redirect to another site
+        res.redirect(301, '/' + req.path.replace(/^\/+|\/+$/g, '') + query);
+        return;
+    }
+    next();
+});
+
 const angularApp = new AngularNodeAppEngine();
 const markdown = await createMarkdownRenderer();
 
