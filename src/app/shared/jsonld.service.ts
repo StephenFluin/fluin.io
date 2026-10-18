@@ -7,11 +7,11 @@ export const PERSON_SCHEMA = {
     name: 'Stephen Fluin',
     url: 'https://fluin.io/bio',
     image: 'https://fluin.io/assets/images/mainpic.jpg',
-    jobTitle: 'VP of Product',
+    jobTitle: 'Head of DevRel',
     worksFor: {
         '@type': 'Organization',
-        name: 'HeroDevs',
-        url: 'https://herodevs.com',
+        name: 'Buildkite',
+        url: 'https://buildkite.com',
     },
     sameAs: [
         'https://twitter.com/stephenfluin',

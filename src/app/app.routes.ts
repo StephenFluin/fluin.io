@@ -4,7 +4,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./pages/home.component').then((m) => m.HomeComponent),
-        title: 'fluin.io - Stephen Fluin. VP of Product, DevRel, Speaker, and more',
+        title: 'fluin.io - Stephen Fluin. Head of DevRel, Product, Speaker, and more',
     },
     {
         path: 'blog',
@@ -25,7 +25,7 @@ export const routes: Routes = [
         title: 'About Stephen Fluin | fluin.io',
         data: {
             description:
-                'Stephen Fluin is VP of Product at HeroDevs, a former Angular core team member, and an Angular GDE with ~25 years building software at Google, Trello, Chainlink Labs, and more.',
+                'Stephen Fluin is Head of DevRel at Buildkite, a former Angular core team member, and an Angular GDE with ~25 years building software at Google, Trello, Chainlink Labs, and more.',
         },
     },
     {
