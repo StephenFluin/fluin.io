@@ -4,11 +4,12 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./pages/home.component').then((m) => m.HomeComponent),
-        title: 'fluin.io - Stephen Fluin. CPO, Product, DevRel, Speaker, and more',
+        title: 'fluin.io - Stephen Fluin. VP of Product, DevRel, Speaker, and more',
     },
     {
         path: 'blog',
         loadComponent: () => import('./pages/blog.component').then((m) => m.BlogComponent),
+        title: 'Blog | fluin.io',
         data: {
             description:
                 'Stephen Fluin writing about Angular, web performance, product, developer relations, and developer tools.',
@@ -21,7 +22,7 @@ export const routes: Routes = [
     {
         path: 'bio',
         loadComponent: () => import('./pages/bio.component').then((m) => m.BioComponent),
-        title: 'About Stephen Fluin',
+        title: 'About Stephen Fluin | fluin.io',
         data: {
             description:
                 'Stephen Fluin is VP of Product at HeroDevs, a former Angular core team member, and an Angular GDE with ~25 years building software at Google, Trello, Chainlink Labs, and more.',
@@ -30,7 +31,7 @@ export const routes: Routes = [
     {
         path: 'projects',
         loadComponent: () => import('./pages/projects.component').then((m) => m.ProjectsComponent),
-        title: 'Projects',
+        title: 'Projects | fluin.io',
         data: {
             description:
                 'Apps and experiments built and maintained by Stephen Fluin, mostly with Angular and Firebase, and what each one is built with.',
