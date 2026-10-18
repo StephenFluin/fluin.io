@@ -117,7 +117,7 @@ const VALID_POST_ID = /^[A-Za-z0-9_-]+$/;
 
 /**
  * Server-side cache for Firebase posts.json.
- * Reduces redundant fetches from /api/posts, /api/posts/:id, /sitemap.txt, /feed.xml.
+ * Reduces redundant fetches from /api/posts, /api/posts/:id, /sitemap.xml, /feed.xml.
  * TTL: 60 seconds, matches HTTP cache max-age.
  */
 interface PostsCache {
@@ -377,27 +377,45 @@ function publishedPosts(posts: Record<string, StoredPost>) {
         .sort((a, b) => b.date!.localeCompare(a.date!));
 }
 
-app.get('/sitemap.txt', async (req, res) => {
+/** Sitemap with each page's last change, so crawlers can tell what's worth refetching */
+app.get('/sitemap.xml', async (_req, res) => {
     try {
-        const posts = await getPostsFromFirebase();
-        let sitemap = '';
-
         // Drafts and future-dated posts stay out of search engines until they're published
-        for (const post of publishedPosts(posts)) {
-            sitemap += `https://fluin.io/blog/${post.id}\n`;
-        }
-        sitemap += `https://fluin.io/blog\n`;
-        sitemap += `https://fluin.io\n`;
-        sitemap += `https://fluin.io/bio\n`;
-        sitemap += `https://fluin.io/projects\n`;
+        const posts = publishedPosts(await getPostsFromFirebase());
+        const newestPost = posts[0]?.date;
+        const newestProject = Object.values(await projectInfo.get().catch(() => ({})))
+            .map((info) => info.updatedAt?.slice(0, 10))
+            .filter((date): date is string => !!date)
+            .sort()
+            .at(-1);
 
-        res.set('Content-Type', 'text/plain');
-        res.send(sitemap);
+        const pages: { path: string; lastmod?: string }[] = [
+            { path: '', lastmod: newestPost },
+            { path: '/blog', lastmod: newestPost },
+            { path: '/bio' },
+            { path: '/projects', lastmod: newestProject },
+            ...posts.map((post) => ({ path: `/blog/${post.id}`, lastmod: post.date })),
+        ];
+        const urls = pages.map(
+            ({ path, lastmod }) =>
+                `  <url><loc>${escapeXml(`https://fluin.io${path}`)}</loc>${lastmod ? `<lastmod>${lastmod}</lastmod>` : ''}</url>`
+        );
+
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+        res.setHeader('Cache-Control', 'public, max-age=600, s-maxage=600');
+        res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.join('\n')}
+</urlset>
+`);
     } catch (err) {
         console.error('Sitemap error', err);
         res.status(500).send('Unable to generate sitemap.');
     }
 });
+
+/** The old plain-text sitemap, which search consoles may still have on file */
+app.get('/sitemap.txt', (_req, res) => res.redirect(301, '/sitemap.xml'));
 
 const FEED_SIZE = 20;
 
