@@ -193,4 +193,24 @@ export const PROJECTS: Project[] = [
         url: 'https://pizza.fluin.io',
         repo: 'StephenFluin/pizza-online',
     },
+    {
+        name: 'bundlesize.dev',
+        imageSrc: '/assets/images/projects/bundlesize.avif',
+        imageAlt: 'Screenshot of the bundlesize.dev report',
+        description:
+            'BundleSize.dev scans any site for its JavaScript size, frameworks, and delivery best practices, and benchmarks it against the rest of the web.',
+        url: 'https://bundlesize.dev',
+        repo: 'StephenFluin/watcher',
+        privateRepo: true,
+        tech: { dataStores: ['mariadb'] },
+    },
+    {
+        name: 'TrollAttack',
+        imageSrc: '/assets/images/projects/trollattack.avif',
+        imageAlt: 'Screenshot of the TrollAttack telnet welcome screen',
+        description:
+            'TrollAttack is a SMAUG-style telnet MUD written in Java in 2005, with over 500 rooms to explore and still running today.',
+        url: 'https://trollattack.com',
+        repo: 'StephenFluin/trollattack',
+    },
 ];
