@@ -4,7 +4,7 @@ export const routes: Routes = [
     {
         path: '',
         loadComponent: () => import('./pages/home.component').then((m) => m.HomeComponent),
-        title: 'fluin.io - Stephen Fluin. Head of DevRel, Product, Speaker, and more',
+        title: 'Stephen Fluin · Helping developers ship faster',
     },
     {
         path: 'blog',
@@ -12,7 +12,7 @@ export const routes: Routes = [
         title: 'Blog | fluin.io',
         data: {
             description:
-                'Stephen Fluin writing about Angular, web performance, product, developer relations, and developer tools.',
+                'Stephen Fluin on building real products with AI coding agents: what worked, what broke, and why.',
         },
         children: [
             { path: '', loadComponent: () => import('./no-blog.component').then((m) => m.NoBlogComponent) },
@@ -25,7 +25,7 @@ export const routes: Routes = [
         title: 'About Stephen Fluin | fluin.io',
         data: {
             description:
-                'Stephen Fluin is Head of DevRel at Buildkite, a former Angular core team member, and an Angular GDE with ~25 years building software at Google, Trello, Chainlink Labs, and more.',
+                'Stephen Fluin is Head of DevRel at Buildkite, a former Angular core team member, and an Angular GDE who has spent his career helping developers ship faster.',
         },
     },
     {

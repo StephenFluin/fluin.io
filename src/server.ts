@@ -462,7 +462,7 @@ app.get('/feed.xml', async (req, res) => {
   <channel>
     <title>fluin.io blog</title>
     <link>https://fluin.io/blog</link>
-    <description>Stephen Fluin writing about Angular, product, developer relations, and developer tools.</description>
+    <description>Stephen Fluin on building real products with AI coding agents: what worked, what broke, and why.</description>
     <language>en-us</language>
     <atom:link href="https://fluin.io/feed.xml" rel="self" type="application/rss+xml" />
     <lastBuildDate>${posts.length ? rfc822(posts[0].date!) : new Date().toUTCString()}</lastBuildDate>${items.join('')}

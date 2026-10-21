@@ -5,7 +5,7 @@ export const SITE_URL = 'https://fluin.io';
 
 /** Used by pages that don't set their own description. Keep in sync with src/index.html. */
 export const DEFAULT_DESCRIPTION =
-    'Stephen Fluin is a technology leader in product and DevRel, writing about Angular, Linux, Productivity, SSR, Firebase, and developer tools.';
+    'Stephen Fluin is Head of DevRel at Buildkite and a former Angular core team member who has spent his career helping developers ship faster.';
 
 const DEFAULT_IMAGE = { url: `${SITE_URL}/assets/images/mainpic.jpg`, width: 960, height: 960 };
 

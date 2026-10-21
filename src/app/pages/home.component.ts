@@ -1,9 +1,10 @@
 import { Component, DOCUMENT, DestroyRef, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PostListComponent } from '../embeddable/post-list.component';
 
 @Component({
     templateUrl: './home.component.html',
-    imports: [PostListComponent],
+    imports: [PostListComponent, RouterLink],
 })
 export class HomeComponent {
     constructor() {
