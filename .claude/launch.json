@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ssr",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "source ~/.nvm/nvm.sh >/dev/null && nvm use 24 >/dev/null && node dist/fluin-io/server/server.mjs"],
+      "port": 4000
+    }
+  ]
+}
