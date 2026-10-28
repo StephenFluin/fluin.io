@@ -34,6 +34,11 @@
             <label for="post-image">Cover image URL</label>
             <input id="post-image" [(ngModel)]="post.image" (ngModelChange)="edited(post)" spellcheck="false" />
         </div>
+        <div class="field tags-field">
+            <label for="post-tags">Tags</label>
+            <input id="post-tags" [(ngModel)]="post.tags" (ngModelChange)="edited(post)" placeholder="Angular, Web performance" />
+            <span class="hint muted">Comma-separated</span>
+        </div>
     </div>
 
     <div class="pane-tabs" role="group" aria-label="Show">

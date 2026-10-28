@@ -38,5 +38,9 @@ export const routes: Routes = [
         },
     },
     { path: 'admin', loadChildren: () => import('./admin/admin.routes').then((m) => m.AdminRoutes) },
-    { path: '**', loadComponent: () => import('./not-found.component').then((m) => m.NotFoundComponent) },
+    {
+        path: '**',
+        loadComponent: () => import('./not-found.component').then((m) => m.NotFoundComponent),
+        title: 'Page not found | fluin.io',
+    },
 ];

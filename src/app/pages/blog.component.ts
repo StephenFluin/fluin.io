@@ -12,6 +12,7 @@ export class BlogComponent {
     private readonly postService = inject(PostService);
     /** The five most recent posts, for the sidebar */
     readonly posts = computed(() => this.postService.postList().slice(0, 5));
+    readonly tags = this.postService.tags;
     readonly featuredImageSizes = '240px';
 
     featuredPostImage(post: Post) {

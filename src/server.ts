@@ -15,6 +15,7 @@ import { getDatabaseWithUrl, type Reference } from 'firebase-admin/database';
 import { ALLOWED_IMAGE_QUALITIES, ALLOWED_IMAGE_SIZES, isOptimizableImage } from './app/shared/image-url';
 import { isPublished, publishedAt } from './app/shared/post-dates';
 import { createMarkdownRenderer } from './app/shared/markdown';
+import { parseTags } from './app/shared/post-tags';
 import { createProjectInfoCache } from './project-info';
 
 // Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
@@ -80,6 +81,7 @@ interface StoredPost {
     date?: string;
     image?: string;
     body?: string;
+    tags?: string;
 }
 
 function parseFit(value: unknown) {
@@ -168,11 +170,11 @@ app.get('/api/posts', async (_req, res) => {
     try {
         const data = await getPostsFromFirebase();
 
-        // List views only need title/date/id/image. Full content is served by /api/posts/:id.
+        // List views only need title/date/id/image/tags. Full content is served by /api/posts/:id.
         const summaries: Record<string, unknown> = {};
         for (const key of Object.keys(data)) {
-            const { id, title, date, image } = data[key];
-            summaries[key] = { id, title, date, image };
+            const { id, title, date, image, tags } = data[key];
+            summaries[key] = { id, title, date, image, tags };
         }
 
         res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
@@ -197,8 +199,8 @@ app.get('/api/posts/:id', async (req, res) => {
         // Render markdown server-side so blog pages don't need to download
         // markdown-it in the browser during hydration.
         const renderedBody = typeof post.body === 'string' ? markdown.render(post.body) : '';
-        const { id: postId, title, date, image, body } = post;
-        const responsePost = { id: postId, title, date, image, body, renderedBody };
+        const { id: postId, title, date, image, body, tags } = post;
+        const responsePost = { id: postId, title, date, image, body, tags, renderedBody };
 
         res.setHeader('Cache-Control', 'public, max-age=60, s-maxage=60, stale-while-revalidate=300');
         res.json(responsePost);
@@ -451,7 +453,9 @@ app.get('/feed.xml', async (req, res) => {
       <title>${escapeXml(post.title ?? post.id)}</title>
       <link>${url}</link>
       <guid isPermaLink="true">${url}</guid>
-      <pubDate>${rfc822(post.date!)}</pubDate>
+      <pubDate>${rfc822(post.date!)}</pubDate>${parseTags(post.tags)
+                .map((tag) => `\n      <category>${escapeXml(tag)}</category>`)
+                .join('')}
       <description>${summary(post.body)}</description>
       <content:encoded>${cdata(cover + markdown.render(post.body ?? ''))}</content:encoded>
     </item>`;

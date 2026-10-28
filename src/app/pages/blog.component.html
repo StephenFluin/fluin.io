@@ -30,13 +30,20 @@
 
         <hr />
 
-        <section id="category-list">
-            <div>Angular</div>
-            <div>Wearables</div>
-            <div>Mobile</div>
+        @if (tags().length) {
+        <section id="tag-list" aria-labelledby="tags-heading">
+            <h2 id="tags-heading" class="sidebar-heading">Topics</h2>
+            <ul class="tag-cloud">
+                @for (tag of tags(); track tag.slug) {
+                <li>
+                    <a routerLink="/blog" [queryParams]="{ tag: tag.slug }">{{ tag.name }} <span class="tag-count">{{ tag.count }}</span></a>
+                </li>
+                }
+            </ul>
         </section>
 
         <hr />
+        }
 
         <section id="featured-blogs" aria-labelledby="featured-posts-heading">
             <h2 id="featured-posts-heading" class="sidebar-heading">Featured posts</h2>

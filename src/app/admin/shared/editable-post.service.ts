@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Post } from '../../shared/post.service';
+import { parseTags } from '../../shared/post-tags';
 import { FirebaseService } from '../firebase.service';
 
 /** Firebase keys can't contain . # $ [ ] or /, and "new" is the editor's create route. */
@@ -33,6 +34,8 @@ export class EditablePostService {
             image: post.image ?? '',
             date: post.date ?? '',
             body: post.body ?? '',
+            // Normalized, so "angular ,Web perf," is stored as "angular, Web perf"
+            tags: parseTags(post.tags).join(', '),
         };
         const path = `/posts/${post.id}`;
 

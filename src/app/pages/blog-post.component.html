@@ -5,6 +5,13 @@
         <span class="post-author">by Stephen Fluin</span>
         <time class="post-date date" [attr.datetime]="post.date">{{ post.date }}</time>
     </div>
+    @if (tags().length) {
+    <ul class="tag-cloud post-tags" aria-label="Tags">
+        @for (tag of tags(); track tag) {
+        <li><a routerLink="/blog" [queryParams]="{ tag: slug(tag) }">{{ tag }}</a></li>
+        }
+    </ul>
+    }
     @if (adminService.isAdmin()) {
     <div>
         <a [routerLink]="['/admin', post.id]">Edit This Post</a>
@@ -24,6 +31,28 @@
         />
     </div>
     <div [innerHTML]="post.renderedBody" class="post-content"></div>
+    <footer class="post-footer">
+        <div class="post-follow">
+            <p>Thanks for reading! Follow along for more:</p>
+            <div class="post-follow-links"><social-links /></div>
+        </div>
+        @if (older() || newer()) {
+        <nav class="post-nav" aria-label="More posts">
+            @if (older(); as older) {
+            <a class="post-nav-older" [routerLink]="['/blog', older.id]">
+                <span class="post-nav-label">← Older</span>
+                {{ older.title }}
+            </a>
+            }
+            @if (newer(); as newer) {
+            <a class="post-nav-newer" [routerLink]="['/blog', newer.id]">
+                <span class="post-nav-label">Newer →</span>
+                {{ newer.title }}
+            </a>
+            }
+        </nav>
+        }
+    </footer>
 </article>
 } @else if (postFailed()) {
 <not-found />

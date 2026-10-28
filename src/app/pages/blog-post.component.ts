@@ -8,14 +8,16 @@ import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY, toAbsol
 import { JsonLdService, PERSON_SCHEMA } from '../shared/jsonld.service';
 import { PageHeadService, SITE_URL } from '../shared/page-head.service';
 import { markdownToPlainText } from '../shared/plain-text';
-import { Post } from '../shared/post.service';
+import { Post, PostService } from '../shared/post.service';
+import { SocialLinksComponent } from '../shared/social-links';
+import { parseTags, tagSlug } from '../shared/post-tags';
 import { NotFoundComponent } from '../not-found.component';
 
 const HERO_IMAGE_SIZES = '(max-width: 900px) calc(100vw - 64px), 800px';
 
 @Component({
     templateUrl: './blog-post.component.html',
-    imports: [RouterLink, NotFoundComponent],
+    imports: [RouterLink, NotFoundComponent, SocialLinksComponent],
 })
 export class BlogPostComponent {
     protected readonly adminService = inject(AdminService);
@@ -33,6 +35,14 @@ export class BlogPostComponent {
     /** The post couldn't be loaded (usually a 404 from /api/posts/:id) */
     readonly postFailed = computed(() => !!this.postResource.error());
     protected readonly heroImageSizes = HERO_IMAGE_SIZES;
+    readonly tags = computed(() => parseTags(this.post()?.tags));
+    protected readonly slug = tagSlug;
+
+    /** The published posts on either side of this one (the list is newest first) */
+    private readonly postList = inject(PostService).postList;
+    private readonly position = computed(() => this.postList().findIndex((post) => post.id === this.id()));
+    readonly older = computed(() => (this.position() < 0 ? undefined : this.postList()[this.position() + 1]));
+    readonly newer = computed(() => (this.position() < 1 ? undefined : this.postList()[this.position() - 1]));
 
     constructor() {
         effect(() => {
@@ -95,6 +105,7 @@ export class BlogPostComponent {
             headline: post.title,
             url,
             datePublished: post.date,
+            keywords: parseTags(post.tags).join(', ') || undefined,
             image: socialImage,
             description,
             author: PERSON_SCHEMA,

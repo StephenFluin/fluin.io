@@ -160,12 +160,12 @@ hr {
     min-height: 750px;
 }
 
-nav {
+#header nav {
     display: flex;
     align-items: center;
 }
 
-nav a {
+#header nav a {
     padding-left: 30px;
     font-size: 16px;
     font-weight: normal;
@@ -363,6 +363,61 @@ article.post h1 {
     margin-bottom: 1.75rem;
 }
 
+.post-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-follow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+}
+
+.post .post-follow p {
+    margin: 0;
+}
+
+.post-follow-links {
+    display: flex;
+    gap: 16px;
+}
+
+.post-follow-links a {
+    color: var(--muted-text-color);
+}
+
+.post-follow-links a:hover {
+    color: var(--link-hover-color);
+}
+
+.post-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.post-nav a {
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+}
+
+.post-nav-newer {
+    grid-column: 2;
+    text-align: right;
+}
+
+.post-nav-label {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--muted-text-color);
+    font-size: 14px;
+}
+
 /* Code blocks, plain or highlighted by Shiki (colors are in src/code-theme.css). They use the light
    code theme in dark mode too, so they set their own background and text color. */
 .post pre {
@@ -488,6 +543,54 @@ router-outlet {
     height: 28px;
 }
 
+/* NOT FOUND */
+
+.not-found {
+    flex-grow: 1;
+    max-width: 50em;
+}
+
+.not-found p {
+    margin: 16px 0;
+}
+
+.not-found-search {
+    display: flex;
+    gap: 8px;
+}
+
+/* TAGS */
+
+.tag-cloud {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tag-cloud a {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: var(--surface-background);
+    font-size: 14px;
+}
+
+.tag-count {
+    color: var(--muted-text-color);
+    font-weight: 400;
+}
+
+.post .post-tags {
+    margin-top: 12px;
+    padding: 0;
+}
+
+.tag-filter {
+    margin-bottom: 16px;
+}
+
 /* ALL POSTS (/blog) */
 
 .all-posts {
@@ -495,6 +598,7 @@ router-outlet {
     max-width: 50em;
 }
 
+.not-found-search input,
 .all-posts input[type='search'] {
     width: 100%;
     padding: 10px 14px;
@@ -503,6 +607,18 @@ router-outlet {
     background: var(--surface-background);
     border: 1px solid var(--border-color);
     border-radius: 6px;
+}
+
+.not-found-search button {
+    flex: none;
+    padding: 10px 18px;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--page-background);
+    background: var(--link-color);
+    border: 0;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
 .all-posts .post-count {
@@ -759,6 +875,14 @@ router-outlet {
 
     #sidebar {
         width: 100%;
+    }
+
+    .post-nav {
+        grid-template-columns: 1fr;
+    }
+
+    .post-nav-newer {
+        grid-column: auto;
     }
 
     .post-index li {
