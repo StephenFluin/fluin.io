@@ -1,9 +1,9 @@
 @if (post(); as post) {
-<article class="container post" style="flex-grow: 1">
+<article class="container post">
     <h1>{{ post.title }}</h1>
     <div class="post-details">
         <span class="post-author">by Stephen Fluin</span>
-        <span class="post-date date">{{ post.date }}</span>
+        <time class="post-date date" [attr.datetime]="post.date">{{ post.date }}</time>
     </div>
     @if (adminService.isAdmin()) {
     <div>
@@ -15,7 +15,7 @@
             [src]="postImageUrl(post)"
             [attr.srcset]="postImageSet(post)"
             [sizes]="heroImageSizes"
-            [alt]="post.title"
+            alt=""
             width="1200"
             height="675"
             loading="eager"

@@ -4,7 +4,10 @@
     <router-outlet #routerOutlet="outlet"></router-outlet>
 </main>
 
-<div class="footer">
+<footer class="footer">
+    <span>© Stephen Fluin</span>
+    <!-- The admin hint comes from localStorage, so this never loads the admin module for visitors -->
+    @if (adminService.isAdmin()) {
     <a routerLink="/admin">Admin</a>
-    | <a href="https://baby.fluin.io/">Baby Log</a>
-</div>
+    }
+</footer>

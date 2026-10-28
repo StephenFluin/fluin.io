@@ -15,28 +15,22 @@
         decoding="async"
         fetchpriority="high"
     />
-    <div>
-        <div>
-            <h1>Stephen Fluin</h1>
-        </div>
-        <div>
-            <p style="font-weight: bold">I help developers ship faster.</p>
-            <br />
-            <p>
-                I'm Head of DevRel at <a href="https://buildkite.com">Buildkite</a>, a former Angular core team member,
-                and a current Angular GDE. I believe that with the right tools, and by staying in front of the wave of AI
-                innovation, everyone can be more effective.
-            </p>
-            <br />
-
-            <p>
-                I build and run my own <a routerLink="/projects">apps</a> end to end with AI coding agents, and share what
-                worked, what broke, and why.
-            </p>
-        </div>
+    <div class="intro-text">
+        <h1>Stephen Fluin</h1>
+        <p class="tagline">I help developers ship faster.</p>
+        <p>
+            I'm Head of DevRel at <a href="https://buildkite.com">Buildkite</a>, a former Angular core team member,
+            and a current Angular GDE. I believe that with the right tools, and by staying in front of the wave of AI
+            innovation, everyone can be more effective.
+        </p>
+        <p>
+            I build and run my own <a routerLink="/projects">apps</a> end to end with AI coding agents, and share what
+            worked, what broke, and why.
+        </p>
     </div>
 </div>
 <!-- end intro-block-->
 
 <hr />
-<post-list [limit]="64"></post-list>
+<post-list [limit]="12"></post-list>
+<p class="view-all"><a routerLink="/blog">View all posts →</a></p>

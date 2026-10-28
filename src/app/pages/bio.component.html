@@ -15,6 +15,51 @@
             He builds and runs his own <a routerLink="/projects">apps</a>, like friendlai.xyz, end to end with AI
             coding agents, and shares what worked, what broke, and why.
         </p>
-        <br />
     </div>
 </div>
+
+<section class="container bio-details" id="speaking">
+    <h2>Speaking</h2>
+    <p>
+        Stephen has given keynotes and talks at ng-conf, Google I/O, AngularConnect, and conferences around the world,
+        about Angular, web performance, and helping developers and enterprises move faster. More recordings are in his
+        <a href="https://www.youtube.com/playlist?list=PLkZLBHjxfgssv4X0Bcw6I9O4s5XBUvX5x">talks playlist</a> and on
+        <a href="https://www.youtube.com/@StephenFluin">YouTube</a>.
+    </p>
+    <ol class="talk-list">
+        @for (talk of talks; track talk.url) {
+        <li>
+            <span class="talk-meta">{{ talk.year }} · {{ talk.event }}</span>
+            <a [href]="talk.url">{{ talk.title }}</a>
+        </li>
+        }
+    </ol>
+
+    <h2 id="organizers">For event organizers</h2>
+    <p>Feel free to use the bio and headshot below.</p>
+    <div class="organizer-kit">
+        <figure>
+            <img
+                src="/assets/images/mainpic-300.jpg"
+                srcset="/assets/images/mainpic-300.jpg 300w, /assets/images/mainpic-600.jpg 600w"
+                sizes="200px"
+                alt="Headshot of Stephen Fluin"
+                width="960"
+                height="960"
+                loading="lazy"
+                decoding="async"
+            />
+            <figcaption><a href="/assets/images/mainpic.jpg" download="stephen-fluin-headshot.jpg">Download headshot</a> (960×960 JPEG)</figcaption>
+        </figure>
+        <div>
+            <h3>Short bio</h3>
+            <p class="bio-copy">{{ shortBio }}</p>
+            <h3>Long bio</h3>
+            <div class="bio-copy">
+                @for (paragraph of longBio; track $index) {
+                <p>{{ paragraph }}</p>
+                }
+            </div>
+        </div>
+    </div>
+</section>

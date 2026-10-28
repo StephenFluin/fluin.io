@@ -3,6 +3,7 @@ import { Meta } from '@angular/platform-browser';
 import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { AppHeaderComponent } from './embeddable/app-header.component';
+import { AdminService } from './shared/admin.service';
 
 @Component({
     selector: 'app-root',
@@ -10,6 +11,8 @@ import { AppHeaderComponent } from './embeddable/app-header.component';
     imports: [AppHeaderComponent, RouterOutlet, RouterLink],
 })
 export class AppComponent {
+    protected readonly adminService = inject(AdminService);
+
     constructor() {
         // Clear the previous page's noindex before the next page is created, so NotFoundComponent can set it again
         const meta = inject(Meta);

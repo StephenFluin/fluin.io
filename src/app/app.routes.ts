@@ -15,7 +15,7 @@ export const routes: Routes = [
                 'Stephen Fluin on building real products with AI coding agents: what worked, what broke, and why.',
         },
         children: [
-            { path: '', loadComponent: () => import('./no-blog.component').then((m) => m.NoBlogComponent) },
+            { path: '', loadComponent: () => import('./pages/all-posts.component').then((m) => m.AllPostsComponent) },
             { path: ':id', loadComponent: () => import('./pages/blog-post.component').then((m) => m.BlogPostComponent) },
         ],
     },
@@ -38,9 +38,5 @@ export const routes: Routes = [
         },
     },
     { path: 'admin', loadChildren: () => import('./admin/admin.routes').then((m) => m.AdminRoutes) },
-    {
-        path: 'newsletter',
-        loadChildren: () => import('./newsletter/newsletter.routes').then((m) => m.routes),
-    },
     { path: '**', loadComponent: () => import('./not-found.component').then((m) => m.NotFoundComponent) },
 ];

@@ -25,9 +25,7 @@ import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '
                 <h2 class="post-title">
                   {{ post.title }}
                 </h2>
-                <div class="post-date">
-                  {{ post.date }}
-                </div>
+                <time class="post-date" [attr.datetime]="post.date">{{ post.date }}</time>
               </div>
             </a>
           }

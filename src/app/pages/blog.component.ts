@@ -1,11 +1,12 @@
 import { Component, computed, inject } from '@angular/core';
 import { Post, PostService } from '../shared/post.service';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { SocialLinksComponent } from '../shared/social-links';
 import { buildOptimizedImageUrl, buildResponsiveImageSet, IMAGE_QUALITY } from '../shared/image-url';
 
 @Component({
     templateUrl: './blog.component.html',
-    imports: [RouterOutlet, RouterLink],
+    imports: [RouterOutlet, RouterLink, SocialLinksComponent],
 })
 export class BlogComponent {
     private readonly postService = inject(PostService);

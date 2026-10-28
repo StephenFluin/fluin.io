@@ -1,10 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
+import { SocialLinksComponent } from '../shared/social-links';
+
 @Component({
     selector: 'app-header',
     templateUrl: './app-header.component.html',
-    imports: [RouterLink, RouterLinkActive],
+    imports: [RouterLink, RouterLinkActive, SocialLinksComponent],
     host: {
         '(window:resize)': 'onResize()',
     },

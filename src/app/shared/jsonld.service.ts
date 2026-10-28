@@ -1,5 +1,7 @@
 import { DOCUMENT, Injectable, OnDestroy, Renderer2, RendererFactory2, inject } from '@angular/core';
 
+import { SAME_AS } from './social-links';
+
 /** Stephen, as the author of the site. src/index.html has the same Person on every page. */
 export const PERSON_SCHEMA = {
     '@type': 'Person',
@@ -13,13 +15,7 @@ export const PERSON_SCHEMA = {
         name: 'Buildkite',
         url: 'https://buildkite.com',
     },
-    sameAs: [
-        'https://twitter.com/stephenfluin',
-        'https://bsky.app/profile/stephenfluin.bsky.social',
-        'https://github.com/stephenfluin',
-        'https://www.linkedin.com/in/stephenfluin',
-        'https://developers.live/@StephenFluin',
-    ],
+    sameAs: SAME_AS,
 };
 
 /** Adds and removes structured data (JSON-LD) scripts in the document head */
