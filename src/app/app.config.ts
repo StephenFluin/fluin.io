@@ -1,6 +1,6 @@
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { provideClientHydration, withEventReplay, withNoIncrementalHydration } from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import {
     provideRouter,
     TitleStrategy,
@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
             withViewTransitions(routeViewTransitionConfig)
         ),
         { provide: TitleStrategy, useClass: SiteTitleStrategy },
-        provideClientHydration(withEventReplay(), withNoIncrementalHydration()),
+        provideClientHydration(withEventReplay()),
         provideHttpClient(withFetch()),
     ],
 };
