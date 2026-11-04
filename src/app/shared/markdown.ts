@@ -1,4 +1,4 @@
-import MarkdownIt from 'markdown-it';
+import markdownit, { type MarkdownIt } from 'markdown-it';
 import { createHighlighterCore, type ShikiTransformer } from 'shiki/core';
 import { createJavaScriptRegexEngine } from 'shiki/engine/javascript';
 
@@ -75,7 +75,7 @@ export async function createMarkdownRenderer(): Promise<MarkdownIt> {
         engine: createJavaScriptRegexEngine(),
     });
 
-    return new MarkdownIt({
+    return new markdownit({
         highlight(code, label) {
             const grammar = GRAMMARS[label.toLowerCase()];
             // An empty string tells markdown-it to render the block as escaped plain text
