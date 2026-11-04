@@ -9,7 +9,13 @@ updates:
       minor-and-patch:
         applies-to: version-updates
         update-types: [minor, patch]
+      security:
+        applies-to: security-updates
+        patterns: ['*']
     ignore:
       # Angular's compiler pins the TypeScript version it supports.
       - dependency-name: typescript
         update-types: ['version-update:semver-major', 'version-update:semver-minor']
+      # Stays on the major version of the Node release we run.
+      - dependency-name: '@types/node'
+        update-types: ['version-update:semver-major']
