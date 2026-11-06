@@ -7,7 +7,7 @@
             @if (saving()) { Saving... } @else if (saveError()) { {{ saveError() }} } @else if (dirty()) { Unsaved
             changes } @else if (lastSaved()) { Saved at {{ lastSaved() }} }
         </span>
-        @if (savedId() !== 'new') {
+        @if (savedId() !== 'new' && isPublished(post)) {
         <a class="button" [href]="'/blog/' + savedId()" target="_blank" rel="noopener">View post ↗</a>
         }
         <button type="button" class="button primary" (click)="save(post, false)" [disabled]="saving()" title="Ctrl+S">

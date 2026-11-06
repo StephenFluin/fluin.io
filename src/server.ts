@@ -182,6 +182,10 @@ app.get('/api/posts', async (_req, res) => {
         // List views only need title/date/id/image/tags. Full content is served by /api/posts/:id.
         const summaries: Record<string, unknown> = {};
         for (const key of Object.keys(data)) {
+            // Drafts and future-dated posts are only visible in the admin, which reads the realtime db itself
+            if (!isPublished(data[key])) {
+                continue;
+            }
             const { id, title, date, image, tags } = data[key];
             summaries[key] = { id, title, date, image, tags };
         }
@@ -200,7 +204,8 @@ app.get('/api/posts/:id', async (req, res) => {
     try {
         const post = await getPostFromFirebase(id);
 
-        if (!post) {
+        // An unpublished post looks the same as one that doesn't exist
+        if (!post || !isPublished(post)) {
             res.status(404).send('Post not found.');
             return;
         }

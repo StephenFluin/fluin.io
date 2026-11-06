@@ -11,6 +11,7 @@ import {
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
+import { isPublished } from '../shared/post-dates';
 import { Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseService } from './firebase.service';
@@ -78,6 +79,8 @@ export class EditPostComponent {
     lastSaved = signal('');
     /** Which pane is shown on narrow screens */
     mobilePane = signal<'write' | 'preview'>('write');
+    /** The public site only serves published posts, so "View post" would be a 404 for anything else */
+    protected readonly isPublished = isPublished;
 
     constructor() {
         const title = inject(Title);
