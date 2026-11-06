@@ -1,5 +1,6 @@
 scripts:
-  buildCommand: ng build
+  # A failing test fails the build, so the rollout never starts
+  buildCommand: npm test && ng build
   runCommand: npm run serve:ssr:fluin-io
 
 env:
