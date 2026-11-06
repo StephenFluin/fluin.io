@@ -1,4 +1,4 @@
-import { Component, DOCUMENT, DestroyRef, computed, effect, inject, input } from '@angular/core';
+import { Component, DOCUMENT, DestroyRef, RESPONSE_INIT, computed, effect, inject, input } from '@angular/core';
 import { httpResource } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
 import { RouterLink } from '@angular/router';
@@ -32,8 +32,10 @@ export class BlogPostComponent {
     /** The full post, including its rendered body, fetched individually so list views stay lightweight */
     private readonly postResource = httpResource<Post>(() => `/api/posts/${this.id()}`);
     readonly post = computed(() => (this.postResource.hasValue() ? this.postResource.value() : undefined));
-    /** The post couldn't be loaded (usually a 404 from /api/posts/:id) */
-    readonly postFailed = computed(() => !!this.postResource.error());
+    /** /api/posts/:id returned a 404: there's no published post with this slug */
+    readonly postMissing = computed(() => this.postResource.statusCode() === 404);
+    /** The post couldn't be loaded for any other reason, like the database being unreachable */
+    readonly postFailed = computed(() => !!this.postResource.error() && !this.postMissing());
     protected readonly heroImageSizes = HERO_IMAGE_SIZES;
     readonly tags = computed(() => parseTags(this.post()?.tags));
     protected readonly slug = tagSlug;
@@ -49,6 +51,14 @@ export class BlogPostComponent {
             const post = this.post();
             if (post) {
                 this.updateHead(post);
+            }
+        });
+
+        // A failed load is temporary, so the server says "come back later" where a 404 would tell crawlers the post is gone
+        const responseInit = inject(RESPONSE_INIT, { optional: true });
+        effect(() => {
+            if (responseInit && this.postFailed()) {
+                responseInit.status = 503;
             }
         });
 

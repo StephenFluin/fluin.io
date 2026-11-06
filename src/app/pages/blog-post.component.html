@@ -54,6 +54,13 @@
         }
     </footer>
 </article>
-} @else if (postFailed()) {
+} @else if (postMissing()) {
 <not-found />
+} @else if (postFailed()) {
+<section class="container not-found">
+    <h1>This post couldn't be loaded</h1>
+    <p>Something went wrong on our end, and it's probably temporary.</p>
+    <!-- A plain link, so it reloads the page and works before hydration too -->
+    <p><a [href]="'/blog/' + id()">Try again</a>, or head to <a routerLink="/blog">all posts</a>.</p>
+</section>
 }
