@@ -39,7 +39,7 @@
     "@angular/compiler-cli": "^22.2.4",
     "@types/compression": "^1.8.1",
     "@types/express": "^5.0.1",
-    "@types/node": "^26.6.3",
+    "@types/node": "^24.19.2",
     "baseline-browser-mapping": "^2.10.20",
     "typescript": "~6.0.3"
   },
