@@ -6,6 +6,9 @@
         },
         "talks": {
             ".read": true
+        },
+        "links": {
+            ".read": true
         }
     }
 }

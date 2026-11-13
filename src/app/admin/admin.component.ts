@@ -12,6 +12,7 @@ import { FirebaseService } from './firebase.service';
             <header class="toolbar">
                 <h1>Posts</h1>
                 <a class="button primary" routerLink="new">New post</a>
+                <a class="button" routerLink="links">Quick links</a>
                 <span class="spacer"></span>
                 <span class="muted">Signed in as {{ auth.name() }}</span>
                 <button type="button" class="button" (click)="auth.logout()">Log out</button>

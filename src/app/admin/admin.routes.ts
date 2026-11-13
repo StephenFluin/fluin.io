@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { AdminShellComponent } from './admin-shell.component';
 import { EditPostComponent } from './edit-post.component';
+import { QuickLinksComponent } from './quick-links.component';
 
 import { FirebaseApp, initializeApp } from 'firebase/app';
 
@@ -38,6 +39,8 @@ export const AdminRoutes: Route[] = [
         ],
         children: [
             { path: '', component: AdminComponent, title: 'Admin' },
+            // Before :id, so it isn't taken for a post
+            { path: 'links', component: QuickLinksComponent, title: 'Quick links' },
             {
                 path: ':id',
                 component: EditPostComponent,

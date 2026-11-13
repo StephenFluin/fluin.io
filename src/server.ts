@@ -16,6 +16,7 @@ import { ALLOWED_IMAGE_QUALITIES, ALLOWED_IMAGE_SIZES, isOptimizableImage } from
 import { isPublished, publishedAt } from './app/shared/post-dates';
 import { createMarkdownRenderer } from './app/shared/markdown';
 import { parseTags } from './app/shared/post-tags';
+import { isValidLinkTarget, slugProblem, type QuickLink } from './app/shared/quick-links';
 import { createProjectInfoCache } from './project-info';
 
 // Initialize firebase-admin once (uses Application Default Credentials in App Hosting / Cloud Run).
@@ -494,6 +495,51 @@ app.get('/feed.xml', async (req, res) => {
     } catch (err) {
         console.error('Feed error', err);
         res.status(500).send('Unable to generate feed.');
+    }
+});
+
+const LINKS_URL = 'https://fluindotio-website-93127.firebaseio.com/links.json';
+/** Short, so a link changed in the admin takes effect within a minute */
+const LINKS_TTL_MS = 30 * 1000;
+let linksCache: { data: Record<string, QuickLink>; timestamp: number } | null = null;
+
+async function getLinksFromFirebase(): Promise<Record<string, QuickLink>> {
+    const now = Date.now();
+    if (linksCache && now - linksCache.timestamp < LINKS_TTL_MS) {
+        return linksCache.data;
+    }
+
+    const response = await fetch(LINKS_URL);
+    if (!response.ok) {
+        throw new Error(`Firebase returned ${response.status}`);
+    }
+
+    const data = (await response.json()) ?? {};
+    linksCache = { data, timestamp: now };
+    return data;
+}
+
+/** Quick links managed in the admin, like fluin.io/meet. Anything that isn't one falls through to the site. */
+app.get('/:slug', async (req, res, next) => {
+    const slug = req.params['slug'];
+    if (slugProblem(slug)) {
+        next();
+        return;
+    }
+
+    try {
+        const url = (await getLinksFromFirebase())[slug]?.url;
+        if (!url || !isValidLinkTarget(url)) {
+            next();
+            return;
+        }
+        // Permanent, but browsers and CDNs must check back so the target can be changed later
+        res.setHeader('Cache-Control', 'no-cache');
+        res.redirect(301, url);
+    } catch (error) {
+        // If links can't be loaded, the rest of the site should still work
+        console.error('Quick links error', error);
+        next();
     }
 });
 
