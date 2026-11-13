@@ -80,6 +80,13 @@ img {
     max-width: 100%;
 }
 
+/* The root element paints the canvas and sits behind the view-transition layer, so it needs the
+   page background too: otherwise dark mode flashes the browser's default white around the sliding
+   snapshots during route animations. */
+html {
+    background-color: var(--page-background);
+}
+
 body {
     font-size: 16px;
     color: var(--text-color);
@@ -204,6 +211,16 @@ hr {
    Back (shallower): new page slides in from left.
    No-op on browsers that don't support the View Transitions API.
    Uses modern data-view-transition-type attribute per Angular routing guide. */
+::view-transition {
+    /* Fill the layer behind the sliding snapshots, so no white shows between or beside them */
+    background-color: var(--page-background);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+    /* Browsers differ on whether a root snapshot includes the canvas background; paint it under each */
+    background-color: var(--page-background);
+}
+
 :root[data-view-transition-type='forward']::view-transition-old(root) {
     animation: 300ms cubic-bezier(.35, 0, .25, 1) both slide-out-left;
 }
