@@ -26,7 +26,7 @@ export class AuthService {
     login() {
         const auth = this.firebaseService.auth;
         signInWithPopup(auth, provider).catch((error) => {
-            if (error.code == 'auth/popup-blocked') {
+            if (error.code === 'auth/popup-blocked') {
                 console.log('Falling back to redirect.');
                 signInWithRedirect(auth, provider);
                 return;

@@ -81,7 +81,7 @@ export class FirebaseService {
     }
     upload = uploadBytes;
 
-    push(path: string, value: any) {
+    push(path: string, value: unknown) {
         return push(this.dbRef(path), value);
     }
 

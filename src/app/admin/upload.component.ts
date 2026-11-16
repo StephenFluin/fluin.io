@@ -93,9 +93,9 @@ export class UploadComponent {
      */
     folder = input.required<string>();
     /** Markdown for an image, to insert into the post body */
-    insert = output<string>();
+    readonly insert = output<string>();
     /** The URL of an image to use as the post's cover image */
-    useAsCover = output<string>();
+    readonly useAsCover = output<string>();
 
     fileInput = viewChild.required<ElementRef<HTMLInputElement>>('fileInput');
     uploading = signal(false);
