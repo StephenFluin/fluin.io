@@ -12,6 +12,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { isPublished } from '../shared/post-dates';
+import { postSlug } from '../shared/post-slug';
 import { Post } from '../shared/post.service';
 import { EditablePostService } from './shared/editable-post.service';
 import { FirebaseService } from './firebase.service';
@@ -77,6 +78,11 @@ export class EditPostComponent {
     saving = signal(false);
     saveError = signal('');
     lastSaved = signal('');
+    /**
+     * Fill the slug in from the title while the user hasn't typed one. Off for posts that already
+     * have a slug, so retitling a published post doesn't silently change its URL.
+     */
+    private autoSlug = true;
     /** Which pane is shown on narrow screens */
     mobilePane = signal<'write' | 'preview'>('write');
     /** The public site only serves published posts, so "View post" would be a 404 for anything else */
@@ -89,6 +95,7 @@ export class EditPostComponent {
             if (post) {
                 title.setTitle(this.savedId() === 'new' ? 'New post | fluin.io blog' : `Edit ${post.title} | fluin.io blog`);
                 this.dirty.set(false);
+                this.autoSlug = !post.id;
                 this.contentChange(post);
             }
         });
@@ -104,10 +111,26 @@ export class EditPostComponent {
         this.contentChange(post);
     }
 
+    titleEdited(post: Post) {
+        if (this.autoSlug) {
+            post.id = postSlug(post.title);
+        }
+        this.edited(post);
+    }
+
+    /** Typing a slug stops it following the title; clearing it hands it back to the title */
+    slugEdited(post: Post) {
+        this.autoSlug = !post.id;
+        this.edited(post);
+    }
+
     /**
      * @param leave Go back to the admin list after a successful save
      */
     async save(post: Post, leave: boolean) {
+        if (!post.id) {
+            post.id = postSlug(post.title);
+        }
         this.saving.set(true);
         this.saveError.set('');
         try {

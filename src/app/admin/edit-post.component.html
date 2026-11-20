@@ -18,11 +18,11 @@
     <div class="fields">
         <div class="field title-field">
             <label for="post-title">Title</label>
-            <input id="post-title" [(ngModel)]="post.title" (ngModelChange)="edited(post)" />
+            <input id="post-title" [(ngModel)]="post.title" (ngModelChange)="titleEdited(post)" />
         </div>
         <div class="field">
             <label for="post-slug">Slug</label>
-            <input id="post-slug" [(ngModel)]="post.id" (ngModelChange)="edited(post)" spellcheck="false" />
+            <input id="post-slug" [(ngModel)]="post.id" (ngModelChange)="slugEdited(post)" spellcheck="false" />
             <span class="hint muted">fluin.io/blog/{{ post.id || '…' }}</span>
         </div>
         <div class="field">
